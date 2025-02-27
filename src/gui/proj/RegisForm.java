@@ -236,13 +236,12 @@ public class RegisForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   String fname = fn.getText().trim();
+        String fname = fn.getText().trim();
     String lname = ln1.getText().trim();
     String email = Email.getText().trim();
     String username = uss1.getText().trim();
     String password = new String(RegPass.getPassword()).trim();
     String type = userType.getText().trim();
-
 
     // Email regex for validation
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -268,24 +267,29 @@ public class RegisForm extends javax.swing.JFrame {
         return;
     }
 
-  if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};'\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
-    JOptionPane.showMessageDialog(this, "Invalid Password! Must be at least 8 characters long, contain one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
+    if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};'\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
+        JOptionPane.showMessageDialog(this, "Invalid Password! Must be at least 8 characters long, contain one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-    // Debug message
-    System.out.println("Debug: Validation passed, attempting to insert user...");
-
-    // Hash the password
-    String hashedPassword = hashPassword(password);
-    dbConnector db = new dbConnector(); // Create a new database connection instance
+    // Initialize database connection
+    dbConnector db = new dbConnector();
 
     if (db == null) {
         JOptionPane.showMessageDialog(this, "Database connection failed.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Insert the user and check result
+    // **Check if email already exists**
+    if (db.isEmailExists(email)) {
+        JOptionPane.showMessageDialog(this, "Email already in use! Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Hash the password before storing
+    String hashedPassword = hashPassword(password);
+
+    // Insert the user into the database
     int inserted = db.insertUser(fname, lname, email, type, username, hashedPassword);
 
     if (inserted > 0) {
@@ -298,6 +302,7 @@ public class RegisForm extends javax.swing.JFrame {
     }
 
     db.closeConnection(); // Close the database connection
+
 }
 
     private String hashPassword(String password) {

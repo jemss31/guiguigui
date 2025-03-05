@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package config;
 
 /**
- *
- * @author admin
+ * Singleton class to manage user session information.
  */
 public class Session {
     
@@ -19,30 +13,35 @@ public class Session {
     private String u_username;
     private String type;
     private String status;
-    
-    
-    private Session(){
+
+    // Private constructor to prevent instantiation
+    private Session() {
+        // Initialize default values
+        this.id = 0;
     }
 
-
+    // Get the singleton instance of the Session
     public static synchronized Session getInstance() {
-        if (instance == null){
+        if (instance == null) {
             instance = new Session();
         }
         return instance;
     }
 
+    // Check if the session instance is empty
     public static boolean isInstanceEmpty() {
-        return instance == null;
+        return instance == null || instance.id == 0;
     }
 
-        public int getId() {
+    // Getters and Setters for session attributes
+    public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
+
     public String getU_fname() {
         return u_fname;
     }
@@ -90,6 +89,31 @@ public class Session {
     public void setStatus(String status) {
         this.status = status;
     }
-    
 
+    // Reset session attributes to default values
+    public void resetSession() {
+        this.id = 0;
+        this.u_fname = null;
+        this.u_lname = null;
+        this.u_email = null;
+        this.u_username = null;
+        this.type = null;
+        this.status = null;
+    }
+
+    // Logout method to reset the session
+    public void logout() {
+        resetSession(); // Reset session attributes
+    }
+
+    // Method to set user details after successful login
+    public void setUserDetails(int id, String fname, String lname, String email, String username, String type, String status) {
+        this.id = id;
+        this.u_fname = fname;
+        this.u_lname = lname;
+        this.u_email = email;
+        this.u_username = username;
+        this.type = type;
+        this.status = status;
+    }
 }

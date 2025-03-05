@@ -7,6 +7,7 @@ package admin;
 
 import config.Session;
 import gui.proj.LogInForm;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +16,9 @@ import javax.swing.JOptionPane;
  */
 public class AccountAdmin extends javax.swing.JFrame {
      private boolean isMessageShown = false;
+    private JLabel usernameLabel;
+    private JLabel nameLabel;
+    private JLabel emailLabel;
 
     /**
      * Creates new form AccountAdmin
@@ -207,23 +211,21 @@ public class AccountAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_gwapoMouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-           Session sess = Session.getInstance();        
+        Session sess = Session.getInstance();
 
-    // Check if session exists
-    if (sess.getId() == 0) {
-        // Only show the message once if the user is not logged in
-        if (!isMessageShown) {
-            JOptionPane.showMessageDialog(null, "No Account, Login First!");
-            isMessageShown = true; // Set a flag to indicate the message has been shown
-            LogInForm lf = new LogInForm();
-            lf.setVisible(true);
-            this.dispose();
-        }
+    if (sess.getId() == 0) { // Check if session ID is zero
+        System.out.println("No active session. Redirecting to login.");
+        LogInForm lf = new LogInForm();
+        lf.setVisible(true);
+        this.dispose(); // Close the current form
     } else {
-        gwapo.setText(sess.getU_fname());
-        pepe.setText(sess.getU_lname());
-        isMessageShown = false; // Reset the flag when a valid session is found
+        // Populate UI components with session data
+        usernameLabel.setText("Username: " + sess.getU_username());
+        nameLabel.setText("Name: " + sess.getU_fname() + " " + sess.getU_lname());
+        emailLabel.setText("Email: " + sess.getU_email());
+        // Add any other components you want to update with session data
     }
+    
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
 

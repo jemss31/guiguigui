@@ -43,7 +43,6 @@ public class RegisForm extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        userType = new javax.swing.JTextField();
         fn = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         RegPass = new javax.swing.JPasswordField();
@@ -55,6 +54,7 @@ public class RegisForm extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Email = new javax.swing.JTextField();
+        UserType = new javax.swing.JComboBox<>();
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
         jLabel7.setText("jLabel5");
@@ -129,13 +129,6 @@ public class RegisForm extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel5.setText("Email:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 220, 60));
-
-        userType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userTypeActionPerformed(evt);
-            }
-        });
-        jPanel1.add(userType, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 260, 50));
 
         fn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,6 +205,14 @@ public class RegisForm extends javax.swing.JFrame {
         });
         jPanel1.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 260, 50));
 
+        UserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer" }));
+        UserType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserTypeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(UserType, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 260, 50));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,7 +242,7 @@ public class RegisForm extends javax.swing.JFrame {
     String email = Email.getText().trim();
     String username = uss1.getText().trim();
     String password = new String(RegPass.getPassword()).trim();
-    String type = userType.getText().trim();
+    String type = UserType.getSelectedItem().toString();
 
     // Email regex for validation
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -327,20 +328,6 @@ public class RegisForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void userTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeActionPerformed
- String address = userType.getText().trim();
-   
-   String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-    if (address.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Email cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    } else if (!address.matches(emailRegex)) {
-        JOptionPane.showMessageDialog(this, "Invalid Email! Please enter a valid email address.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-                               
-    }//GEN-LAST:event_userTypeActionPerformed
-
     private void fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnActionPerformed
         String name = fn.getText();
           String regex = "^[a-zA-Z]+$";
@@ -410,6 +397,10 @@ String username = uss1.getText().trim();
         // TODO add your handling code here:
     }//GEN-LAST:event_EmailActionPerformed
 
+    private void UserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UserTypeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -448,6 +439,7 @@ String username = uss1.getText().trim();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Email;
     private javax.swing.JPasswordField RegPass;
+    private javax.swing.JComboBox<String> UserType;
     private javax.swing.JTextField fn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -466,7 +458,6 @@ String username = uss1.getText().trim();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField ln1;
-    private javax.swing.JTextField userType;
     private javax.swing.JTextField uss1;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,6 +7,7 @@ package gui.proj;
 
 import Userdashboard.userdashboard;
 import admin.adminDashboard;
+import config.Session;
 import config.dbConnector;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -32,40 +33,60 @@ public class LogInForm extends javax.swing.JFrame {
     }
     
    public static Boolean loginAcc(String username, String password) {
-        dbConnector connector = new dbConnector();
-        String query = "SELECT u_pass, status, type FROM users WHERE u_username = ?";
+            dbConnector connector = new dbConnector();
+    String query = "SELECT id, u_fname, u_lname, u_email, u_username, u_pass, status, type FROM users WHERE u_username = ?";
 
-        try (PreparedStatement pst = connector.getConnection().prepareStatement(query)) {
-            pst.setString(1, username);
-            ResultSet resultSet = pst.executeQuery();
+    try (Connection connect = connector.getConnection();
+         PreparedStatement pst = connect.prepareStatement(query)) {
 
-            if (resultSet.next()) {
-                String storedHashedPassword = resultSet.getString("u_pass");
-                String status = resultSet.getString("status");
-                String type = resultSet.getString("type");
+        pst.setString(1, username);
+        ResultSet resultSet = pst.executeQuery();
 
-                // ✅ Check if password matches
-                if (!storedHashedPassword.equals(hashPassword(password))) {
-                    return false;
-                }
+        if (resultSet.next()) {
+            String storedHashedPassword = resultSet.getString("u_pass");
+            String status = resultSet.getString("status");
+            String type = resultSet.getString("type");
 
-                // ✅ Check if account is approved
-                if ("Pending".equalsIgnoreCase(status)) {
-                    JOptionPane.showMessageDialog(null, "Your account is pending approval.", "Access Denied", JOptionPane.ERROR_MESSAGE);
-                    return false;
-                }
-
-                // ✅ Login successful
-                JOptionPane.showMessageDialog(null, "Welcome " + username + "! You are logged in as " + type);
-                return true;
+            String hashedPasswordInput = hashPassword(password);
+            if (hashedPasswordInput == null) {
+                JOptionPane.showMessageDialog(null, "Error hashing password!", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+
+            // Verify password
+            if (!hashedPasswordInput.equals(storedHashedPassword)) {
+                JOptionPane.showMessageDialog(null, "Invalid password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+
+            // Successful login
+            Session sess = Session.getInstance();
+            sess.setId(resultSet.getInt("id")); // Set the session ID
+            sess.setU_fname(resultSet.getString("u_fname"));
+            sess.setU_lname(resultSet.getString("u_lname"));
+            sess.setU_email(resultSet.getString("u_email"));
+            sess.setU_username(resultSet.getString("u_username"));
+            sess.setType(type);
+            sess.setStatus(status);
+
+            // Check account status
+            if ("Pending".equalsIgnoreCase(status)) {
+                JOptionPane.showMessageDialog(null, "Your account is pending approval.", "Access Denied", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+
+            JOptionPane.showMessageDialog(null, "Welcome " + username + "! You are logged in as " + type);
+            return true; // Login successful
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            return false; // Username not found
         }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         return false;
     }
-
-    // ✅ Password Hashing with SHA-256
+   }
+   
     private static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -255,7 +276,7 @@ public class LogInForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    String usernameInput = username.getText().trim();
+        String usernameInput = username.getText().trim();
     String passwordInput = new String(password.getPassword()).trim();
 
     

@@ -5,6 +5,7 @@
  */
 package Userdashboard;
 
+import config.Session;
 import gui.proj.LogInForm;
 import javax.swing.JOptionPane;
 
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
  * @author admin
  */
 public class userAccounts extends javax.swing.JFrame {
+     private boolean isMessageShown = false;
 
     /**
      * Creates new form userAccounts
@@ -30,6 +32,8 @@ public class userAccounts extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -44,9 +48,39 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        namo = new javax.swing.JLabel();
+        nameew = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(240, 245, 179));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -61,16 +95,16 @@ public class userAccounts extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(351, 351, 351)
+                .addGap(344, 344, 344)
                 .addComponent(jLabel2)
-                .addContainerGap(441, Short.MAX_VALUE))
+                .addContainerGap(448, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 120));
@@ -141,6 +175,17 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, 860, 280));
 
+        namo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        namo.setText("Email:");
+        jPanel1.add(namo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 100, 50));
+
+        nameew.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        nameew.setText("Name:");
+        jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 110, 60));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/profile+user+icon-1320086081145096981-removebg-preview.png"))); // NOI18N
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 420, 230));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,6 +242,28 @@ public class userAccounts extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel11MouseClicked
 
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+      Session sess = Session.getInstance();        
+
+    // Check if session exists
+    if (sess.getId() == 0) {
+        // Only show the message once if the user is not logged in
+        if (!isMessageShown) {
+            isMessageShown = true; // Set the flag to indicate the message has been shown
+            JOptionPane.showMessageDialog(null, "No Account, Login First!");
+            LogInForm lf = new LogInForm();
+            lf.setVisible(true);
+            this.dispose();
+        }
+    } else {
+        // Reset the flag when a valid session is found
+        isMessageShown = false; 
+        nameew.setText(sess.getU_fname());
+        namo.setText(sess.getU_lname());
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
+
     /**
      * @param args the command line arguments
      */
@@ -242,10 +309,15 @@ public class userAccounts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel nameew;
+    private javax.swing.JLabel namo;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,13 +15,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author admin
  */
 public class AdminAccountControl extends javax.swing.JFrame {
+    private JTable usersTable;
 
     /**
      * Creates new form AdminAccountControl
@@ -29,10 +32,11 @@ public class AdminAccountControl extends javax.swing.JFrame {
     public AdminAccountControl() {
         initComponents();
         loadUsersData();
+        usersTable = new JTable();
     }
     
     private void loadUsersData() {
-    DefaultTableModel model = (DefaultTableModel) tbl.getModel();
+    DefaultTableModel model = (DefaultTableModel) table1.getModel();
     
     
     String[] columnNames = {"id", "u_fname", "u_lname", "u_email", "type", "u_username","u_pass", "status"};
@@ -89,7 +93,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
         dash = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl = new javax.swing.JTable();
+        table1 = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -185,7 +189,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
         jLabel11.setText("Users Control");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 120, 40));
 
-        tbl.setModel(new javax.swing.table.DefaultTableModel(
+        table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -196,7 +200,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tbl);
+        jScrollPane1.setViewportView(table1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 670, 320));
 
@@ -268,33 +272,39 @@ public class AdminAccountControl extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel8KeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    int selectedRow = tbl.getSelectedRow(); // Get selected row index
+         int selectedRow = table1.getSelectedRow(); // Get selected row index
 
     if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Please select a row to update.", "No Selection", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    // Get the current values from the selected row
-    int userId = (int) tbl.getValueAt(selectedRow, 0);
-    String fname = (String) tbl.getValueAt(selectedRow, 1);
-    String lname = (String) tbl.getValueAt(selectedRow, 2);
-    String email = (String) tbl.getValueAt(selectedRow, 3);
-    String type = (String) tbl.getValueAt(selectedRow, 4);
-    String username = (String) tbl.getValueAt(selectedRow, 5);
-    String password = (String) tbl.getValueAt(selectedRow, 6);
-    String status = (String) tbl.getValueAt(selectedRow, 7);
+    // Retrieve current values safely
+    int userId = (int) table1.getValueAt(selectedRow, 0);
+    String fname = String.valueOf(table1.getValueAt(selectedRow, 1));
+    String lname = String.valueOf(table1.getValueAt(selectedRow, 2));
+    String email = String.valueOf(table1.getValueAt(selectedRow, 3));
+    String type = String.valueOf(table1.getValueAt(selectedRow, 4));
+    String username = String.valueOf(table1.getValueAt(selectedRow, 5));
+    String password = String.valueOf(table1.getValueAt(selectedRow, 6));
+    String status = String.valueOf(table1.getValueAt(selectedRow, 7));
 
-    // Create input dialogs to get updated values
-    fname = JOptionPane.showInputDialog(this, "Enter First Name:", fname);
-    lname = JOptionPane.showInputDialog(this, "Enter Last Name:", lname);
-    email = JOptionPane.showInputDialog(this, "Enter Email:", email);
-    type = JOptionPane.showInputDialog(this, "Enter User Type:", type);
-    username = JOptionPane.showInputDialog(this, "Enter Username:", username);
-    password = JOptionPane.showInputDialog(this, "Enter Password:", password);
-    status = JOptionPane.showInputDialog(this, "Enter Status:", status);
+    // Create input dialogs with validation
+    fname = getUserInput("Enter First Name:", fname);
+    lname = getUserInput("Enter Last Name:", lname);
+    email = getUserInput("Enter Email:", email);
+    type = getUserInput("Enter User Type:", type);
+    username = getUserInput("Enter Username:", username);
+    password = getUserInput("Enter Password:", password);
+    status = getUserInput("Enter Status:", status);
 
-    // Update the database
+    // If user cancels or enters blank values, stop update
+    if (fname == null || lname == null || email == null || type == null || username == null || password == null || status == null) {
+        JOptionPane.showMessageDialog(this, "Update canceled.", "Canceled", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    // Database update query
     String sql = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, type = ?, u_username = ?, u_pass = ?, status = ? WHERE id = ?";
 
     try (Connection connect = new dbConnector().getConnection();
@@ -313,7 +323,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
 
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "User updated successfully.");
-            loadUsersData(); // Refresh the table after updating
+            loadUsersData(); // Refresh the table
         } else {
             JOptionPane.showMessageDialog(this, "Error: Update failed.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -321,7 +331,16 @@ public class AdminAccountControl extends javax.swing.JFrame {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-        // TODO add your handling code here:
+}
+
+/**
+ * Utility method to get user input safely.
+ * Returns null if the user cancels, or returns trimmed input if valid.
+ */
+private String getUserInput(String message, String currentValue) {
+    String input = JOptionPane.showInputDialog(this, message, currentValue);
+    return (input != null && !input.trim().isEmpty()) ? input.trim() : null;
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
@@ -338,14 +357,14 @@ public class AdminAccountControl extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int selectedRow = tbl.getSelectedRow(); 
+        int selectedRow = table1.getSelectedRow(); 
 
     if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Please select a row to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    int userId = (int) tbl.getValueAt(selectedRow, 0);
+    int userId = (int) table1.getValueAt(selectedRow, 0);
 
     int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
     if (confirm == JOptionPane.YES_OPTION) {
@@ -373,94 +392,10 @@ public class AdminAccountControl extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-   String fname = JOptionPane.showInputDialog(this, "Enter First Name:").trim();
-    String lname = JOptionPane.showInputDialog(this, "Enter Last Name:").trim();
-    String email = JOptionPane.showInputDialog(this, "Enter Email:").trim();
-    String type = JOptionPane.showInputDialog(this, "Enter User Type:").trim();
-    String username = JOptionPane.showInputDialog(this, "Enter Username:").trim();
-    String password = JOptionPane.showInputDialog(this, "Enter Password:").trim();
-    String status = JOptionPane.showInputDialog(this, "Enter Status (Active/Inactive):").trim();
-
-    // ✅ Ensure all fields are filled
-    if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || type.isEmpty() ||
-        username.isEmpty() || password.isEmpty() || status.isEmpty()) {
+        AddUser as = new AddUser();
+        as.setVisible(true);
+        this.dispose();
         
-        JOptionPane.showMessageDialog(this, "All fields are required.", "Input Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // ✅ Validate name (Only letters & spaces allowed)
-    if (!fname.matches("[a-zA-Z ]+") || !lname.matches("[a-zA-Z ]+")) {
-        JOptionPane.showMessageDialog(this, "First and Last Name must contain only letters.", "Input Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // ✅ Validate email format using regex
-    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-    if (!email.matches(emailRegex)) {
-        JOptionPane.showMessageDialog(this, "Invalid email format!", "Input Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // ✅ Validate username (At least 5 characters, only letters, numbers, and underscores)
-    if (!username.matches("[a-zA-Z0-9_]{5,}")) {
-        JOptionPane.showMessageDialog(this, "Username must be at least 5 characters and contain only letters, numbers, and underscores.", "Input Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // ✅ Validate password (Min 8 chars, 1 uppercase, 1 special char, 1 number)
-    if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\\d).{8,}$")) {
-        JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long, contain an uppercase letter, a special character, and a number.", "Input Error", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // ✅ Hash password before storing in the database
-    String hashedPassword = hashPassword(password);
-
-    // ✅ Insert new user into the database
-    String sql = "INSERT INTO users (u_fname, u_lname, u_email, type, u_username, u_pass, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-    try (Connection connect = new dbConnector().getConnection();
-         PreparedStatement pst = connect.prepareStatement(sql)) {
-
-        pst.setString(1, fname);
-        pst.setString(2, lname);
-        pst.setString(3, email);
-        pst.setString(4, type);
-        pst.setString(5, username);
-        pst.setString(6, hashedPassword);  // Store hashed password
-        pst.setString(7, status);
-
-        int rowsAffected = pst.executeUpdate();
-
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "User added successfully.");
-            loadUsersData(); // Refresh the table
-        } else {
-            JOptionPane.showMessageDialog(this, "Error: Failed to add user.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
-
-// ✅ Hashes password using SHA-256
-private String hashPassword(String password) {
-    try {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            hexString.append(String.format("%02x", b));
-        }
-        return hexString.toString();
-    } catch (NoSuchAlgorithmException e) {
-        e.printStackTrace();
-        return null;
-    }
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -531,6 +466,6 @@ private String hashPassword(String password) {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable tbl;
+    private javax.swing.JTable table1;
     // End of variables declaration//GEN-END:variables
 }

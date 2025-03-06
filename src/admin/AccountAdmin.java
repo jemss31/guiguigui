@@ -46,14 +46,14 @@ public class AccountAdmin extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        pepe = new javax.swing.JLabel();
+        emm = new javax.swing.JLabel();
         gwapo = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        pepe1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -118,9 +118,6 @@ public class AccountAdmin extends javax.swing.JFrame {
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 100, 40));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
-        jSeparator2.setBackground(new java.awt.Color(204, 255, 204));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 110, 210, 170));
-
         jLabel11.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel11.setText("Users Control");
         jLabel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
@@ -150,26 +147,32 @@ public class AccountAdmin extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 420, 860, 280));
 
-        pepe.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        pepe.setText("name:");
-        pepe.addMouseListener(new java.awt.event.MouseAdapter() {
+        emm.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        emm.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pepeMouseClicked(evt);
+                emmMouseClicked(evt);
             }
         });
-        jPanel1.add(pepe, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 120, 40));
+        jPanel1.add(emm, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 190, 40));
 
         gwapo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        gwapo.setText("name:");
         gwapo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 gwapoMouseClicked(evt);
             }
         });
-        jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 120, 40));
+        jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 190, 40));
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/profile+user+icon-1320086081145096981-removebg-preview.png"))); // NOI18N
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 350, 200));
+
+        pepe1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        pepe1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pepe1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(pepe1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 190, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,10 +193,10 @@ public class AccountAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void pepeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pepeMouseClicked
+    private void emmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_emmMouseClicked
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_pepeMouseClicked
+    }//GEN-LAST:event_emmMouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         //hover
@@ -220,14 +223,17 @@ public class AccountAdmin extends javax.swing.JFrame {
         this.dispose(); // Close the current form
     } else {
         // Populate UI components with session data
-        usernameLabel.setText("Username: " + sess.getU_username());
-        nameLabel.setText("Name: " + sess.getU_fname() + " " + sess.getU_lname());
-        emailLabel.setText("Email: " + sess.getU_email());
-        // Add any other components you want to update with session data
+        gwapo.setText(""+ sess.getU_username());
+        pepe1.setText("" + sess.getU_lname());
+        emm.setText("" + sess.getU_email());
     }
     
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
+
+    private void pepe1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pepe1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pepe1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -265,6 +271,7 @@ public class AccountAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel emm;
     private javax.swing.JLabel gwapo;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
@@ -281,7 +288,6 @@ public class AccountAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel pepe;
+    private javax.swing.JLabel pepe1;
     // End of variables declaration//GEN-END:variables
 }

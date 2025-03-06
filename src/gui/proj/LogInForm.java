@@ -47,16 +47,6 @@ public class LogInForm extends javax.swing.JFrame {
             String status = resultSet.getString("status");
             String type = resultSet.getString("type");
 
-            // Create or get the session instance
-            Session sess = Session.getInstance();
-            sess.setId(resultSet.getInt("id")); // Set the session ID
-            sess.setU_fname(resultSet.getString("u_fname"));
-            sess.setU_lname(resultSet.getString("u_lname"));
-            sess.setU_email(resultSet.getString("u_email"));
-            sess.setU_username(resultSet.getString("u_username"));
-            sess.setType(type);
-            sess.setStatus(status);
-
             // Hash the input password for comparison
             String hashedPasswordInput = hashPassword(password);
             if (hashedPasswordInput == null) {
@@ -290,18 +280,29 @@ public class LogInForm extends javax.swing.JFrame {
     String hashedPasswordInput = hashPassword(passwordInput);
 
     
-    String sql = "SELECT u_pass, status, type FROM users WHERE u_username = ?";
+    String sql = "SELECT id,u_fname,u_lname,u_email,u_username,type,status, u_pass FROM users  WHERE u_username = ?";
 
     try (Connection connect = new dbConnector().getConnection(); 
          PreparedStatement pst = connect.prepareStatement(sql)) {
         
         pst.setString(1, usernameInput);
         ResultSet rs = pst.executeQuery();
+        
+        
 
         if (rs.next()) {
             String dbPassword = rs.getString("u_pass"); 
             String status = rs.getString("status");
             String type = rs.getString("type"); 
+            
+             Session sess = Session.getInstance();
+            sess.setId(rs.getInt("id")); 
+            sess.setU_fname(rs.getString("u_fname"));
+            sess.setU_lname(rs.getString("u_lname"));
+            sess.setU_email(rs.getString("u_email"));
+            sess.setU_username(rs.getString("u_username"));
+            sess.setType("type");
+            sess.setStatus("status");
 
            
             if (status.equalsIgnoreCase("Pending")) {

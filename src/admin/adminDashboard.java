@@ -6,8 +6,8 @@
 package admin;
 
 import config.Session;
-import gui.proj.LogInForm;
-import gui.proj.RegisForm;
+import admin.LogInForm;
+import admin.RegisForm;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,7 +46,6 @@ public class adminDashboard extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        gwapo = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -141,10 +140,6 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 200, 600));
 
-        gwapo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        gwapo.setText("name:");
-        jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 100, 40));
-
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 420, 860, 280));
 
@@ -223,7 +218,6 @@ public class adminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel gwapo;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

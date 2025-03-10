@@ -6,7 +6,7 @@
 package admin;
 
 import config.dbConnector;
-import gui.proj.LogInForm;
+import admin.LogInForm;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,7 +46,7 @@ public class AddUser extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         fn = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        RegPass = new javax.swing.JPasswordField();
+        pass = new javax.swing.JPasswordField();
         jCheckBox1 = new javax.swing.JCheckBox();
         uss1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -60,6 +60,7 @@ public class AddUser extends javax.swing.JFrame {
         stat = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(240, 245, 179));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -67,23 +68,23 @@ public class AddUser extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(114, 240, 194));
 
         jLabel2.setFont(new java.awt.Font("Cooper Black", 0, 36)); // NOI18N
-        jLabel2.setText("Welcome to Pet Grooming System!");
+        jLabel2.setText("Add Users!");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(174, 174, 174)
+                .addGap(397, 397, 397)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(485, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 120));
@@ -140,17 +141,17 @@ public class AddUser extends javax.swing.JFrame {
         jLabel6.setText("User Type:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, 220, 60));
 
-        RegPass.addActionListener(new java.awt.event.ActionListener() {
+        pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegPassActionPerformed(evt);
+                passActionPerformed(evt);
             }
         });
-        RegPass.addKeyListener(new java.awt.event.KeyAdapter() {
+        pass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                RegPassKeyPressed(evt);
+                passKeyPressed(evt);
             }
         });
-        jPanel1.add(RegPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 260, 50));
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 260, 50));
 
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +217,7 @@ public class AddUser extends javax.swing.JFrame {
         jLabel7.setText("User Status:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 220, 60));
 
-        stat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Pending" }));
+        stat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aprroved", "Pending" }));
         stat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statActionPerformed(evt);
@@ -236,6 +237,7 @@ public class AddUser extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -255,7 +257,7 @@ public class AddUser extends javax.swing.JFrame {
         String lname = ln1.getText().trim();
         String email = Email.getText().trim();
         String username = uss1.getText().trim();
-        String password = new String(RegPass.getPassword()).trim();
+        String password = new String(pass.getPassword()).trim();
         String type = utype.getSelectedItem().toString();
 
         // Email regex for validation
@@ -286,7 +288,6 @@ public class AddUser extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Invalid Password! Must be at least 8 characters long, contain one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         // Initialize database connection
         dbConnector db = new dbConnector();
 
@@ -309,7 +310,7 @@ public class AddUser extends javax.swing.JFrame {
 
         if (inserted > 0) {
             JOptionPane.showMessageDialog(this, "Registration Successful! Your account is pending approval.", "Success", JOptionPane.INFORMATION_MESSAGE);
-            LogInForm login = new LogInForm();
+            AdminAccountControl login = new AdminAccountControl();
             login.setVisible(true);
             this.dispose();
         } else {
@@ -319,6 +320,7 @@ public class AddUser extends javax.swing.JFrame {
         db.closeConnection(); // Close the database connection
 
         }
+    
 
         private String hashPassword(String password) {
            try {
@@ -335,6 +337,7 @@ public class AddUser extends javax.swing.JFrame {
         e.printStackTrace();
         return null;
     }
+           
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -353,25 +356,25 @@ public class AddUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fnActionPerformed
 
-    private void RegPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegPassActionPerformed
-        String password = new String(RegPass.getPassword());
+    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
+        String password = new String(pass.getPassword());
 
         if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
             JOptionPane.showMessageDialog(this, "Invalid Password! Must be at least 8 characters long, contain one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
-            RegPass.setText("");
+            pass.setText("");
         }
 
-    }//GEN-LAST:event_RegPassActionPerformed
+    }//GEN-LAST:event_passActionPerformed
 
-    private void RegPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_RegPassKeyPressed
+    private void passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_RegPassKeyPressed
+    }//GEN-LAST:event_passKeyPressed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         if (jCheckBox1.isSelected()) {
-            RegPass.setEchoChar((char) 0);
+            pass.setEchoChar((char) 0);
         } else {
-            RegPass.setEchoChar('*');
+            pass.setEchoChar('*');
         }
 
     }//GEN-LAST:event_jCheckBox1ActionPerformed
@@ -446,9 +449,8 @@ public class AddUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Email;
-    private javax.swing.JPasswordField RegPass;
-    private javax.swing.JTextField fn;
+    public javax.swing.JTextField Email;
+    public javax.swing.JTextField fn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -465,9 +467,10 @@ public class AddUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField ln1;
-    private javax.swing.JComboBox<String> stat;
-    private javax.swing.JTextField uss1;
-    private javax.swing.JComboBox<String> utype;
+    public javax.swing.JTextField ln1;
+    public javax.swing.JPasswordField pass;
+    public javax.swing.JComboBox<String> stat;
+    public javax.swing.JTextField uss1;
+    public javax.swing.JComboBox<String> utype;
     // End of variables declaration//GEN-END:variables
 }

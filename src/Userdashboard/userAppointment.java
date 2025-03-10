@@ -5,7 +5,7 @@
  */
 package Userdashboard;
 
-import gui.proj.LogInForm;
+import admin.LogInForm;
 import javax.swing.JOptionPane;
 
 /**

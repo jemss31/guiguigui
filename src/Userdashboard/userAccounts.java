@@ -6,7 +6,7 @@
 package Userdashboard;
 
 import config.Session;
-import gui.proj.LogInForm;
+import admin.LogInForm;
 import javax.swing.JOptionPane;
 
 /**
@@ -48,9 +48,10 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        namo = new javax.swing.JLabel();
+        gg = new javax.swing.JLabel();
         nameew = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        namo1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -175,16 +176,17 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, 860, 280));
 
-        namo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        namo.setText("Email:");
-        jPanel1.add(namo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 100, 50));
+        gg.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jPanel1.add(gg, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 250, 50));
 
         nameew.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        nameew.setText("Name:");
-        jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 110, 60));
+        jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 110, 60));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/profile+user+icon-1320086081145096981-removebg-preview.png"))); // NOI18N
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 420, 230));
+
+        namo1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jPanel1.add(namo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 100, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -259,7 +261,8 @@ public class userAccounts extends javax.swing.JFrame {
         // Reset the flag when a valid session is found
         isMessageShown = false; 
         nameew.setText(sess.getU_fname());
-        namo.setText(sess.getU_lname());
+        namo1.setText(sess.getU_lname());
+        gg.setText(sess.getU_email());
     }
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
@@ -300,6 +303,7 @@ public class userAccounts extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel gg;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -318,6 +322,6 @@ public class userAccounts extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel nameew;
-    private javax.swing.JLabel namo;
+    private javax.swing.JLabel namo1;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,7 @@
 package admin;
 
 import config.dbConnector;
-import gui.proj.LogInForm;
+import admin.LogInForm;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,6 +33,8 @@ public class AdminAccountControl extends javax.swing.JFrame {
         initComponents();
         loadUsersData();
         usersTable = new JTable();
+
+        
     }
     
     private void loadUsersData() {
@@ -214,6 +216,11 @@ public class AdminAccountControl extends javax.swing.JFrame {
 
         jButton1.setText("UPDATE");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -272,75 +279,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel8KeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         int selectedRow = table1.getSelectedRow(); // Get selected row index
-
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a row to update.", "No Selection", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Retrieve current values safely
-    int userId = (int) table1.getValueAt(selectedRow, 0);
-    String fname = String.valueOf(table1.getValueAt(selectedRow, 1));
-    String lname = String.valueOf(table1.getValueAt(selectedRow, 2));
-    String email = String.valueOf(table1.getValueAt(selectedRow, 3));
-    String type = String.valueOf(table1.getValueAt(selectedRow, 4));
-    String username = String.valueOf(table1.getValueAt(selectedRow, 5));
-    String password = String.valueOf(table1.getValueAt(selectedRow, 6));
-    String status = String.valueOf(table1.getValueAt(selectedRow, 7));
-
-    // Create input dialogs with validation
-    fname = getUserInput("Enter First Name:", fname);
-    lname = getUserInput("Enter Last Name:", lname);
-    email = getUserInput("Enter Email:", email);
-    type = getUserInput("Enter User Type:", type);
-    username = getUserInput("Enter Username:", username);
-    password = getUserInput("Enter Password:", password);
-    status = getUserInput("Enter Status:", status);
-
-    // If user cancels or enters blank values, stop update
-    if (fname == null || lname == null || email == null || type == null || username == null || password == null || status == null) {
-        JOptionPane.showMessageDialog(this, "Update canceled.", "Canceled", JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
-
-    // Database update query
-    String sql = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, type = ?, u_username = ?, u_pass = ?, status = ? WHERE id = ?";
-
-    try (Connection connect = new dbConnector().getConnection();
-         PreparedStatement pst = connect.prepareStatement(sql)) {
-
-        pst.setString(1, fname);
-        pst.setString(2, lname);
-        pst.setString(3, email);
-        pst.setString(4, type);
-        pst.setString(5, username);
-        pst.setString(6, password);
-        pst.setString(7, status);
-        pst.setInt(8, userId);
-
-        int rowsAffected = pst.executeUpdate();
-
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "User updated successfully.");
-            loadUsersData(); // Refresh the table
-        } else {
-            JOptionPane.showMessageDialog(this, "Error: Update failed.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
-
-/**
- * Utility method to get user input safely.
- * Returns null if the user cancels, or returns trimmed input if valid.
- */
-private String getUserInput(String message, String currentValue) {
-    String input = JOptionPane.showInputDialog(this, message, currentValue);
-    return (input != null && !input.trim().isEmpty()) ? input.trim() : null;
-
+      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
@@ -409,6 +348,40 @@ private String getUserInput(String message, String currentValue) {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_dashMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+         
+        int rowIndex = table1.getSelectedRow();
+        if (rowIndex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select an item!");
+    } else {
+        try {
+            dbConnector dbc = new dbConnector();
+            TableModel tbl = table1.getModel();
+            
+            String userId = tbl.getValueAt(rowIndex, 0).toString(); // Get the user ID from the selected row
+            String query = "SELECT * FROM users WHERE id = ?"; // Use a prepared statement for safety
+            
+            PreparedStatement pst = dbc.getConnection().prepareStatement(query);
+            pst.setString(1, userId);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                AddUser crf = new AddUser(); // Open the update form
+                crf.fn.setText(rs.getString("u_fname"));
+                 crf.ln1.setText(rs.getString("u_lname")); // Fill the form with data
+                 crf.Email.setText(rs.getString("u_email"));
+                 crf.uss1.setText(rs.getString("u_username"));
+                 crf.pass.setEnabled(false); // Disables the password field
+
+                crf.setVisible(true);
+                this.dispose(); // Close the current form
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments

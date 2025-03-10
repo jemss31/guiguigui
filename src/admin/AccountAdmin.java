@@ -6,7 +6,7 @@
 package admin;
 
 import config.Session;
-import gui.proj.LogInForm;
+import admin.LogInForm;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -153,7 +153,7 @@ public class AccountAdmin extends javax.swing.JFrame {
                 emmMouseClicked(evt);
             }
         });
-        jPanel1.add(emm, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 190, 40));
+        jPanel1.add(emm, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 280, 40));
 
         gwapo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         gwapo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -223,7 +223,7 @@ public class AccountAdmin extends javax.swing.JFrame {
         this.dispose(); // Close the current form
     } else {
         // Populate UI components with session data
-        gwapo.setText(""+ sess.getU_username());
+        gwapo.setText(""+ sess.getU_fname());
         pepe1.setText("" + sess.getU_lname());
         emm.setText("" + sess.getU_email());
     }

@@ -31,25 +31,29 @@ public Connection getConnection() {
     }
 
     // Insert user data into the database
-    public int insertUser(String fname, String lname, String email, String userType, String username, String password) {
-        int result = 0; 
-        String sql = "INSERT INTO users (u_fname, u_lname, u_email, type, u_username, u_pass, status) VALUES (?, ?, ?, ?, ?, ?)";
+    public int insertUser(String fname, String lname, String email, String type, String username, String password) {
+    int result = 0;
+    String sql = "INSERT INTO users (u_fname, u_lname, u_email, type, u_username, u_pass, status) VALUES (?, ?, ?, ?, ?, ?, 'Pending')"; // Default status = 'Pending'
 
-        try (PreparedStatement pst = connect.prepareStatement(sql)) {
-            pst.setString(1, fname);
-            pst.setString(2, lname);
-            pst.setString(3, email);
-            pst.setString(4, userType);
-            pst.setString(5, username);
-            pst.setString(6, password); // Ensure to hash the password before storing
+    try (Connection connect = getConnection();
+         PreparedStatement pst = connect.prepareStatement(sql)) {
 
-            result = pst.executeUpdate();
-            System.out.println("User inserted successfully!");
-        } catch (SQLException ex) {
-            System.err.println("Insert Error: " + ex.getMessage());
-        }
-        return result;
+        pst.setString(1, fname);
+        pst.setString(2, lname);
+        pst.setString(3, email);
+        pst.setString(4, type);
+        pst.setString(5, username);
+        pst.setString(6, password);
+
+        System.out.println("Executing Insert: " + pst.toString()); // Debugging statement
+
+        result = pst.executeUpdate();
+
+    } catch (SQLException ex) {
+        System.out.println("Insert Error: " + ex.getMessage());
     }
+    return result;
+}
 
     // Close the database connection
     public void closeConnection() {

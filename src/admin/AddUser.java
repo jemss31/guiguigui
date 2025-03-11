@@ -10,6 +10,9 @@ import admin.LogInForm;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -254,80 +257,96 @@ public class AddUser extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String fname = fn.getText().trim();
-        String lname = ln1.getText().trim();
-        String email = Email.getText().trim();
-        String username = uss1.getText().trim();
-        String password = new String(pass.getPassword()).trim();
-        String type = utype.getSelectedItem().toString();
+    String lname = ln1.getText().trim();
+    String email = Email.getText().trim();
+    String username = uss1.getText().trim();
+    String password = new String(pass.getPassword()).trim();
+    String type = utype.getSelectedItem().toString();
 
-        // Email regex for validation
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    // Email regex pattern
+    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
-        // Validate inputs
-        if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "All fields are required. Please fill out the form.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // 🚀 **VALIDATIONS**
+    if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (!fname.matches("[a-zA-Z ]+") || !lname.matches("[a-zA-Z ]+")) {
-            JOptionPane.showMessageDialog(this, "Only letters are allowed for First and Last Name.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!fname.matches("[a-zA-Z ]+") || !lname.matches("[a-zA-Z ]+")) {
+        JOptionPane.showMessageDialog(this, "First and Last Name can only contain letters.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (!email.matches(emailRegex)) {
-            JOptionPane.showMessageDialog(this, "Invalid Email! Please enter a valid email address.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!email.matches(emailRegex)) {
+        JOptionPane.showMessageDialog(this, "Invalid email format!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (!username.matches("[a-zA-Z0-9_]{5,}")) {
-            JOptionPane.showMessageDialog(this, "Invalid Username! Must be at least 5 characters and contain only letters, numbers, and underscores.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!username.matches("[a-zA-Z0-9_]{5,}")) {
+        JOptionPane.showMessageDialog(this, "Username must be at least 5 characters long and contain only letters, numbers, and underscores.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};'\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
-            JOptionPane.showMessageDialog(this, "Invalid Password! Must be at least 8 characters long, contain one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        // Initialize database connection
-        dbConnector db = new dbConnector();
+    if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};'\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
+        JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long, include an uppercase letter, a special character, and a number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (db == null) {
-            JOptionPane.showMessageDialog(this, "Database connection failed.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    // ✅ **Database Connection**
+    dbConnector db = new dbConnector();
+    Connection conn = db.getConnection();
+    
+    if (conn == null) {
+        JOptionPane.showMessageDialog(this, "Database connection failed.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
+    try {
         // **Check if email already exists**
         if (db.isEmailExists(email)) {
-            JOptionPane.showMessageDialog(this, "Email already in use! Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Email is already in use. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Hash the password before storing
+        // 🔐 **Hash Password**
         String hashedPassword = hashPassword(password);
 
-        // Insert the user into the database
-        int inserted = db.insertUser(fname, lname, email, type, username, hashedPassword);
+        // **Insert User**
+        String insertQuery = "INSERT INTO users (u_fname, u_lname, u_email, u_username, u_pass, type, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pst = conn.prepareStatement(insertQuery)) {
+            pst.setString(1, fname);
+            pst.setString(2, lname);
+            pst.setString(3, email);
+            pst.setString(4, username);
+            pst.setString(5, hashedPassword);
+            pst.setString(6, type);
+            pst.setString(7, "Pending");  // Default status
 
-        if (inserted > 0) {
-            JOptionPane.showMessageDialog(this, "Registration Successful! Your account is pending approval.", "Success", JOptionPane.INFORMATION_MESSAGE);
-            AdminAccountControl login = new AdminAccountControl();
-            login.setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Registration failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            int inserted = pst.executeUpdate();
+            if (inserted > 0) {
+                JOptionPane.showMessageDialog(this, "Registration successful! Your account is pending approval.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                AdminAccountControl login = new AdminAccountControl();
+                login.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Registration failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    } finally {
+        // **Ensure the connection is closed**
+        db.closeConnection();
+    }
+}
 
-        db.closeConnection(); // Close the database connection
-
-        }
-    
-
-        private String hashPassword(String password) {
-           try {
-        byte[] salt = "RandomSaltValue".getBytes(StandardCharsets.UTF_8); // Ideally, use a unique salt per user
+// **🔐 Password Hashing Method**
+private String hashPassword(String password) {
+    try {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(salt);
         byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
+
         StringBuilder hexString = new StringBuilder();
         for (byte b : hash) {
             hexString.append(String.format("%02x", b));
@@ -337,7 +356,7 @@ public class AddUser extends javax.swing.JFrame {
         e.printStackTrace();
         return null;
     }
-           
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

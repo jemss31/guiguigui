@@ -9,6 +9,7 @@ import config.dbConnector;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +31,7 @@ public class edituseradmin extends javax.swing.JFrame {
      * Creates new form edituseradmin
      */
     public edituseradmin() {
-        initComponents();
+        initComponents();   
         pass.setEnabled(false);
         
     }
@@ -261,54 +262,83 @@ public class edituseradmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     
-    String newFname = fn.getText();
-    String newLname = ln1.getText();
-    String newEmail = Email.getText();
-    String newUsername = uss1.getText();
-    String newUserType = utype.getSelectedItem().toString(); // Get user type from combo box
-    String newUserStatus = stat.getSelectedItem().toString(); // Get user status from combo box
+    String newFname = fn.getText().trim();
+    String newLname = ln1.getText().trim();
+    String newEmail = Email.getText().trim();
+    String newUsername = uss1.getText().trim();
+    String newUserType = utype.getSelectedItem().toString();
+    String newUserStatus = stat.getSelectedItem().toString();
 
+    // Email regex pattern
+    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+    // Validate inputs
     if (newFname.isEmpty() || newLname.isEmpty() || newEmail.isEmpty() || newUsername.isEmpty() || newUserType.isEmpty() || newUserStatus.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    try {
-        dbConnector dbc = new dbConnector();
+    if (!newFname.matches("[a-zA-Z ]+") || !newLname.matches("[a-zA-Z ]+")) {
+        JOptionPane.showMessageDialog(this, "Only letters are allowed for First and Last Name.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Check if the username already exists (excluding current user)
-        String checkQuery = "SELECT COUNT(*) FROM users WHERE u_username = ? AND id != ?";
-        PreparedStatement checkPst = dbc.getConnection().prepareStatement(checkQuery);
-        checkPst.setString(1, newUsername);
-        checkPst.setString(2, this.userId); 
-        ResultSet rs = checkPst.executeQuery();
+    if (!newEmail.matches(emailRegex)) {
+        JOptionPane.showMessageDialog(this, "Invalid Email! Please enter a valid email address.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (rs.next() && rs.getInt(1) > 0) {
-            JOptionPane.showMessageDialog(null, "Username already exists! Please choose a different username.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+    if (!newUsername.matches("[a-zA-Z0-9_]{5,}")) {
+        JOptionPane.showMessageDialog(this, "Invalid Username! Must be at least 5 characters and contain only letters, numbers, and underscores.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    dbConnector dbc = new dbConnector();
+    
+    // Ensure userId is valid before running queries
+    if (this.userId == null || this.userId.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Error: User ID is missing.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String checkQuery = "SELECT COUNT(*) FROM users WHERE (u_username = ? OR u_email = ?) AND id != ?";
+
+    try (Connection conn = dbc.getConnection();
+         PreparedStatement pst = conn.prepareStatement(checkQuery)) {
+
+        pst.setString(1, newUsername);
+        pst.setString(2, newEmail);
+        pst.setString(3, this.userId);
+
+        try (ResultSet rs = pst.executeQuery()) {
+            if (rs.next() && rs.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(this, "Username or Email already exists! Please use different credentials.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
+        
+        // Proceed with update
+        String updateQuery = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, type = ?, status = ? WHERE id = ?";
+        try (PreparedStatement updatePst = conn.prepareStatement(updateQuery)) {
+            updatePst.setString(1, newFname);
+            updatePst.setString(2, newLname);
+            updatePst.setString(3, newEmail);
+            updatePst.setString(4, newUsername);
+            updatePst.setString(5, newUserType);
+            updatePst.setString(6, newUserStatus);
+            updatePst.setString(7, this.userId);
 
-        // Proceed with update (including user type and status)
-        String query = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, u_type = ?, u_status = ? WHERE id = ?";
-        PreparedStatement pst = dbc.getConnection().prepareStatement(query);
-        pst.setString(1, newFname);
-        pst.setString(2, newLname);
-        pst.setString(3, newEmail);
-        pst.setString(4, newUsername);
-        pst.setString(5, newUserType);
-        pst.setString(6, newUserStatus);
-        pst.setString(7, this.userId); // ✅ Now includes user ID
-
-        int updated = pst.executeUpdate();
-        if (updated > 0) {
-            JOptionPane.showMessageDialog(null, "User updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose(); 
-        } else {
-            JOptionPane.showMessageDialog(null, "Update failed!", "Error", JOptionPane.ERROR_MESSAGE);
+            int updated = updatePst.executeUpdate();
+            if (updated > 0) {
+                JOptionPane.showMessageDialog(this, "User updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                new AdminAccountControl().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     } catch (SQLException ex) {
-        System.out.println("Update Error: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -290,7 +290,7 @@ public class RegisForm extends javax.swing.JFrame {
     // Hash the password before storing
     String hashedPassword = hashPassword(password);
 
-    // Insert the user into the database
+    // Insert the user into the database    
     int inserted = db.insertUser(fname, lname, email, type, username, hashedPassword);
 
     if (inserted > 0) {

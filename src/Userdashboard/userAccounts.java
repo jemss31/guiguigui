@@ -174,19 +174,19 @@ public class userAccounts extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, 860, 280));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 420, 860, 280));
 
         gg.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jPanel1.add(gg, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 250, 50));
 
         nameew.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 110, 60));
+        jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 220, 60));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/profile+user+icon-1320086081145096981-removebg-preview.png"))); // NOI18N
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 420, 230));
 
         namo1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel1.add(namo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 100, 50));
+        jPanel1.add(namo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 170, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

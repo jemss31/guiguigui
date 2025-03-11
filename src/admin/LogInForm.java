@@ -305,6 +305,7 @@ try (Connection connect = new dbConnector().getConnection();
         sess.setU_username(rs.getString("u_username"));
         sess.setType(type);   // FIXED: Store actual type value
         sess.setStatus(status); // FIXED: Store actual status value
+        sess.setU_pass(rs.getString("u_pass"));
 
         // ✅ Account status check
         if (status.equalsIgnoreCase("Pending")) {

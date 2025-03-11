@@ -388,6 +388,9 @@ if (rowIndex < 0) {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+   loadUsersData(); // Refresh the JTable with the latest data from the database
+    JOptionPane.showMessageDialog(this, "Data refreshed successfully!", "Refresh", JOptionPane.INFORMATION_MESSAGE);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 

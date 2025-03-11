@@ -13,6 +13,8 @@ public class Session {
     private String u_username;
     private String type;
     private String status;
+    private String u_pass;
+
 
     // Private constructor to prevent instantiation
     private Session() {
@@ -27,6 +29,8 @@ public class Session {
         }
         return instance;
     }
+
+   
 
     // Check if the session instance is empty
     public static boolean isInstanceEmpty() {
@@ -88,6 +92,13 @@ public class Session {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+     public String getU_pass() {
+        return u_pass;
+    }
+
+    public void setU_pass(String u_pass) {
+        this.u_pass = u_pass;
     }
 
     // Reset session attributes to default values

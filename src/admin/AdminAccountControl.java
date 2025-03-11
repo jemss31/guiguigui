@@ -212,7 +212,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 430, 530, 260));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 430, 530, 260));
 
         jButton1.setText("UPDATE");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
@@ -279,53 +279,86 @@ public class AdminAccountControl extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel8KeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
+   int rowIndex = table1.getSelectedRow();
+if (rowIndex < 0) {
+    JOptionPane.showMessageDialog(null, "Please select an item!");
+} else {
+    try {
+        dbConnector dbc = new dbConnector();
+        TableModel tbl = table1.getModel();
+
+        String userId = tbl.getValueAt(rowIndex, 0).toString(); // Get the user ID
+        String query = "SELECT * FROM users WHERE id = ?";
+
+        PreparedStatement pst = dbc.getConnection().prepareStatement(query);
+        pst.setString(1, userId);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            edituseradmin crf = new edituseradmin();
+            crf.setUserId(userId); // Pass the user ID
+            crf.fn.setText(rs.getString("u_fname"));
+            crf.ln1.setText(rs.getString("u_lname"));
+            crf.Email.setText(rs.getString("u_email"));
+            crf.uss1.setText(rs.getString("u_username"));
+            crf.pass.setEnabled(false); 
+
+            crf.setVisible(true);
+            this.dispose();
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+
+    }//GEN-LAST:event_jButton1MouseClicked
+
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-     int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
-    
-    if (confirm == JOptionPane.YES_OPTION) {
-        JOptionPane.showMessageDialog(this, "You have successfully logged out!", "Logout", JOptionPane.INFORMATION_MESSAGE);
-        
-        LogInForm li = new LogInForm();
-        li.setVisible(true);
-        
-        this.dispose();
-    }
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "You have successfully logged out!", "Logout", JOptionPane.INFORMATION_MESSAGE);
+
+            LogInForm li = new LogInForm();
+            li.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int selectedRow = table1.getSelectedRow(); 
+        int selectedRow = table1.getSelectedRow();
 
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a row to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    int userId = (int) table1.getValueAt(selectedRow, 0);
-
-    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-    if (confirm == JOptionPane.YES_OPTION) {
-        String sql = "DELETE FROM users WHERE id = ?";
-
-        try (Connection connect = new dbConnector().getConnection();
-             PreparedStatement pst = connect.prepareStatement(sql)) {
-
-            pst.setInt(1, userId);
-            int rowsAffected = pst.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "User deleted successfully.");
-                loadUsersData(); 
-            } else {
-                JOptionPane.showMessageDialog(this, "Error: User not found.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    }
+
+        int userId = (int) table1.getValueAt(selectedRow, 0);
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            String sql = "DELETE FROM users WHERE id = ?";
+
+            try (Connection connect = new dbConnector().getConnection();
+                PreparedStatement pst = connect.prepareStatement(sql)) {
+
+                pst.setInt(1, userId);
+                int rowsAffected = pst.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "User deleted successfully.");
+                    loadUsersData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error: User not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -334,7 +367,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
         AddUser as = new AddUser();
         as.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -348,40 +381,6 @@ public class AdminAccountControl extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_dashMouseClicked
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-         
-        int rowIndex = table1.getSelectedRow();
-        if (rowIndex < 0) {
-        JOptionPane.showMessageDialog(null, "Please select an item!");
-    } else {
-        try {
-            dbConnector dbc = new dbConnector();
-            TableModel tbl = table1.getModel();
-            
-            String userId = tbl.getValueAt(rowIndex, 0).toString(); // Get the user ID from the selected row
-            String query = "SELECT * FROM users WHERE id = ?"; // Use a prepared statement for safety
-            
-            PreparedStatement pst = dbc.getConnection().prepareStatement(query);
-            pst.setString(1, userId);
-            ResultSet rs = pst.executeQuery();
-
-            if (rs.next()) {
-                AddUser crf = new AddUser(); // Open the update form
-                crf.fn.setText(rs.getString("u_fname"));
-                 crf.ln1.setText(rs.getString("u_lname")); // Fill the form with data
-                 crf.Email.setText(rs.getString("u_email"));
-                 crf.uss1.setText(rs.getString("u_username"));
-                 crf.pass.setEnabled(false); // Disables the password field
-
-                crf.setVisible(true);
-                this.dispose(); // Close the current form
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
-    }
-    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -417,6 +416,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel dash;

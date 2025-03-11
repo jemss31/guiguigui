@@ -33,7 +33,7 @@ public Connection getConnection() {
     // Insert user data into the database
     public int insertUser(String fname, String lname, String email, String userType, String username, String password) {
         int result = 0; 
-        String sql = "INSERT INTO users (u_fname, u_lname, u_email, type, u_username, u_pass) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (u_fname, u_lname, u_email, type, u_username, u_pass, status) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pst = connect.prepareStatement(sql)) {
             pst.setString(1, fname);

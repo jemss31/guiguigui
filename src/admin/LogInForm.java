@@ -268,7 +268,7 @@ public class LogInForm extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String usernameInput = username.getText().trim();
-    String passwordInput = new String(password.getPassword()).trim();
+        String passwordInput = new String(password.getPassword()).trim();
 
     
     if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
@@ -295,7 +295,7 @@ public class LogInForm extends javax.swing.JFrame {
             String status = rs.getString("status");
             String type = rs.getString("type"); 
             
-             Session sess = Session.getInstance();
+            Session sess = Session.getInstance();
             sess.setId(rs.getInt("id")); 
             sess.setU_fname(rs.getString("u_fname"));
             sess.setU_lname(rs.getString("u_lname"));

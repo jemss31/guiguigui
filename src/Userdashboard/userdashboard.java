@@ -6,6 +6,7 @@
 package Userdashboard;
 
 import admin.LogInForm;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -93,6 +94,12 @@ public class userdashboard extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lgMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lgMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lgMouseExited(evt);
+            }
         });
         jPanel2.add(lg, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 500, 120, 40));
 
@@ -102,6 +109,12 @@ public class userdashboard extends javax.swing.JFrame {
         acc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 accMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                accMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                accMouseExited(evt);
             }
         });
         jPanel2.add(acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, 100, 40));
@@ -113,6 +126,12 @@ public class userdashboard extends javax.swing.JFrame {
         ya.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 yaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                yaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                yaMouseExited(evt);
             }
         });
         jPanel2.add(ya, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 160, 40));
@@ -133,8 +152,8 @@ public class userdashboard extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 860, 280));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/taetaet.gif"))); // NOI18N
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 350, 320, 340));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -184,6 +203,28 @@ public class userdashboard extends javax.swing.JFrame {
         this.dispose();
     }
     }//GEN-LAST:event_lgMouseClicked
+
+    private void yaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yaMouseEntered
+      ya.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_yaMouseEntered
+
+    private void yaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yaMouseExited
+    ya.setForeground(Color.BLACK);    }//GEN-LAST:event_yaMouseExited
+
+    private void accMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accMouseEntered
+    acc.setForeground(new java.awt.Color(114,240,194));    }//GEN-LAST:event_accMouseEntered
+
+    private void accMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accMouseExited
+    acc.setForeground(Color.BLACK);    }//GEN-LAST:event_accMouseExited
+
+    private void lgMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgMouseEntered
+      lg.setForeground(new java.awt.Color(114,240,194));
+
+    }//GEN-LAST:event_lgMouseEntered
+
+    private void lgMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lgMouseExited
+       lg.setForeground(Color.BLACK);
+    }//GEN-LAST:event_lgMouseExited
 
     /**
      * @param args the command line arguments

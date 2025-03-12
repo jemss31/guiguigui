@@ -99,6 +99,14 @@ public class AddUser extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 220, 60));
 
         jButton1.setText("Cancel");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -110,6 +118,12 @@ public class AddUser extends javax.swing.JFrame {
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
             }
         });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -195,13 +209,13 @@ public class AddUser extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-320, -20, 950, 370));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/asdasdasd.gif"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/animated-dog-image-0023.gif"))); // NOI18N
         jLabel8.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 430, 530, 260));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 550, 500, 200));
 
         Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -436,10 +450,6 @@ private String hashPassword(String password) {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel10KeyPressed
 
-    private void jLabel8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel8KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel8KeyPressed
-
     private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_EmailActionPerformed
@@ -461,6 +471,30 @@ private String hashPassword(String password) {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_contactnumActionPerformed
+
+    private void jLabel8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel8KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel8KeyPressed
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+         jButton2.setBackground(new java.awt.Color(114,240,194));
+
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
+         jButton2.setBackground(new java.awt.Color(240, 240, 240));
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseExited
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+       jButton1.setBackground(new java.awt.Color(114,240,194));
+
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+                 jButton1.setBackground(new java.awt.Color(240, 240, 240));
+
+    }//GEN-LAST:event_jButton1MouseExited
 
     /**
      * @param args the command line arguments

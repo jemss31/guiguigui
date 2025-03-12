@@ -6,6 +6,7 @@
 package Userdashboard;
 
 import admin.LogInForm;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -93,6 +94,12 @@ public class userAppointment extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel4MouseExited(evt);
+            }
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 500, 120, 40));
 
@@ -102,6 +109,12 @@ public class userAppointment extends javax.swing.JFrame {
         acc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 accMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                accMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                accMouseExited(evt);
             }
         });
         jPanel2.add(acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, 100, 40));
@@ -118,6 +131,12 @@ public class userAppointment extends javax.swing.JFrame {
         jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel12MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel12MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel12MouseExited(evt);
             }
         });
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 100, 40));
@@ -183,6 +202,31 @@ userdashboard ud = new userdashboard();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jLabel12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseEntered
+     jLabel12.setForeground(new java.awt.Color(114,240,194));
+
+    }//GEN-LAST:event_jLabel12MouseEntered
+
+    private void jLabel12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseExited
+        jLabel12.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel12MouseExited
+
+    private void accMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accMouseEntered
+      acc.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_accMouseEntered
+
+    private void accMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accMouseExited
+         acc.setForeground(Color.BLACK);
+    }//GEN-LAST:event_accMouseExited
+
+    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
+       jLabel4.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel4MouseEntered
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+       jLabel4.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel4MouseExited
 
     /**
      * @param args the command line arguments

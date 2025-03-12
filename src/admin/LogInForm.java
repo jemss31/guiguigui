@@ -47,53 +47,48 @@ public class LogInForm extends javax.swing.JFrame {
             String status = resultSet.getString("status");
             String type = resultSet.getString("type");
 
-            // Hash the input password for comparison
             String hashedPasswordInput = hashPassword(password);
             if (hashedPasswordInput == null) {
-                System.out.println("Error hashing password!"); // Log the error
+                System.out.println("Error hashing password!"); 
                 return false;
             }
 
-            // Verify password
             if (!hashedPasswordInput.equals(storedHashedPassword)) {
-                System.out.println("Invalid password."); // Log the failure
+                System.out.println("Invalid password."); 
                 return false;
             }
 
-            // Successful login - check account status
             if ("Pending".equalsIgnoreCase(status)) {
-                System.out.println("Your account is pending approval."); // Log the status
+                System.out.println("Your account is pending approval.");
                 return false;
             }
 
-            // Successful login message
             System.out.println("Welcome " + username + "! You are logged in as " + type);
-            return true; // Login successful
+            return true; 
         } else {
-            System.out.println("Invalid username or password."); // Log the failure
-            return false; // Username not found
+            System.out.println("Invalid username or password."); 
+            return false; 
         }
     } catch (SQLException ex) {
-        System.out.println("Database Error: " + ex.getMessage()); // Log the error
+        System.out.println("Database Error: " + ex.getMessage()); 
         return false;
     }
    }
-    private static String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                hexString.append(String.format("%02x", b));
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
+   public static String hashPassword(String password) {  
+    try {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            hexString.append(String.format("%02x", b));
         }
+        return hexString.toString();
+    } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+        return null;
     }
+}
 
-    // ✅ User Registration (Fixed Table Name)
     public static Boolean insertUser(String fname, String lname, String email, String type, String username, String password) {
         dbConnector connector = new dbConnector();
         String query = "INSERT INTO tbl_pets (u_fname, u_lname, u_email, type, u_username, u_pass, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -104,8 +99,8 @@ public class LogInForm extends javax.swing.JFrame {
             pst.setString(3, email);
             pst.setString(4, type);
             pst.setString(5, username);
-            pst.setString(6, hashPassword(password)); // ✅ Hash before storing
-            pst.setString(7, "Pending"); // Default status is "Pending"
+            pst.setString(6, hashPassword(password)); 
+            pst.setString(7, "Pending");
             
             int rowsInserted = pst.executeUpdate();
             return rowsInserted > 0;
@@ -275,7 +270,7 @@ if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
     return;
 }
 
-String hashedPasswordInput = hashPassword(passwordInput);  // Hash input password
+String hashedPasswordInput = hashPassword(passwordInput); 
 
 String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, status, u_pass FROM users WHERE u_username = ?";
 
@@ -290,34 +285,24 @@ try (Connection connect = new dbConnector().getConnection();
         String status = rs.getString("status");
         String type = rs.getString("type");
 
-        // Debugging: Print retrieved values
-        System.out.println("Entered Username: " + usernameInput);
-        System.out.println("DB Username: " + rs.getString("u_username"));
-        System.out.println("DB Status: " + status);
-        System.out.println("DB Type: " + type);
-
-        // ✅ FIX: Set session values correctly
         Session sess = Session.getInstance();
         sess.setId(rs.getInt("id")); 
         sess.setU_fname(rs.getString("u_fname"));
         sess.setU_lname(rs.getString("u_lname"));
         sess.setU_email(rs.getString("u_email"));
         sess.setU_username(rs.getString("u_username"));
-        sess.setType(type);   // FIXED: Store actual type value
-        sess.setStatus(status); // FIXED: Store actual status value
+        sess.setType(type);  
+        sess.setStatus(status); 
         sess.setU_pass(rs.getString("u_pass"));
 
-        // ✅ Account status check
         if (status.equalsIgnoreCase("Pending")) {
             JOptionPane.showMessageDialog(this, "Your account is pending approval. Please wait for admin approval.", "Access Denied", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // ✅ FIX: Check if the hashed password matches
         if (hashedPasswordInput.equals(dbPassword)) {
             JOptionPane.showMessageDialog(this, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-            // Redirect based on user type
             if (type.equalsIgnoreCase("admin")) {
                 new adminDashboard().setVisible(true);
             } else if (type.equalsIgnoreCase("customer")) {
@@ -326,7 +311,7 @@ try (Connection connect = new dbConnector().getConnection();
                 JOptionPane.showMessageDialog(this, "Invalid User Type!", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            this.dispose();  // Close login window
+            this.dispose(); 
         } else {
             JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Error", JOptionPane.ERROR_MESSAGE);
         }

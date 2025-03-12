@@ -22,10 +22,10 @@ import javax.swing.table.TableModel;
  */
 public class edituseradmin extends javax.swing.JFrame {
     
-  private String userId; // Declare userId at the class level
+  private String userId; 
 
     public void setUserId(String id) {
-        this.userId = id; // Store the user ID for later use
+        this.userId = id;
     }
     /**
      * Creates new form edituseradmin
@@ -269,10 +269,8 @@ public class edituseradmin extends javax.swing.JFrame {
     String newUserType = utype.getSelectedItem().toString();
     String newUserStatus = stat.getSelectedItem().toString();
 
-    // Email regex pattern
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
-    // Validate inputs
     if (newFname.isEmpty() || newLname.isEmpty() || newEmail.isEmpty() || newUsername.isEmpty() || newUserType.isEmpty() || newUserStatus.isEmpty()) {
         JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -295,7 +293,6 @@ public class edituseradmin extends javax.swing.JFrame {
 
     dbConnector dbc = new dbConnector();
     
-    // Ensure userId is valid before running queries
     if (this.userId == null || this.userId.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Error: User ID is missing.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -316,9 +313,7 @@ public class edituseradmin extends javax.swing.JFrame {
                 return;
             }
         }
-        
-        // Proceed with update
-        String updateQuery = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, type = ?, status = ? WHERE id = ?";
+                String updateQuery = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, type = ?, status = ? WHERE id = ?";
         try (PreparedStatement updatePst = conn.prepareStatement(updateQuery)) {
             updatePst.setString(1, newFname);
             updatePst.setString(2, newLname);

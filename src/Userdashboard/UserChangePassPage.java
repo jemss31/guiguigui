@@ -5,23 +5,80 @@
  */
 package Userdashboard;
 
-import config.Session;
 import admin.LogInForm;
+import static admin.LogInForm.hashPassword;
+import config.Session;
+import config.dbConnector;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author admin
  */
-public class userAccounts extends javax.swing.JFrame {
-     private boolean isMessageShown = false;
+public class UserChangePassPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form userAccounts
+     * Creates new form UserChangePassPage
      */
-    public userAccounts() {
+    public UserChangePassPage() {
         initComponents();
     }
+boolean verifyCurrentPassword(String currentPass) {
+    boolean isValid = false;
+
+    try {
+        dbConnector db = new dbConnector();
+        Connection conn = db.getConnection();
+
+        String query = "SELECT u_pass FROM users WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, Session.getInstance().getId());
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            String dbPass = rs.getString("u_pass");
+            String hashedInputPass = hashPassword(currentPass); 
+
+            isValid = hashedInputPass.equals(dbPass);
+        }
+
+        conn.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return isValid;
+}
+boolean updatePassword(String newPass) {
+    boolean isUpdated = false;
+
+    try {
+        dbConnector db = new dbConnector();
+        Connection conn = db.getConnection();
+
+        String hashedPassword = hashPassword(newPass);
+
+        String query = "UPDATE users SET u_pass = ? WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, hashedPassword); 
+        stmt.setInt(2, Session.getInstance().getId()); 
+
+        int rows = stmt.executeUpdate();
+        if (rows > 0) {
+            isUpdated = true;
+        }
+
+        conn.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return isUpdated;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,8 +89,6 @@ public class userAccounts extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -50,38 +105,19 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         pass = new javax.swing.JLabel();
         nameew = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         namo1 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         gg1 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         user1 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jPasswordField2 = new javax.swing.JPasswordField();
+        jPasswordField3 = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -97,7 +133,7 @@ public class userAccounts extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(114, 240, 194));
 
         jLabel2.setFont(new java.awt.Font("Cooper Black", 0, 36)); // NOI18N
-        jLabel2.setText("Account Center");
+        jLabel2.setText("Change Password");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -106,7 +142,7 @@ public class userAccounts extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(344, 344, 344)
                 .addComponent(jLabel2)
-                .addContainerGap(448, Short.MAX_VALUE))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +218,7 @@ public class userAccounts extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 860, 280));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 420, 860, 280));
 
         pass.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 230, 40));
@@ -190,47 +226,64 @@ public class userAccounts extends javax.swing.JFrame {
         nameew.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 220, 60));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/profile+user+icon-1320086081145096981-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 420, 230));
-
         namo1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(namo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 170, 50));
 
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel9.setText("Password:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 480, 120, 40));
-
         jLabel13.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel13.setText("First Name:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 120, 40));
-
-        jLabel14.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel14.setText("Last Name:");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 120, 40));
-
-        jLabel15.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel15.setText("Email:");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 120, 40));
+        jLabel13.setText("Confirm Password:");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, 170, 50));
 
         gg1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(gg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 400, 230, 40));
 
-        jLabel16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel16.setText("Username:");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 120, 40));
-
         user1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 230, 40));
 
-        jLabel7.setFont(new java.awt.Font("Book Antiqua", 3, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel7.setText("Change password");
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel7MouseClicked(evt);
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel17.setText("Current Password:");
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 170, 50));
+
+        jLabel18.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel18.setText("New Password:");
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 170, 50));
+        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 330, 240, 40));
+        jPanel1.add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, 240, 40));
+
+        jPasswordField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 520, 230, 30));
+        jPanel1.add(jPasswordField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 270, 240, 40));
+
+        jButton1.setText("CHANGE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, -1, -1));
+
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 220, 20, 20));
+
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 280, 20, 20));
+
+        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 340, 20, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -252,26 +305,18 @@ public class userAccounts extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-           int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
-    
-    if (confirm == JOptionPane.YES_OPTION) {
-        JOptionPane.showMessageDialog(this, "You have successfully logged out!", "Logout", JOptionPane.INFORMATION_MESSAGE);
-        
-        LogInForm li = new LogInForm();
-        li.setVisible(true);
-        
-        this.dispose();
-    }
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "You have successfully logged out!", "Logout", JOptionPane.INFORMATION_MESSAGE);
+
+            LogInForm li = new LogInForm();
+            li.setVisible(true);
+
+            this.dispose();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        userdashboard ud = new userdashboard();
-        ud.setVisible(true);
-        this.dispose();
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
 
@@ -285,34 +330,96 @@ public class userAccounts extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel11MouseClicked
 
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-      Session sess = Session.getInstance();        
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        userdashboard ud = new userdashboard();
+        ud.setVisible(true);
+        this.dispose();
 
-    if (sess.getId() == 0) {
-        if (!isMessageShown) {
-            isMessageShown = true; 
-            JOptionPane.showMessageDialog(null, "No Account, Login First!");
-            LogInForm lf = new LogInForm();
-            lf.setVisible(true);
-            this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+          String currentPass = String.valueOf(jPasswordField2.getPassword());
+          String newPass = String.valueOf(jPasswordField3.getPassword());
+          String reenterPass = String.valueOf(jPasswordField1.getPassword());
+
+    if (currentPass.isEmpty() || newPass.isEmpty() || reenterPass.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (!newPass.equals(reenterPass)) {
+        JOptionPane.showMessageDialog(this, "New passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    
+    if (verifyCurrentPassword(currentPass)) {
+        
+        if (updatePassword(newPass)) {
+            JOptionPane.showMessageDialog(this, "Password changed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            userAccounts ua = new userAccounts();
+            ua.setVisible(true);
+            this.dispose(); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Error updating password!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     } else {
-        isMessageShown = false; 
-        nameew.setText(sess.getU_fname());
-        namo1.setText(sess.getU_lname());
-        gg1.setText(sess.getU_email());
-        user1.setText(sess.getU_username());
-        pass.setText(sess.getU_pass());        
+        JOptionPane.showMessageDialog(this, "Incorrect current password!", "Error", JOptionPane.ERROR_MESSAGE);
+    }       
 
-    }
         // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPasswordField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField3ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+         Session sess = Session.getInstance();
+       
+       if(sess.getId()== 0){
+           JOptionPane.showMessageDialog(null,"No account found , Log in First!");
+           LogInForm lf = new LogInForm();
+           lf.setVisible(true);
+           this.dispose();
+       
+       }
+       
+       
+               // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
 
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        UserChangePassPage ucpf = new UserChangePassPage();
-        ucpf.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel7MouseClicked
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jPasswordField2 == null) {
+            System.out.println("acc_ps_user is null");
+            return;
+        }
+
+        if (jCheckBox1.isSelected()) {
+            jPasswordField2.setEchoChar((char) 0);
+        } else {
+            jPasswordField2.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+    if (jCheckBox2.isSelected()) { 
+        jPasswordField3.setEchoChar((char) 0);
+    } else {
+        jPasswordField3.setEchoChar('*');
+    }     // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+   if (jCheckBox3.isSelected()) { 
+        jPasswordField1.setEchoChar((char) 0);
+    } else {
+        jPasswordField1.setEchoChar('*');
+    }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,48 +438,49 @@ public class userAccounts extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(userAccounts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserChangePassPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(userAccounts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserChangePassPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(userAccounts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserChangePassPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(userAccounts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserChangePassPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new userAccounts().setVisible(true);
+                new UserChangePassPage().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel gg1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JPasswordField jPasswordField3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel nameew;
     private javax.swing.JLabel namo1;

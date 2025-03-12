@@ -211,7 +211,6 @@ public class AccountAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_emmMouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        //hover
         AdminAccountControl aac = new  AdminAccountControl();
         aac.setVisible(true);
         this.dispose();
@@ -228,13 +227,13 @@ public class AccountAdmin extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         Session sess = Session.getInstance();
 
-    if (sess.getId() == 0) { // Check if session ID is zero
+    if (sess.getId() == 0) {
         System.out.println("No active session. Redirecting to login.");
         LogInForm lf = new LogInForm();
         lf.setVisible(true);
-        this.dispose(); // Close the current form
+        this.dispose(); 
     } else {
-        // Populate UI components with session data
+       
         gwapo.setText(""+ sess.getU_fname());
         pepe1.setText("" + sess.getU_lname());
         emm.setText("" + sess.getU_email());

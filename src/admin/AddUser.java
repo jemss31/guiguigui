@@ -263,10 +263,8 @@ public class AddUser extends javax.swing.JFrame {
     String password = new String(pass.getPassword()).trim();
     String type = utype.getSelectedItem().toString();
 
-    // Email regex pattern
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
-    // 🚀 **VALIDATIONS**
     if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
         JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -292,7 +290,6 @@ public class AddUser extends javax.swing.JFrame {
         return;
     }
 
-    // ✅ **Database Connection**
     dbConnector db = new dbConnector();
     Connection conn = db.getConnection();
     
@@ -302,16 +299,13 @@ public class AddUser extends javax.swing.JFrame {
     }
 
     try {
-        // **Check if email already exists**
         if (db.isEmailExists(email)) {
             JOptionPane.showMessageDialog(this, "Email is already in use. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // 🔐 **Hash Password**
         String hashedPassword = hashPassword(password);
 
-        // **Insert User**
         String insertQuery = "INSERT INTO users (u_fname, u_lname, u_email, u_username, u_pass, type, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pst = conn.prepareStatement(insertQuery)) {
             pst.setString(1, fname);
@@ -320,7 +314,7 @@ public class AddUser extends javax.swing.JFrame {
             pst.setString(4, username);
             pst.setString(5, hashedPassword);
             pst.setString(6, type);
-            pst.setString(7, "Pending");  // Default status
+            pst.setString(7, "Pending");  
 
             int inserted = pst.executeUpdate();
             if (inserted > 0) {
@@ -336,12 +330,10 @@ public class AddUser extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     } finally {
-        // **Ensure the connection is closed**
         db.closeConnection();
     }
 }
 
-// **🔐 Password Hashing Method**
 private String hashPassword(String password) {
     try {
         MessageDigest md = MessageDigest.getInstance("SHA-256");

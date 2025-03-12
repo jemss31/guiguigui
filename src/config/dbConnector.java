@@ -83,17 +83,17 @@ public Connection getConnection() {
         }
         // Check if an email already exists in the database
 public boolean isEmailExists(String email) {
-    String query = "SELECT COUNT(*) FROM users WHERE u_email = ?"; // Ensure 'u_email' matches your database column name
+    String query = "SELECT COUNT(*) FROM users WHERE u_email = ?"; 
     try (PreparedStatement pst = connect.prepareStatement(query)) {
         pst.setString(1, email);
         ResultSet rs = pst.executeQuery();
         if (rs.next() && rs.getInt(1) > 0) {
-            return true; // Email already exists
+            return true;
         }
     } catch (SQLException ex) {
         System.err.println("Error checking email existence: " + ex.getMessage());
     }
-    return false; // Email does not exist
+    return false;
 }
 
     

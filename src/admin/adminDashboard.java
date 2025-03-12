@@ -170,7 +170,6 @@ public class adminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-      //hover
       AdminAccountControl aac = new  AdminAccountControl();
       aac.setVisible(true);
       this.dispose();

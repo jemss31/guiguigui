@@ -176,14 +176,11 @@ public class userdashboard extends javax.swing.JFrame {
        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
     
     if (confirm == JOptionPane.YES_OPTION) {
-        // Show success message
         JOptionPane.showMessageDialog(this, "You have successfully logged out!", "Logout", JOptionPane.INFORMATION_MESSAGE);
         
-        // Open the login form
         LogInForm li = new LogInForm();
         li.setVisible(true);
         
-        // Close the current window
         this.dispose();
     }
     }//GEN-LAST:event_lgMouseClicked

@@ -294,7 +294,7 @@ if (rowIndex < 0) {
         dbConnector dbc = new dbConnector();
         TableModel tbl = table1.getModel();
 
-        String userId = tbl.getValueAt(rowIndex, 0).toString(); // Get the user ID
+        String userId = tbl.getValueAt(rowIndex, 0).toString();
         String query = "SELECT * FROM users WHERE id = ?";
 
         PreparedStatement pst = dbc.getConnection().prepareStatement(query);
@@ -303,7 +303,7 @@ if (rowIndex < 0) {
 
         if (rs.next()) {
             edituseradmin crf = new edituseradmin();
-            crf.setUserId(userId); // Pass the user ID
+            crf.setUserId(userId); 
             crf.fn.setText(rs.getString("u_fname"));
             crf.ln1.setText(rs.getString("u_lname"));
             crf.Email.setText(rs.getString("u_email"));
@@ -388,7 +388,7 @@ if (rowIndex < 0) {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-   loadUsersData(); // Refresh the JTable with the latest data from the database
+   loadUsersData(); 
     JOptionPane.showMessageDialog(this, "Data refreshed successfully!", "Refresh", JOptionPane.INFORMATION_MESSAGE);
 
         // TODO add your handling code here:

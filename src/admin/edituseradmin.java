@@ -25,7 +25,6 @@ public class edituseradmin extends javax.swing.JFrame {
   private String userId; 
 
     public void setUserId(String id) {
-        this.userId = id;
     }
     /**
      * Creates new form edituseradmin
@@ -53,7 +52,6 @@ public class edituseradmin extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         fn = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         pass = new javax.swing.JPasswordField();
@@ -62,12 +60,15 @@ public class edituseradmin extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         ln1 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Email = new javax.swing.JTextField();
         utype = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         stat = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        contactnum = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,9 +85,9 @@ public class edituseradmin extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(397, 397, 397)
-                .addComponent(jLabel2)
-                .addContainerGap(484, Short.MAX_VALUE))
+                .addGap(364, 364, 364)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 801, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +109,7 @@ public class edituseradmin extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 580, 80, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 640, 80, 30));
 
         jButton2.setText("Edit");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -121,7 +122,7 @@ public class edituseradmin extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 580, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 640, 80, 30));
 
         jButton3.setText("Log In");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -133,11 +134,7 @@ public class edituseradmin extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel4.setText("Password:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 510, 220, 60));
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel5.setText("Email:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 220, 60));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 570, 220, 60));
 
         fn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +145,7 @@ public class edituseradmin extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel6.setText("User Type:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, 220, 60));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 220, 60));
 
         pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,25 +157,25 @@ public class edituseradmin extends javax.swing.JFrame {
                 passKeyPressed(evt);
             }
         });
-        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 260, 50));
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 580, 260, 50));
 
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 540, -1, -1));
+        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 600, -1, -1));
 
         uss1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uss1ActionPerformed(evt);
             }
         });
-        jPanel1.add(uss1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, 260, 50));
+        jPanel1.add(uss1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 260, 50));
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel9.setText("Username:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 220, 60));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 510, 220, 60));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel11.setText("Last Name:");
@@ -191,21 +188,13 @@ public class edituseradmin extends javax.swing.JFrame {
         });
         jPanel1.add(ln1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 260, 50));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
-        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jLabel10KeyPressed(evt);
-            }
-        });
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-320, -20, 950, 370));
-
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/asdasdasd.gif"))); // NOI18N
         jLabel8.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, 530, 260));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 530, 260));
 
         Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,11 +209,11 @@ public class edituseradmin extends javax.swing.JFrame {
                 utypeActionPerformed(evt);
             }
         });
-        jPanel1.add(utype, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 260, 50));
+        jPanel1.add(utype, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 260, 50));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel7.setText("User Status:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 220, 60));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 220, 60));
 
         stat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aprroved", "Pending" }));
         stat.addActionListener(new java.awt.event.ActionListener() {
@@ -232,7 +221,30 @@ public class edituseradmin extends javax.swing.JFrame {
                 statActionPerformed(evt);
             }
         });
-        jPanel1.add(stat, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 260, 50));
+        jPanel1.add(stat, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, 260, 50));
+
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel12.setText("Email:");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 220, 60));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel10KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-300, 40, 950, 370));
+
+        jLabel13.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel13.setText("Phone:");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, -1, 60));
+
+        contactnum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactnumActionPerformed(evt);
+            }
+        });
+        jPanel1.add(contactnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 260, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -262,16 +274,20 @@ public class edituseradmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    String newFname = fn.getText().trim();
+  String newFname = fn.getText().trim();
     String newLname = ln1.getText().trim();
     String newEmail = Email.getText().trim();
     String newUsername = uss1.getText().trim();
     String newUserType = utype.getSelectedItem().toString();
-    String newUserStatus = stat.getSelectedItem().toString();
+    String newUserStatus = stat.getSelectedItem().toString(); 
+    String newContactNumber = contactnum.getText().trim();  // Add contact number field
 
+    // Email regex for validation
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
-    if (newFname.isEmpty() || newLname.isEmpty() || newEmail.isEmpty() || newUsername.isEmpty() || newUserType.isEmpty() || newUserStatus.isEmpty()) {
+    // Validate inputs
+    if (newFname.isEmpty() || newLname.isEmpty() || newEmail.isEmpty() || newUsername.isEmpty() || 
+        newUserType.isEmpty() || newUserStatus.isEmpty() || newContactNumber.isEmpty()) {
         JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -291,6 +307,12 @@ public class edituseradmin extends javax.swing.JFrame {
         return;
     }
 
+    // Validate contact number (Only numbers and specific length)
+    if (!newContactNumber.matches("\\d{12}")) {  // Ensures 10-15 digits
+        JOptionPane.showMessageDialog(this, "Invalid Number! Contact number must be 12 digits.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
     dbConnector dbc = new dbConnector();
     
     if (this.userId == null || this.userId.isEmpty()) {
@@ -298,22 +320,32 @@ public class edituseradmin extends javax.swing.JFrame {
         return;
     }
 
-    String checkQuery = "SELECT COUNT(*) FROM users WHERE (u_username = ? OR u_email = ?) AND id != ?";
+    try (Connection conn = dbc.getConnection()) {
+        // Check if username or email already exists (excluding the current user)
+        String checkQuery = "SELECT COUNT(*) FROM users WHERE (u_username = ? OR u_email = ?) AND id != ?";
+        
+        try (PreparedStatement pst = conn.prepareStatement(checkQuery)) {
+            pst.setString(1, newUsername);
+            pst.setString(2, newEmail);
+            pst.setString(3, this.userId);
 
-    try (Connection conn = dbc.getConnection();
-         PreparedStatement pst = conn.prepareStatement(checkQuery)) {
-
-        pst.setString(1, newUsername);
-        pst.setString(2, newEmail);
-        pst.setString(3, this.userId);
-
-        try (ResultSet rs = pst.executeQuery()) {
-            if (rs.next() && rs.getInt(1) > 0) {
-                JOptionPane.showMessageDialog(this, "Username or Email already exists! Please use different credentials.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    JOptionPane.showMessageDialog(this, "Username or Email already exists! Please use different credentials.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
         }
-                String updateQuery = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, type = ?, status = ? WHERE id = ?";
+
+        // Check if contact number already exists (excluding the current user)
+       if (dbc.isContactExists(newContactNumber)) {
+    JOptionPane.showMessageDialog(this, "Contact number is already in use! Please enter a different number.", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+        // Update user details including the contact number
+        String updateQuery = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, type = ?, status = ?, cont = ? WHERE id = ?";
+        
         try (PreparedStatement updatePst = conn.prepareStatement(updateQuery)) {
             updatePst.setString(1, newFname);
             updatePst.setString(2, newLname);
@@ -321,7 +353,8 @@ public class edituseradmin extends javax.swing.JFrame {
             updatePst.setString(4, newUsername);
             updatePst.setString(5, newUserType);
             updatePst.setString(6, newUserStatus);
-            updatePst.setString(7, this.userId);
+            updatePst.setString(7, newContactNumber);  // Set contact number here
+            updatePst.setString(8, this.userId);  // User ID to identify the correct user
 
             int updated = updatePst.executeUpdate();
             if (updated > 0) {
@@ -329,12 +362,13 @@ public class edituseradmin extends javax.swing.JFrame {
                 new AdminAccountControl().setVisible(true);
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Update failed!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Update failed! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -407,6 +441,16 @@ public class edituseradmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_statActionPerformed
 
+    private void contactnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactnumActionPerformed
+        String ageText = contactnum.getText().trim();
+
+        if (!ageText.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Invalid Number! Only numbers are allowed.", "Error", JOptionPane.ERROR_MESSAGE);
+            contactnum.setText("");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactnumActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -444,6 +488,7 @@ public class edituseradmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField Email;
+    private javax.swing.JTextField contactnum;
     public javax.swing.JTextField fn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -451,10 +496,11 @@ public class edituseradmin extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

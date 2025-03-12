@@ -272,7 +272,7 @@ if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
 
 String hashedPasswordInput = hashPassword(passwordInput); 
 
-String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, status, u_pass FROM users WHERE u_username = ?";
+String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, cont,  status, u_pass FROM users WHERE u_username = ?";
 
 try (Connection connect = new dbConnector().getConnection(); 
      PreparedStatement pst = connect.prepareStatement(sql)) {
@@ -291,7 +291,8 @@ try (Connection connect = new dbConnector().getConnection();
         sess.setU_lname(rs.getString("u_lname"));
         sess.setU_email(rs.getString("u_email"));
         sess.setU_username(rs.getString("u_username"));
-        sess.setType(type);  
+        sess.setType(type); 
+        sess.setCont(rs.getString("cont"));
         sess.setStatus(status); 
         sess.setU_pass(rs.getString("u_pass"));
 

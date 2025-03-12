@@ -60,6 +60,8 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         user1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        phone = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -141,7 +143,7 @@ public class userAccounts extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel10.setText("Account");
-        jLabel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jLabel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel10MouseClicked(evt);
@@ -182,10 +184,10 @@ public class userAccounts extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 860, 280));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 410, 860, 280));
 
         pass.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
-        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 230, 40));
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 520, 230, 40));
 
         nameew.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 220, 60));
@@ -198,7 +200,7 @@ public class userAccounts extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel9.setText("Password:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 480, 120, 40));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 520, 120, 40));
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel13.setText("First Name:");
@@ -209,18 +211,18 @@ public class userAccounts extends javax.swing.JFrame {
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 120, 40));
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel15.setText("Email:");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 120, 40));
+        jLabel15.setText("Phone:");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 120, 40));
 
         gg1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(gg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 400, 230, 40));
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel16.setText("Username:");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 120, 40));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 480, 120, 40));
 
         user1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
-        jPanel1.add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 230, 40));
+        jPanel1.add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 230, 40));
 
         jLabel7.setFont(new java.awt.Font("Book Antiqua", 3, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 51, 204));
@@ -230,7 +232,14 @@ public class userAccounts extends javax.swing.JFrame {
                 jLabel7MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 520, 230, 30));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 560, 230, 30));
+
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel17.setText("Email:");
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 120, 40));
+
+        phone.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
+        jPanel1.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 160, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,7 +311,9 @@ public class userAccounts extends javax.swing.JFrame {
         namo1.setText(sess.getU_lname());
         gg1.setText(sess.getU_email());
         user1.setText(sess.getU_username());
-        pass.setText(sess.getU_pass());        
+        pass.setText(sess.getU_pass());   
+        phone.setText(sess.getCont());        
+
 
     }
         // TODO add your handling code here:
@@ -360,6 +371,7 @@ public class userAccounts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -377,6 +389,7 @@ public class userAccounts extends javax.swing.JFrame {
     private javax.swing.JLabel nameew;
     private javax.swing.JLabel namo1;
     private javax.swing.JLabel pass;
+    private javax.swing.JLabel phone;
     private javax.swing.JLabel user1;
     // End of variables declaration//GEN-END:variables
 }

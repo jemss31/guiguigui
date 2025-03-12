@@ -12,6 +12,7 @@ public class Session {
     private String u_email;
     private String u_username;
     private String type;
+    private String cont;
     private String status;
     private String u_pass;
 
@@ -86,6 +87,14 @@ public class Session {
         this.type = type;
     }
 
+    public String getCont() {
+        return cont;
+    }
+
+    public void setCont(String cont) {
+        this.cont = cont;
+    }
+    
     public String getStatus() {
         return status;
     }

@@ -61,6 +61,8 @@ public class AddUser extends javax.swing.JFrame {
         utype = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         stat = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        contactnum = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -102,7 +104,7 @@ public class AddUser extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 580, 80, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 640, 80, 30));
 
         jButton2.setText("Add");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -115,7 +117,7 @@ public class AddUser extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 580, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 640, 80, 30));
 
         jButton3.setText("Log In");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +129,7 @@ public class AddUser extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel4.setText("Password:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 510, 220, 60));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 570, 220, 60));
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel5.setText("Email:");
@@ -142,7 +144,7 @@ public class AddUser extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel6.setText("User Type:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, 220, 60));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 220, 60));
 
         pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,25 +156,25 @@ public class AddUser extends javax.swing.JFrame {
                 passKeyPressed(evt);
             }
         });
-        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 260, 50));
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 580, 260, 50));
 
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 540, -1, -1));
+        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 600, -1, -1));
 
         uss1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uss1ActionPerformed(evt);
             }
         });
-        jPanel1.add(uss1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, 260, 50));
+        jPanel1.add(uss1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 260, 50));
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel9.setText("Username:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 220, 60));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 510, 220, 60));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel11.setText("Last Name:");
@@ -199,7 +201,7 @@ public class AddUser extends javax.swing.JFrame {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, 530, 260));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 430, 530, 260));
 
         Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,11 +216,11 @@ public class AddUser extends javax.swing.JFrame {
                 utypeActionPerformed(evt);
             }
         });
-        jPanel1.add(utype, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 260, 50));
+        jPanel1.add(utype, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 260, 50));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel7.setText("User Status:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 220, 60));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 220, 60));
 
         stat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aprroved", "Pending" }));
         stat.addActionListener(new java.awt.event.ActionListener() {
@@ -226,7 +228,18 @@ public class AddUser extends javax.swing.JFrame {
                 statActionPerformed(evt);
             }
         });
-        jPanel1.add(stat, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 260, 50));
+        jPanel1.add(stat, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, 260, 50));
+
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel12.setText("Phone:");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, -1, 60));
+
+        contactnum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactnumActionPerformed(evt);
+            }
+        });
+        jPanel1.add(contactnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 260, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -256,16 +269,18 @@ public class AddUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String fname = fn.getText().trim();
+     String fname = fn.getText().trim();
     String lname = ln1.getText().trim();
     String email = Email.getText().trim();
     String username = uss1.getText().trim();
     String password = new String(pass.getPassword()).trim();
     String type = utype.getSelectedItem().toString();
+    String contactNumber = contactnum.getText().trim();  // Get the contact number
 
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
-    if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
+    // Validate inputs
+    if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || contactNumber.isEmpty()) {
         JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -290,8 +305,14 @@ public class AddUser extends javax.swing.JFrame {
         return;
     }
 
-    dbConnector db = new dbConnector();
-    Connection conn = db.getConnection();
+    // Validate contact number (Only numbers, and must be of reasonable length)
+    if (!contactNumber.matches("\\d{12}")) {  // Adjust length range as needed
+        JOptionPane.showMessageDialog(this, "Invalid contact number! It must be 12 digits.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    dbConnector dbc = new dbConnector();
+    Connection conn = dbc.getConnection();
     
     if (conn == null) {
         JOptionPane.showMessageDialog(this, "Database connection failed.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -299,14 +320,22 @@ public class AddUser extends javax.swing.JFrame {
     }
 
     try {
-        if (db.isEmailExists(email)) {
+        // **Check if email already exists**
+        if (dbc.isEmailExists(email)) {
             JOptionPane.showMessageDialog(this, "Email is already in use. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // **Che.ck if contact number already exists**
+      if (dbc.isContactExists(contactNumber)) {  // Removed the second argument
+    JOptionPane.showMessageDialog(this, "Contact number is already in use! Please enter a different number.", "Error", JOptionPane.ERROR_MESSAGE);
+    return;  // Ensure the function exits if contact number exists
+}
+
         String hashedPassword = hashPassword(password);
 
-        String insertQuery = "INSERT INTO users (u_fname, u_lname, u_email, u_username, u_pass, type, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // Insert the user into the database including the contact number
+        String insertQuery = "INSERT INTO users (u_fname, u_lname, u_email, u_username, u_pass, type, status, cont) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pst = conn.prepareStatement(insertQuery)) {
             pst.setString(1, fname);
             pst.setString(2, lname);
@@ -314,7 +343,8 @@ public class AddUser extends javax.swing.JFrame {
             pst.setString(4, username);
             pst.setString(5, hashedPassword);
             pst.setString(6, type);
-            pst.setString(7, "Pending");  
+            pst.setString(7, "Pending");  // Status is initially set to "Pending"
+            pst.setString(8, contactNumber);  // Pass the contact number
 
             int inserted = pst.executeUpdate();
             if (inserted > 0) {
@@ -330,7 +360,7 @@ public class AddUser extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     } finally {
-        db.closeConnection();
+        dbc.closeConnection();
     }
 }
 
@@ -348,8 +378,6 @@ private String hashPassword(String password) {
         e.printStackTrace();
         return null;
     }
-
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -424,6 +452,16 @@ private String hashPassword(String password) {
         // TODO add your handling code here:
     }//GEN-LAST:event_statActionPerformed
 
+    private void contactnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactnumActionPerformed
+        String ageText = contactnum.getText().trim();
+
+        if (!ageText.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Invalid Number! Only numbers are allowed.", "Error", JOptionPane.ERROR_MESSAGE);
+            contactnum.setText("");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactnumActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -461,6 +499,7 @@ private String hashPassword(String password) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField Email;
+    private javax.swing.JTextField contactnum;
     public javax.swing.JTextField fn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -468,6 +507,7 @@ private String hashPassword(String password) {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

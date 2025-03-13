@@ -250,6 +250,12 @@ public class userAccounts extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel7MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel7MouseExited(evt);
+            }
         });
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 560, 230, 30));
 
@@ -366,6 +372,16 @@ public class userAccounts extends javax.swing.JFrame {
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
  jLabel4.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel4MouseExited
+
+    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
+        jLabel7.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel7MouseEntered
+
+    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
+           jLabel7.setForeground(new java.awt.Color(0,51,204));
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MouseExited
 
     /**
      * @param args the command line arguments

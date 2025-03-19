@@ -8,6 +8,7 @@ package admin;
 import config.Session;
 import admin.LogInForm;
 import admin.RegisForm;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -100,6 +101,12 @@ public class adminDashboard extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel4MouseExited(evt);
+            }
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 120, 40));
 
@@ -113,6 +120,12 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel7MouseExited(evt);
             }
         });
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 120, 40));
@@ -133,6 +146,12 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel11MouseExited(evt);
             }
         });
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 120, 40));
@@ -196,6 +215,30 @@ public class adminDashboard extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
+       jLabel7.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel7MouseEntered
+
+    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
+        jLabel7.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel7MouseExited
+
+    private void jLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseEntered
+      jLabel11.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel11MouseEntered
+
+    private void jLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseExited
+        jLabel11.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel11MouseExited
+
+    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
+       jLabel4.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel4MouseEntered
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+          jLabel4.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel4MouseExited
 
     /**
      * @param args the command line arguments

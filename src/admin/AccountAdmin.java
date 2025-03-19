@@ -7,6 +7,7 @@ package admin;
 
 import config.Session;
 import admin.LogInForm;
+import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -55,6 +56,8 @@ public class AccountAdmin extends javax.swing.JFrame {
         pepe1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        uss = new javax.swing.JLabel();
+        kol = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -109,6 +112,12 @@ public class AccountAdmin extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel4MouseExited(evt);
+            }
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 120, 40));
 
@@ -127,6 +136,12 @@ public class AccountAdmin extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel10MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel10MouseExited(evt);
+            }
         });
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 100, 40));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
@@ -137,6 +152,12 @@ public class AccountAdmin extends javax.swing.JFrame {
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel11MouseExited(evt);
             }
         });
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 120, 40));
@@ -190,10 +211,16 @@ public class AccountAdmin extends javax.swing.JFrame {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, 530, 260));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 530, 260));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 500, 860, 210));
+
+        uss.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jPanel1.add(uss, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 390, 190, 40));
+
+        kol.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jPanel1.add(kol, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 190, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,6 +273,8 @@ public class AccountAdmin extends javax.swing.JFrame {
         gwapo.setText(""+ sess.getU_fname());
         pepe1.setText("" + sess.getU_lname());
         emm.setText("" + sess.getU_email());
+        uss.setText("" + sess.getU_username());
+        kol.setText("" + sess.getCont());
     }
     
         // TODO add your handling code here:
@@ -278,6 +307,31 @@ public class AccountAdmin extends javax.swing.JFrame {
     private void jLabel8KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel8KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel8KeyPressed
+
+    private void jLabel10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseEntered
+        jLabel10.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel10MouseEntered
+
+    private void jLabel10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseExited
+        jLabel10.setForeground(Color.BLACK);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MouseExited
+
+    private void jLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseEntered
+      jLabel11.setForeground(new java.awt.Color(114,240,194));
+
+    }//GEN-LAST:event_jLabel11MouseEntered
+
+    private void jLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseExited
+       jLabel11.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel11MouseExited
+
+    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
+        jLabel4.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel4MouseEntered
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+        jLabel4.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel4MouseExited
 
     /**
      * @param args the command line arguments
@@ -333,6 +387,8 @@ public class AccountAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel kol;
     private javax.swing.JLabel pepe1;
+    private javax.swing.JLabel uss;
     // End of variables declaration//GEN-END:variables
 }

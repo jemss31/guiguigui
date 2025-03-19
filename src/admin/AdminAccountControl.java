@@ -7,6 +7,7 @@ package admin;
 
 import config.dbConnector;
 import admin.LogInForm;
+import java.awt.Color;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -41,11 +42,11 @@ public class AdminAccountControl extends javax.swing.JFrame {
     DefaultTableModel model = (DefaultTableModel) table1.getModel();
     
     
-    String[] columnNames = {"id", "u_fname", "u_lname", "u_email", "type", "u_username","u_pass", "status"};
+    String[] columnNames = {"id", "u_fname", "u_lname", "u_email", "cont", "type", "u_username","u_pass", "status"};
     model.setColumnIdentifiers(columnNames); 
     model.setRowCount(0);
 
-    String sql = "SELECT id, u_fname, u_lname, u_email, type, u_username, u_pass, status FROM users";
+    String sql = "SELECT id, u_fname, u_lname, u_email, cont, type, u_username, u_pass, status FROM users";
 
     try (Connection connect = new dbConnector().getConnection();
          PreparedStatement pst = connect.prepareStatement(sql);
@@ -57,6 +58,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
                 rs.getString("u_fname"),
                 rs.getString("u_lname"),
                 rs.getString("u_email"),
+                rs.getString("cont"),
                 rs.getString("type"),
                 rs.getString("u_username"),
                 rs.getString("u_pass"),
@@ -87,7 +89,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        acc = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
@@ -150,6 +152,12 @@ public class AdminAccountControl extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel4MouseExited(evt);
+            }
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 120, 40));
 
@@ -157,15 +165,21 @@ public class AdminAccountControl extends javax.swing.JFrame {
         jLabel6.setText("Pets");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 100, 40));
 
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel7.setText("Account");
-        jLabel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+        acc.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        acc.setText("Account");
+        acc.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        acc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel7MouseClicked(evt);
+                accMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                accMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                accMouseExited(evt);
             }
         });
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 120, 40));
+        jPanel2.add(acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 120, 40));
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Appointments");
@@ -188,6 +202,12 @@ public class AdminAccountControl extends javax.swing.JFrame {
         dash.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dashMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dashMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dashMouseExited(evt);
             }
         });
         jPanel2.add(dash, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 100, 40));
@@ -219,7 +239,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 430, 530, 260));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 290, 280));
 
         jButton1.setText("UPDATE");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
@@ -336,8 +356,11 @@ if (rowIndex < 0) {
             crf.setUserId(userId); 
             crf.fn.setText(rs.getString("u_fname"));
             crf.ln1.setText(rs.getString("u_lname"));
+            crf.contactnum.setText(rs.getString("cont"));
             crf.Email.setText(rs.getString("u_email"));
+            
             crf.uss1.setText(rs.getString("u_username"));
+            
             crf.pass.setEnabled(false); 
 
             crf.setVisible(true);
@@ -346,17 +369,6 @@ if (rowIndex < 0) {
     } catch (SQLException ex) {
         System.out.println("Error: " + ex.getMessage());
     }
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     }//GEN-LAST:event_jButton1ActionPerformed
     }
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -432,14 +444,14 @@ if (rowIndex < 0) {
         // TODO add your handling code here:
     }//GEN-LAST:event_dashMouseClicked
 
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+    private void accMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accMouseClicked
         AccountAdmin aa = new AccountAdmin();
         aa.setVisible(true);
         this.dispose();
 
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel7MouseClicked
+    }//GEN-LAST:event_accMouseClicked
 
     private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
         jButton5.setBackground(new java.awt.Color(114,240,194));
@@ -480,6 +492,31 @@ if (rowIndex < 0) {
 
     }//GEN-LAST:event_jButton2MouseExited
 
+    private void dashMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashMouseEntered
+      dash.setForeground(new java.awt.Color(114,240,194));
+
+    }//GEN-LAST:event_dashMouseEntered
+
+    private void dashMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashMouseExited
+        dash.setForeground(Color.BLACK);
+    }//GEN-LAST:event_dashMouseExited
+
+    private void accMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accMouseEntered
+     acc.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_accMouseEntered
+
+    private void accMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accMouseExited
+        acc.setForeground(Color.BLACK);
+    }//GEN-LAST:event_accMouseExited
+
+    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
+       jLabel4.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel4MouseEntered
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+        jLabel4.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel4MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -517,6 +554,7 @@ if (rowIndex < 0) {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel acc;
     private javax.swing.JLabel dash;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -529,7 +567,6 @@ if (rowIndex < 0) {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

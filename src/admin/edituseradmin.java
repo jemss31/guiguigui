@@ -25,6 +25,7 @@ public class edituseradmin extends javax.swing.JFrame {
   private String userId; 
 
     public void setUserId(String id) {
+        this.userId = id;
     }
     /**
      * Creates new form edituseradmin
@@ -288,7 +289,7 @@ public class edituseradmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-  String newFname = fn.getText().trim();
+    String newFname = fn.getText().trim();
     String newLname = ln1.getText().trim();
     String newEmail = Email.getText().trim();
     String newUsername = uss1.getText().trim();
@@ -522,7 +523,7 @@ public class edituseradmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField Email;
-    private javax.swing.JTextField contactnum;
+    public javax.swing.JTextField contactnum;
     public javax.swing.JTextField fn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

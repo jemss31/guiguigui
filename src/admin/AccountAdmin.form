@@ -137,6 +137,8 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel4MouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel4MouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel4MouseExited"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -187,6 +189,8 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel10MouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel10MouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel10MouseExited"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -218,6 +222,8 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel11MouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel11MouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel11MouseExited"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -332,7 +338,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="160" y="430" width="530" height="260"/>
+              <AbsoluteConstraints x="460" y="400" width="530" height="260"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -345,6 +351,30 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="370" y="500" width="860" height="210"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JLabel" name="uss">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="18" style="0"/>
+            </Property>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="270" y="390" width="190" height="40"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JLabel" name="kol">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="18" style="0"/>
+            </Property>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="270" y="420" width="190" height="40"/>
             </Constraint>
           </Constraints>
         </Component>

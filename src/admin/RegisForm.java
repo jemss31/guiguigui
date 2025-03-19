@@ -119,6 +119,12 @@ public class RegisForm extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
+            }
         });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -469,6 +475,14 @@ String username = uss1.getText().trim();
        jButton1.setBackground(new java.awt.Color(240, 240, 240));
 
     }//GEN-LAST:event_jButton1MouseExited
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+         jButton2.setBackground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
+       jButton2.setBackground(new java.awt.Color(240, 240, 240));
+    }//GEN-LAST:event_jButton2MouseExited
 
     /**
      * @param args the command line arguments

@@ -243,7 +243,7 @@ boolean updatePassword(String newPass) {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 860, 280));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 860, 280));
 
         pass.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 230, 40));
@@ -491,7 +491,7 @@ jLabel11.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel11MouseExited
     }//GEN-LAST:event_jLabel4MouseEntered
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-jLabel4.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel4MouseExited
+    jLabel4.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel4MouseExited
 
     /**
      * @param args the command line arguments

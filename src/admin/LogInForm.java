@@ -9,6 +9,7 @@ import Userdashboard.userdashboard;
 import admin.adminDashboard;
 import config.Session;
 import config.dbConnector;
+import java.awt.Color;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -237,6 +238,12 @@ public class LogInForm extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 regisMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                regisMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                regisMouseExited(evt);
+            }
         });
         jPanel1.add(regis, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 220, 30));
 
@@ -385,6 +392,14 @@ if (jCheckBox1.isSelected()) {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_asMouseExited
+
+    private void regisMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regisMouseEntered
+     regis.setForeground(new java.awt.Color(238, 130, 238));
+    }//GEN-LAST:event_regisMouseEntered
+
+    private void regisMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regisMouseExited
+       regis.setForeground(Color.BLACK);
+    }//GEN-LAST:event_regisMouseExited
     /**
      * @param args the command line arguments
      */

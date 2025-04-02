@@ -15,6 +15,9 @@ public class Session {
     private String cont;
     private String status;
     private String u_pass;
+    private String SecurityQuestion;
+    private String answer;
+    private String PIN;
 
 
     // Private constructor to prevent instantiation
@@ -109,6 +112,31 @@ public class Session {
     public void setU_pass(String u_pass) {
         this.u_pass = u_pass;
     }
+
+    public String getSecurityQuestion() {
+        return SecurityQuestion;
+    }
+
+    public void setSecurityQuestion(String SecurityQuestion) {
+        this.SecurityQuestion = SecurityQuestion;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getPIN() {
+        return PIN;
+    }
+
+    public void setPIN(String PIN) {
+        this.PIN = PIN;
+    }
+    
 
     // Reset session attributes to default values
     public void resetSession() {

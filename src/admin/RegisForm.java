@@ -53,13 +53,18 @@ public class RegisForm extends javax.swing.JFrame {
         uss1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        Email = new javax.swing.JTextField();
         ln1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        Email = new javax.swing.JTextField();
         UserType = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         contactnum = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        te = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        re = new javax.swing.JTextField();
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
         jLabel7.setText("jLabel5");
@@ -94,11 +99,11 @@ public class RegisForm extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 120));
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel3.setText("First Name:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 220, 60));
+        jLabel3.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel3.setText("Answer:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 350, 220, 60));
 
-        jButton1.setText("Cancel");
+        jButton1.setText("CANCEL");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton1MouseEntered(evt);
@@ -112,9 +117,9 @@ public class RegisForm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 580, 80, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 610, 130, 40));
 
-        jButton2.setText("Register");
+        jButton2.setText("REGISTER");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -131,7 +136,7 @@ public class RegisForm extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 580, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 610, 120, 40));
 
         jButton3.setText("Log In");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -141,24 +146,24 @@ public class RegisForm extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 760, 80, 30));
 
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel4.setText("Password:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 510, 220, 60));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 530, 220, 60));
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel5.setText("Email:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 220, 60));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 220, 60));
 
         fn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fnActionPerformed(evt);
             }
         });
-        jPanel1.add(fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 250, 50));
+        jPanel1.add(fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 250, 50));
 
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel6.setText("User Type:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, 220, 60));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 220, 60));
 
         RegPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,36 +175,43 @@ public class RegisForm extends javax.swing.JFrame {
                 RegPassKeyPressed(evt);
             }
         });
-        jPanel1.add(RegPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 250, 50));
+        jPanel1.add(RegPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 540, 250, 50));
 
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 540, -1, -1));
+        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 560, -1, -1));
 
         uss1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uss1ActionPerformed(evt);
             }
         });
-        jPanel1.add(uss1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, 250, 50));
+        jPanel1.add(uss1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 480, 250, 50));
 
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel9.setText("Username:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 220, 60));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 470, 220, 60));
 
-        jLabel11.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel11.setText("Last Name:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 220, 60));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 220, 60));
+
+        Email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 250, 50));
 
         ln1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ln1ActionPerformed(evt);
             }
         });
-        jPanel1.add(ln1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 250, 50));
+        jPanel1.add(ln1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 250, 50));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
         jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -207,7 +219,7 @@ public class RegisForm extends javax.swing.JFrame {
                 jLabel10KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-320, -20, 950, 370));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-90, -30, 750, 370));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/asdasdasd.gif"))); // NOI18N
         jLabel8.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -215,14 +227,7 @@ public class RegisForm extends javax.swing.JFrame {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 530, 260));
-
-        Email.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmailActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 250, 50));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 430, 530, 260));
 
         UserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer" }));
         UserType.addActionListener(new java.awt.event.ActionListener() {
@@ -230,18 +235,44 @@ public class RegisForm extends javax.swing.JFrame {
                 UserTypeActionPerformed(evt);
             }
         });
-        jPanel1.add(UserType, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 250, 50));
+        jPanel1.add(UserType, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 250, 50));
 
-        jLabel12.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel12.setText("Phone:");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, -1, 60));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, -1, 60));
 
         contactnum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 contactnumActionPerformed(evt);
             }
         });
-        jPanel1.add(contactnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 250, 50));
+        jPanel1.add(contactnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 250, 50));
+
+        jLabel13.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel13.setText("First Name:");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 220, 60));
+
+        jLabel14.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        jLabel14.setText("In case of Password loss:");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 310, 60));
+
+        te.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teActionPerformed(evt);
+            }
+        });
+        jPanel1.add(te, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 250, 50));
+
+        jLabel15.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel15.setText("Security Question:");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 220, 60));
+
+        re.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reActionPerformed(evt);
+            }
+        });
+        jPanel1.add(re, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 250, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -273,13 +304,15 @@ public class RegisForm extends javax.swing.JFrame {
     String username = uss1.getText().trim();
     String password = new String(RegPass.getPassword()).trim();
     String type = UserType.getSelectedItem().toString();
-    String contactNumber = contactnum.getText().trim();  // Get the contact number
+    String contactNumber = contactnum.getText().trim();  
+     String squestion = re.getText().trim();
+    String answer = te.getText().trim();
 
     // Email regex for validation
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
     // Validate inputs
-    if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || contactNumber.isEmpty()) {
+    if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || contactNumber.isEmpty() || squestion.isEmpty() || answer.isEmpty()) {
         JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -301,6 +334,14 @@ public class RegisForm extends javax.swing.JFrame {
 
     if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};'\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
         JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long, include an uppercase letter, a special character, and a number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
+        JOptionPane.showMessageDialog(this, "Invalid Password! Must be at least 8 characters long, contain one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+   if (squestion.length() < 5 || !squestion.matches(".*[?]$")) {
+        JOptionPane.showMessageDialog(this, "Invalid Question! It must be at least 5 characters long and end with a question mark.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -334,7 +375,7 @@ public class RegisForm extends javax.swing.JFrame {
         String hashedPassword = hashPassword(password);
 
         // Insert the user into the database including the contact number
-        String insertQuery = "INSERT INTO users (u_fname, u_lname, u_email, u_username, u_pass, type, status, cont) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO users (u_fname, u_lname, u_email, u_username, u_pass, type, status, cont, SecurityQuestion, answer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
         try (PreparedStatement pst = conn.prepareStatement(insertQuery)) {
             pst.setString(1, fname);
             pst.setString(2, lname);
@@ -343,7 +384,9 @@ public class RegisForm extends javax.swing.JFrame {
             pst.setString(5, hashedPassword);
             pst.setString(6, type);
             pst.setString(7, "Pending");  
-            pst.setString(8, contactNumber);  
+            pst.setString(8, contactNumber);
+            pst.setString(9, squestion);
+            pst.setString(10, answer);  
 
             int inserted = pst.executeUpdate();
             if (inserted > 0) {
@@ -484,6 +527,30 @@ String username = uss1.getText().trim();
        jButton2.setBackground(new java.awt.Color(240, 240, 240));
     }//GEN-LAST:event_jButton2MouseExited
 
+    private void teActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teActionPerformed
+       String answer = te.getText().trim();
+       
+       if (answer.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Answer cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+              }    }//GEN-LAST:event_teActionPerformed
+
+    private void reActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reActionPerformed
+       String squestion = re.getText().trim();
+        
+       
+       if (squestion.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Security Question cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+       }
+       else if (squestion.length() < 5 || !squestion.matches(".*[?]$")) {
+    JOptionPane.showMessageDialog(this, "Invalid Question! It must be at least 5 characters long and end with a question mark.", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+       
+              // TODO add your handling code here:
+    }//GEN-LAST:event_reActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -532,6 +599,9 @@ String username = uss1.getText().trim();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -543,6 +613,8 @@ String username = uss1.getText().trim();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField ln1;
+    private javax.swing.JTextField re;
+    private javax.swing.JTextField te;
     private javax.swing.JTextField uss1;
     // End of variables declaration//GEN-END:variables
 }

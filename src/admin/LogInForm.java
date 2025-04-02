@@ -10,6 +10,8 @@ import admin.adminDashboard;
 import config.Session;
 import config.dbConnector;
 import java.awt.Color;
+import java.awt.Desktop;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -135,6 +138,11 @@ public class LogInForm extends javax.swing.JFrame {
         regis = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
+        nigga1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         checkbox1.setLabel("checkbox1");
 
@@ -213,7 +221,7 @@ public class LogInForm extends javax.swing.JFrame {
                 asActionPerformed(evt);
             }
         });
-        jPanel1.add(as, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 410, 80, 30));
+        jPanel1.add(as, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 440, 80, 30));
 
         jButton2.setText("Log In");
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(51, 51, 51), new java.awt.Color(0, 0, 0)));
@@ -230,7 +238,7 @@ public class LogInForm extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 410, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 440, 80, 30));
 
         regis.setFont(new java.awt.Font("Arial", 2, 14)); // NOI18N
         regis.setText("New User? Click Here to Register!");
@@ -245,10 +253,10 @@ public class LogInForm extends javax.swing.JFrame {
                 regisMouseExited(evt);
             }
         });
-        jPanel1.add(regis, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 220, 30));
+        jPanel1.add(regis, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 220, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-220, 420, 860, 280));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-230, 420, 720, 280));
 
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,6 +264,72 @@ public class LogInForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, -1, -1));
+
+        nigga1.setFont(new java.awt.Font("Arial", 2, 14)); // NOI18N
+        nigga1.setText("Forgot Password?");
+        nigga1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nigga1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                nigga1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                nigga1MouseExited(evt);
+            }
+        });
+        jPanel1.add(nigga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 120, 20));
+
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/dsadc - Copy.png"))); // NOI18N
+        jLabel6.setText("jamessvenansali@gmail.com");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 650, 270, 40));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/7ab261c112429812160c05ad9f487c2f.jpg"))); // NOI18N
+        jLabel7.setText("Facebook");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel7MouseExited(evt);
+            }
+        });
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 650, 120, 40));
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/vd.png"))); // NOI18N
+        jLabel8.setText("INSTAGRAM");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 630, 70, 60));
+
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel9.setText("Instagram");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel9MouseExited(evt);
+            }
+        });
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 650, 110, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -400,6 +474,78 @@ if (jCheckBox1.isSelected()) {
     private void regisMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regisMouseExited
        regis.setForeground(Color.BLACK);
     }//GEN-LAST:event_regisMouseExited
+
+    private void nigga1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nigga1MouseEntered
+     nigga1.setForeground(new java.awt.Color(238, 130, 238));
+    }//GEN-LAST:event_nigga1MouseEntered
+
+    private void nigga1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nigga1MouseExited
+    nigga1.setForeground(Color.BLACK);
+
+    }//GEN-LAST:event_nigga1MouseExited
+
+    private void nigga1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nigga1MouseClicked
+        ForgotPassword fp = new ForgotPassword();
+        fp.setVisible(true);
+        this.dispose();
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nigga1MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+  
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+
+ try {
+        // Open the Facebook link in the default web browser
+        Desktop.getDesktop().browse(new URI("https://www.facebook.com/jamessven.ansali"));
+    } catch (Exception ex) {
+        ex.printStackTrace(); // Print any errors
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+ try {
+        // Open the Facebook link in the default web browser
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/the_art_of_jemss/"));
+    } catch (Exception ex) {
+        ex.printStackTrace(); // Print any errors
+    }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+ try {
+        // Open the Facebook link in the default web browser
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/the_art_of_jemss/"));
+    } catch (Exception ex) {
+        ex.printStackTrace(); // Print any errors
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
+     jLabel9.setForeground(new java.awt.Color(238, 130, 238));
+    }//GEN-LAST:event_jLabel9MouseEntered
+
+    private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited
+     jLabel9.setForeground(Color.BLACK);
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseExited
+
+    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
+        jLabel7.setForeground(new java.awt.Color(238, 130, 238));
+    }//GEN-LAST:event_jLabel7MouseEntered
+
+    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
+      jLabel7.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel7MouseExited
     /**
      * @param args the command line arguments
      */
@@ -445,8 +591,13 @@ if (jCheckBox1.isSelected()) {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel nigga1;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel regis;
     private javax.swing.JTextField username;

@@ -94,7 +94,7 @@ private void customizeButton(JButton button) {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Cooper Black", 0, 36)); // NOI18N
-        jLabel2.setText("Recovery Mode");
+        jLabel2.setText("Recovery Option");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 320, 116));
 
         jButton2.setText("LOGIN");
@@ -238,18 +238,25 @@ private void customizeButton(JButton button) {
         // Open the JFrame for Security Question
         SecurityQuestion sqFrame = new SecurityQuestion();
         sqFrame.setVisible(true);
+                this.dispose();
+
     } else if (s.isSelected()) {
         // Open the JFrame for PIN
-        PinFrame pinFrame = new PinFrame();
+        UserRecoveryPIN pinFrame = new UserRecoveryPIN();
         pinFrame.setVisible(true);
+        this.dispose();
     } else if (d.isSelected()) {
         // Open the JFrame for Mobile Number
         MobileNumberFrame mnFrame = new MobileNumberFrame();
         mnFrame.setVisible(true);
+                this.dispose();
+
     } else if (f.isSelected()) {
-        // Open the JFrame for Enter Password
+//         Open the JFrame for Enter Password
         LogInForm epFrame = new LogInForm();
         epFrame.setVisible(true);
+                this.dispose();
+
     } else {
         JOptionPane.showMessageDialog(this, "Please select an option.");
     }

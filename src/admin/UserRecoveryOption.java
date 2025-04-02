@@ -63,18 +63,18 @@ private void customizeButton(JButton button) {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        ep = new javax.swing.JLabel();
+        po = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         ch = new javax.swing.JCheckBox();
         s = new javax.swing.JCheckBox();
         d = new javax.swing.JCheckBox();
         f = new javax.swing.JCheckBox();
-        jLabel8 = new javax.swing.JLabel();
+        ep = new javax.swing.JLabel();
         sec = new javax.swing.JLabel();
         pin = new javax.swing.JLabel();
         mn = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        con = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
@@ -107,8 +107,8 @@ private void customizeButton(JButton button) {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 120));
 
-        ep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(ep, new org.netbeans.lib.awtextra.AbsoluteConstraints(-240, 420, 780, 280));
+        po.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
+        jPanel1.add(po, new org.netbeans.lib.awtextra.AbsoluteConstraints(-240, 420, 940, 280));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -145,14 +145,14 @@ private void customizeButton(JButton button) {
         });
         jPanel2.add(f, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 20, 20));
 
-        jLabel8.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
-        jLabel8.setText("Enter Password");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        ep.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        ep.setText("Enter Password");
+        ep.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                epMouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 280, 40));
+        jPanel2.add(ep, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 280, 40));
 
         sec.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         sec.setText("Security Question");
@@ -181,13 +181,13 @@ private void customizeButton(JButton button) {
         });
         jPanel2.add(mn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 280, 40));
 
-        jButton1.setText("CONTINUE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        con.setText("CONTINUE");
+        con.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                conActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 270, 140, 40));
+        jPanel2.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 270, 140, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 620, 360));
 
@@ -233,27 +233,56 @@ private void customizeButton(JButton button) {
         // TODO add your handling code here:
     }//GEN-LAST:event_fActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void conActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conActionPerformed
+        if (ch.isSelected()) {
+        // Open the JFrame for Security Question
+        SecurityQuestion sqFrame = new SecurityQuestion();
+        sqFrame.setVisible(true);
+    } else if (s.isSelected()) {
+        // Open the JFrame for PIN
+        PinFrame pinFrame = new PinFrame();
+        pinFrame.setVisible(true);
+    } else if (d.isSelected()) {
+        // Open the JFrame for Mobile Number
+        MobileNumberFrame mnFrame = new MobileNumberFrame();
+        mnFrame.setVisible(true);
+    } else if (f.isSelected()) {
+        // Open the JFrame for Enter Password
+        LogInForm epFrame = new LogInForm();
+        epFrame.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Please select an option.");
+    }
+    }//GEN-LAST:event_conActionPerformed
 
     private void secMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_secMouseClicked
-        // TODO add your handling code here:
-        ch.setSelected(!ch.isSelected());
+       ch.setSelected(true);
+    s.setSelected(false);
+    d.setSelected(false);
+    f.setSelected(false);
         
     }//GEN-LAST:event_secMouseClicked
 
     private void pinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pinMouseClicked
-        s.setSelected(!s.isSelected());
+        ch.setSelected(false);
+    s.setSelected(true);
+    d.setSelected(false);
+    f.setSelected(false);
     }//GEN-LAST:event_pinMouseClicked
 
     private void mnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnMouseClicked
-    d.setSelected(!d.isSelected());
+    ch.setSelected(false);
+    s.setSelected(false);
+    d.setSelected(true);
+    f.setSelected(false);
     }//GEN-LAST:event_mnMouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        f.setSelected(!f.isSelected());
-    }//GEN-LAST:event_jLabel8MouseClicked
+    private void epMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_epMouseClicked
+        ch.setSelected(false);
+    s.setSelected(false);
+    d.setSelected(false);
+    f.setSelected(true);
+    }//GEN-LAST:event_epMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       int confirm = javax.swing.JOptionPane.showConfirmDialog(
@@ -321,22 +350,22 @@ private void customizeButton(JButton button) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox ch;
+    private javax.swing.JButton con;
     private javax.swing.JCheckBox d;
     private javax.swing.JLabel ep;
     private javax.swing.JCheckBox f;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel mn;
     private javax.swing.JLabel name;
     private javax.swing.JLabel pin;
+    private javax.swing.JLabel po;
     private javax.swing.JCheckBox s;
     private javax.swing.JLabel sec;
     // End of variables declaration//GEN-END:variables

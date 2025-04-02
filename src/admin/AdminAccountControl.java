@@ -488,8 +488,7 @@ if (rowIndex < 0) {
     }//GEN-LAST:event_jButton2MouseEntered
 
     private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
-        jButton2.setBackground(new java.awt.Color(114,240,194));
-
+        jButton2.setBackground(new java.awt.Color(240, 240, 240));
     }//GEN-LAST:event_jButton2MouseExited
 
     private void dashMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashMouseEntered

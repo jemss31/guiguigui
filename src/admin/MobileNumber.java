@@ -157,17 +157,25 @@ public class MobileNumber extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void conActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conActionPerformed
-       dbConnector dbc = new dbConnector();
-    
-    String recipientEmail = "enzoghost8@gmail.com"; // Update with the actual recipient’s email
+ dbConnector dbc = new dbConnector();
+    config.Session sess = config.Session.getInstance(); // Get the current session
+
+    // Retrieve the recipient's email from the session
+    String recipientEmail = sess.getU_email(); // Ensure this method correctly returns the email
+    if (recipientEmail == null || recipientEmail.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No email found in the session.");
+        return; // Exit if no email is found
+    }
+
     generatedOtp = OTPGenerator.generateOTP(4); // Store the generated OTP
-    
+
+    System.out.println("Generated OTP: " + generatedOtp); // Debugging line
+
     try {
         sendEmail(recipientEmail, generatedOtp); // Call the sendEmail method with the OTP
     } catch (Exception e) {
         e.printStackTrace(); // Print the stack trace for debugging
     }}
-
 private void sendEmail(String toEmail, String otp) {
     
     final String fromEmail = "enzoghost8@gmail.com"; // Your Gmail address

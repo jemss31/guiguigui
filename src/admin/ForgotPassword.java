@@ -188,6 +188,11 @@ private Connection connect;
         jPanel2.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 520, 60));
 
         search.setText("SEARCH");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
         jPanel2.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 90, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 700, 310));
@@ -216,6 +221,10 @@ private Connection connect;
         searchUsername(); 
     }
     }//GEN-LAST:event_nameKeyPressed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchActionPerformed
 
     /**
      * @param args the command line arguments

@@ -144,24 +144,6 @@ private void resetPassword() {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void conActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conActionPerformed
- String userAnswer = as.getText().trim(); 
-        String correctAnswer = getCorrectAnswerFromDatabase(); 
-
-        if (userAnswer.equals(correctAnswer)) {
-            
-            resetPassword();
-        } else {
-            attempts--; 
-            if (attempts > 0) {
-                JOptionPane.showMessageDialog(this, "Incorrect answer. You have " + attempts + " attempts left.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Maximum attempts reached. You cannot proceed.");
-                con.setEnabled(false); 
-            }
-        }      
-    }//GEN-LAST:event_conActionPerformed
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
          Session sess = Session.getInstance();
 
@@ -178,6 +160,24 @@ private void resetPassword() {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
+
+    private void conActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conActionPerformed
+        String userAnswer = as.getText().trim();
+        String correctAnswer = getCorrectAnswerFromDatabase();
+
+        if (userAnswer.equals(correctAnswer)) {
+
+            resetPassword();
+        } else {
+            attempts--;
+            if (attempts > 0) {
+                JOptionPane.showMessageDialog(this, "Incorrect answer. You have " + attempts + " attempts left.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Maximum attempts reached. You cannot proceed.");
+                con.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_conActionPerformed
 
     /**
      * @param args the command line arguments

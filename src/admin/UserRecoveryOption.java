@@ -108,7 +108,7 @@ private void customizeButton(JButton button) {
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 120));
 
         po.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(po, new org.netbeans.lib.awtextra.AbsoluteConstraints(-240, 420, 940, 280));
+        jPanel1.add(po, new org.netbeans.lib.awtextra.AbsoluteConstraints(-240, 420, 700, 280));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -234,31 +234,31 @@ private void customizeButton(JButton button) {
     }//GEN-LAST:event_fActionPerformed
 
     private void conActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conActionPerformed
-        if (ch.isSelected()) {
-        // Open the JFrame for Security Question
+        if (!ch.isSelected() && !s.isSelected() && !d.isSelected() && !f.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Please select an option before continuing.");
+        return; // Exit the method early if none are selected
+    }
+
+    // Proceed based on the selection
+    if (ch.isSelected()) {
         SecurityQuestion sqFrame = new SecurityQuestion();
         sqFrame.setVisible(true);
-                this.dispose();
+        this.dispose();
 
     } else if (s.isSelected()) {
-        // Open the JFrame for PIN
         UserRecoveryPIN pinFrame = new UserRecoveryPIN();
         pinFrame.setVisible(true);
         this.dispose();
+
     } else if (d.isSelected()) {
-        // Open the JFrame for Mobile Number
-        MobileNumberFrame mnFrame = new MobileNumberFrame();
+        MobileNumber mnFrame = new MobileNumber();
         mnFrame.setVisible(true);
-                this.dispose();
+        this.dispose();
 
     } else if (f.isSelected()) {
-//         Open the JFrame for Enter Password
         LogInForm epFrame = new LogInForm();
         epFrame.setVisible(true);
-                this.dispose();
-
-    } else {
-        JOptionPane.showMessageDialog(this, "Please select an option.");
+        this.dispose();
     }
     }//GEN-LAST:event_conActionPerformed
 

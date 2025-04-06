@@ -182,11 +182,11 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Georgia" size="18" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Mobile:"/>
+                <Property name="text" type="java.lang.String" value="Email:"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="120" y="100" width="110" height="40"/>
+                  <AbsoluteConstraints x="130" y="100" width="110" height="40"/>
                 </Constraint>
               </Constraints>
             </Component>

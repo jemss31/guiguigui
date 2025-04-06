@@ -173,7 +173,7 @@ private void customizeButton(JButton button) {
         jPanel2.add(pin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 280, 40));
 
         mn.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
-        mn.setText("Mobile Number");
+        mn.setText("Email");
         mn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mnMouseClicked(evt);

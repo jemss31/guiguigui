@@ -110,8 +110,8 @@ public class MobileNumber extends javax.swing.JFrame {
         jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 110, 40));
 
         jLabel7.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
-        jLabel7.setText("Mobile:");
-        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 110, 40));
+        jLabel7.setText("Email:");
+        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 110, 40));
 
         con1.setText("CONTINUE");
         con1.addActionListener(new java.awt.event.ActionListener() {
@@ -280,17 +280,13 @@ private void sendEmail(String toEmail, String otp) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton con;
     private javax.swing.JButton con1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField m1;

@@ -23,6 +23,8 @@ public class userAccounts extends javax.swing.JFrame {
     public userAccounts() {
         initComponents();
     }
+    private boolean hasShownPinReminder = false;
+    private boolean isPinCreationOpen = false;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +65,7 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         phone = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -91,6 +94,9 @@ public class userAccounts extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -266,6 +272,15 @@ public class userAccounts extends javax.swing.JFrame {
         phone.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 160, 40));
 
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/idol.png"))); // NOI18N
+        jLabel18.setText("jLabel1");
+        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel18MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 170, 110));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -383,6 +398,26 @@ public class userAccounts extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_jLabel7MouseExited
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+      Session sess = Session.getInstance(); 
+    String pin = sess.getPIN(); 
+    System.out.println("Retrieved PIN: " + pin); 
+
+    
+    if (pin == null || pin.isEmpty()) {
+        if (!hasShownPinReminder) { 
+            JOptionPane.showMessageDialog(this, "It is advisable that you create your PIN for your account security.", "PIN Reminder", JOptionPane.WARNING_MESSAGE);
+            hasShownPinReminder = true; 
+        }
+    }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
+        Security ad = new Security();
+        ad.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel18MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -430,6 +465,7 @@ public class userAccounts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

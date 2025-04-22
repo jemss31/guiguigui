@@ -5,6 +5,7 @@
  */
 package admin;
 
+import Userdashboard.Security;
 import config.Session;
 import admin.LogInForm;
 import java.awt.Color;
@@ -27,6 +28,8 @@ public class AccountAdmin extends javax.swing.JFrame {
     public AccountAdmin() {
         initComponents();
     }
+     private boolean hasShownPinReminder = false;
+     private boolean isPinCreationOpen = false;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,12 +61,16 @@ public class AccountAdmin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         uss = new javax.swing.JLabel();
         kol = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -222,6 +229,15 @@ public class AccountAdmin extends javax.swing.JFrame {
         kol.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jPanel1.add(kol, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 190, 40));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/idol.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 170, 110));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -333,6 +349,26 @@ public class AccountAdmin extends javax.swing.JFrame {
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
         jLabel4.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel4MouseExited
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    Session sess = Session.getInstance(); 
+    String pin = sess.getPIN(); 
+    System.out.println("Retrieved PIN: " + pin); 
+
+    
+    if (pin == null || pin.isEmpty()) {
+        if (!hasShownPinReminder) { 
+            JOptionPane.showMessageDialog(this, "It is advisable that you create your PIN for your account security.", "PIN Reminder", JOptionPane.WARNING_MESSAGE);
+            hasShownPinReminder = true; 
+        }
+    }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        Security ad = new Security();
+        ad.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -372,6 +408,7 @@ public class AccountAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel emm;
     private javax.swing.JLabel gwapo;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

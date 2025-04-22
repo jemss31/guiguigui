@@ -369,7 +369,7 @@ if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
 
 String hashedPasswordInput = hashPassword(passwordInput); 
 
-String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, cont,  status, u_pass FROM users WHERE u_username = ?";
+String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, cont,  status, u_pass, PIN FROM users WHERE u_username = ?";
 
 try (Connection connect = new dbConnector().getConnection(); 
      PreparedStatement pst = connect.prepareStatement(sql)) {
@@ -392,6 +392,7 @@ try (Connection connect = new dbConnector().getConnection();
         sess.setCont(rs.getString("cont"));
         sess.setStatus(status); 
         sess.setU_pass(rs.getString("u_pass"));
+        sess.setPIN(rs.getString("PIN"));
 
         if (status.equalsIgnoreCase("Pending")) {
             JOptionPane.showMessageDialog(this, "Your account is pending approval. Please wait for admin approval.", "Access Denied", JOptionPane.ERROR_MESSAGE);

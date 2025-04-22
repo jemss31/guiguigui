@@ -157,7 +157,7 @@ public class MobileNumber extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void conActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conActionPerformed
- dbConnector dbc = new dbConnector();
+     dbConnector dbc = new dbConnector();
     config.Session sess = config.Session.getInstance(); // Get the current session
 
     // Retrieve the recipient's email from the session
@@ -197,7 +197,7 @@ private void sendEmail(String toEmail, String otp) {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(fromEmail));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-        message.setSubject("Your OTP Code");
+        message.setSubject("PET GROOMING SYSTEM OTP");
         message.setText("Your OTP is: " + otp);
 
         Transport.send(message);

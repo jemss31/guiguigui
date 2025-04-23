@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  * @author admin
  */
 public class GenQue extends javax.swing.JFrame {
+    public static String userType;
 
     /**
      * Creates new form GenQue
@@ -128,21 +129,32 @@ public class GenQue extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-          int confirm = javax.swing.JOptionPane.showConfirmDialog(
-            this, "Are you sure you wanna discard this recovery process?", "Confirmation",
-            javax.swing.JOptionPane.YES_NO_OPTION);
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(
+        this, "Are you sure you want to discard this recovery process?", "Confirmation",
+        javax.swing.JOptionPane.YES_NO_OPTION);
 
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            this.dispose();
+    if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+        this.dispose();
 
+        // Get the user type directly from the static variable
+        String userType = GenQue.userType;
+
+        if ("admin".equalsIgnoreCase(userType)) {
             AccountAdmin loginPage = new AccountAdmin();
             loginPage.setVisible(true);
+        } else if ("customer".equalsIgnoreCase(userType)) {
+            userAccounts userPage = new userAccounts();
+            userPage.setVisible(true);
+        } else {
+            // Handle unexpected user type if necessary
+            JOptionPane.showMessageDialog(this, "Unknown user type.");
         }
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void conActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conActionPerformed
-     String squestion = s5.getText().trim(); // Ensure trimming
-     String answer = s6.getText().trim(); // Ensure trimming
+       String squestion = s5.getText().trim();
+    String answer = s6.getText().trim(); 
 
     System.out.println("Question: '" + squestion + "' (Length: " + squestion.length() + ")");
     
@@ -166,29 +178,43 @@ public class GenQue extends javax.swing.JFrame {
 
     dbConnector dbConnect = new dbConnector();
     
-try {
-    // Execute the SQL update and get the number of affected rows
-    int rowsAffected = dbConnect.insertData(sql);
+    try {
+        int rowsAffected = dbConnect.insertData(sql);
 
-    // Check if the update was successful
-    if (rowsAffected > 0) {
-        Session.getInstance().setSecurityQuestion(squestion); 
-        Session.getInstance().setAnswer(answer);
-        JOptionPane.showMessageDialog(this, "Security Question created successfully!");
-        AccountAdmin aa = new AccountAdmin();
-        aa.setVisible(true);
-        this.dispose();
-    } else {
-        JOptionPane.showMessageDialog(this, "Error saving Security Question to database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+        if (rowsAffected > 0) {
+            Session.getInstance().setSecurityQuestion(squestion); 
+            Session.getInstance().setAnswer(answer);
+            JOptionPane.showMessageDialog(this, "Security Question created successfully!");
+
+            // Add confirmation dialog and user type handling
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(
+                this, "Do you want to go back to the previous page?", "Confirmation",
+                javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                this.dispose();
+
+                // Get the user type directly from the static variable
+                String userType = GenQue.userType;
+
+                if ("admin".equalsIgnoreCase(userType)) {
+                    AccountAdmin aa = new AccountAdmin();
+                    aa.setVisible(true);
+                } else if ("customer".equalsIgnoreCase(userType)) {
+                    userAccounts userPage = new userAccounts();
+                    userPage.setVisible(true);
+                } else {
+                    // Handle unexpected user type if necessary
+                    JOptionPane.showMessageDialog(this, "Unknown user type.");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error saving Security Question to database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace(); 
     }
-}catch (Exception e) {
-    // Catch other exceptions
-    JOptionPane.showMessageDialog(this, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    e.printStackTrace(); // Print stack trace for debugging
-}
-        // Catch SQL exceptions specifically for better error handling
-        // Print stack trace for debugging
-        
     }//GEN-LAST:event_conActionPerformed
 
     private void s6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s6ActionPerformed

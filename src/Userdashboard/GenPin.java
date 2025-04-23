@@ -23,6 +23,7 @@ import javax.swing.text.DocumentFilter;
  */
 public class GenPin extends javax.swing.JFrame {
 private boolean isPinCreationOpen = false;
+  public static String userType;
     
     public GenPin() {
          setUndecorated(true);
@@ -124,7 +125,7 @@ private boolean isPinCreationOpen = false;
         jLabel2.setText("Recovery Mode");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 320, 116));
 
-        jButton2.setText("LOGIN");
+        jButton2.setText("BACK");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -180,22 +181,31 @@ private boolean isPinCreationOpen = false;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-           int confirm = javax.swing.JOptionPane.showConfirmDialog(
-            this, "Are you sure you wanna discard this recovery process?", "Confirmation",
-            javax.swing.JOptionPane.YES_NO_OPTION);
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(
+        this, "Are you sure you want to discard this recovery process?", "Confirmation",
+        javax.swing.JOptionPane.YES_NO_OPTION);
 
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            this.dispose();
+    if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+        this.dispose();
 
+        // Get the user type directly from the static variable
+        String userType = GenPin.userType;
+
+        if ("admin".equalsIgnoreCase(userType)) {
             AccountAdmin loginPage = new AccountAdmin();
             loginPage.setVisible(true);
+        } else if ("customer".equalsIgnoreCase(userType)) {
+            userAccounts userPage = new userAccounts();
+            userPage.setVisible(true);
+        } else {
+            // Handle unexpected user type if necessary
+            JOptionPane.showMessageDialog(this, "Unknown user type.");
         }
-        
-        
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void conActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conActionPerformed
-       String pin = s1.getText() + 
+        String pin = s1.getText() + 
                  s2.getText() + 
                  s3.getText() + 
                  s4.getText() + 
@@ -216,15 +226,36 @@ private boolean isPinCreationOpen = false;
     String sql = "UPDATE users SET PIN = '" + pin + "' WHERE u_username = '" + username + "'";
 
     dbConnector dbConnect = new dbConnector();
-      int rowsAffected = dbConnect.insertData(sql);
+    int rowsAffected = dbConnect.insertData(sql);
     boolean success = rowsAffected > 0;
 
     if (success) {
         Session.getInstance().setPIN(pin); 
         JOptionPane.showMessageDialog(null, "PIN created successfully!");
-        AccountAdmin AA = new AccountAdmin();
-        AA.setVisible(true);
-        this.dispose();
+
+        // Add confirmation dialog before navigating away
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
+            null, "Do you want to go back to the previous page?", "Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            this.dispose();
+
+            // Get the user type directly from the static variable
+            String userType = GenPin.userType;
+
+            if ("admin".equalsIgnoreCase(userType)) {
+                AccountAdmin AA = new AccountAdmin(); //heree
+                AA.setVisible(true);
+            } else if ("customer".equalsIgnoreCase(userType)) {
+                userAccounts userPage = new userAccounts();
+                userPage.setVisible(true);
+            } else {
+                // Handle unexpected user type if necessary
+                JOptionPane.showMessageDialog(this, "Unknown user type.");
+            }
+        }
     } else {
         JOptionPane.showMessageDialog(
             null,

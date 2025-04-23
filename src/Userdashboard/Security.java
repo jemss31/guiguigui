@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  * @author admin
  */
 public class Security extends javax.swing.JFrame {
+      public static String userType;
 
     /**
      * Creates new form Security
@@ -151,16 +152,27 @@ public class Security extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int confirm = javax.swing.JOptionPane.showConfirmDialog(
-            this, "Are you sure you wanna discard this recovery process?", "Confirmation",
-            javax.swing.JOptionPane.YES_NO_OPTION);
+          int confirm = javax.swing.JOptionPane.showConfirmDialog(
+        this, "Are you sure you want to discard this recovery process?", "Confirmation",
+        javax.swing.JOptionPane.YES_NO_OPTION);
 
-        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            this.dispose();
+    if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+        this.dispose();
 
+        // Get the user type directly from the static variable
+        String userType = Security.userType;
+
+        if ("admin".equalsIgnoreCase(userType)) {
             AccountAdmin loginPage = new AccountAdmin();
             loginPage.setVisible(true);
+        } else if ("customer".equalsIgnoreCase(userType)) {
+            userAccounts userPage = new userAccounts();
+            userPage.setVisible(true);
+        } else {
+            // Handle unexpected user type if necessary
+            JOptionPane.showMessageDialog(this, "Unknown user type.");
         }
+    }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void chActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chActionPerformed

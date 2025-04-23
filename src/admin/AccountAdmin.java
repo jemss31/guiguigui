@@ -6,9 +6,18 @@
 package admin;
 
 import Userdashboard.Security;
+import Userdashboard.UpdateUser;
+import static Userdashboard.UpdateUser.getHeightFromWidth;
 import config.Session;
 import admin.LogInForm;
+import config.dbConnector;
 import java.awt.Color;
+import java.awt.Image;
+import java.io.File;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -30,6 +39,22 @@ public class AccountAdmin extends javax.swing.JFrame {
     }
      private boolean hasShownPinReminder = false;
      private boolean isPinCreationOpen = false;
+     
+         public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,13 +80,13 @@ public class AccountAdmin extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         emm = new javax.swing.JLabel();
         gwapo = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         pepe1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         uss = new javax.swing.JLabel();
         kol = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        Profile = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -201,9 +226,6 @@ public class AccountAdmin extends javax.swing.JFrame {
         });
         jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 190, 40));
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/profile+user+icon-1320086081145096981-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 350, 200));
-
         pepe1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         pepe1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -237,6 +259,13 @@ public class AccountAdmin extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 170, 110));
+
+        Profile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProfileMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 250, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -291,6 +320,17 @@ public class AccountAdmin extends javax.swing.JFrame {
         emm.setText("" + sess.getU_email());
         uss.setText("" + sess.getU_username());
         kol.setText("" + sess.getCont());
+    }
+    
+    String imagePath = sess.getImage();
+    if (imagePath != null && !imagePath.isEmpty()) {
+        File imgFile = new File(imagePath);
+        if (imgFile.exists()) {
+            Profile.setIcon(ResizeImage(imagePath,null,Profile)); 
+        } else {
+            System.out.println("Image not found: " + imagePath);
+            Profile.setIcon(new ImageIcon("path/to/default/icon.png")); 
+        }
     }
     
         // TODO add your handling code here:
@@ -369,6 +409,71 @@ public class AccountAdmin extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel1MouseClicked
 
+    private void ProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProfileMouseClicked
+        Session sess = Session.getInstance(); 
+    String userId = String.valueOf(sess.getId()); 
+
+    if (userId == null || userId.equals("0")) { 
+        JOptionPane.showMessageDialog(null, "No user is currently logged in!");
+        return;
+    }
+
+    try {
+        dbConnector dbc = new dbConnector();
+        String query = "SELECT * FROM users WHERE id = ?";
+
+        PreparedStatement pst = dbc.getConnection().prepareStatement(query);
+        pst.setString(1, userId);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            UpdateUser crf = new UpdateUser();
+            crf.setUserId(userId);
+            crf.fn.setText(rs.getString("u_fname"));
+            crf.ln1.setText(rs.getString("u_lname"));
+            crf.contactnum.setText(rs.getString("cont"));
+            crf.Email.setText(rs.getString("u_email"));
+            crf.uss1.setText(rs.getString("u_username"));
+            crf.stat.setSelectedItem(rs.getString("status"));
+            crf.utype.setSelectedItem(rs.getString("type"));
+
+            String imagePath = rs.getString("image");
+
+            if (imagePath != null && !imagePath.isEmpty()) {
+                File imgFile = new File(imagePath);
+                if (imgFile.exists()) {
+                    crf.Picture.setIcon(crf.ResizeImage(imagePath, null, crf.Picture));
+                } else {
+                    System.out.println("Image file does not exist: " + imagePath);
+                    crf.Picture.setIcon(new ImageIcon("path/to/default/icon.png"));
+                }
+                crf.select.setEnabled(false); 
+                crf.remove1.setEnabled(true); 
+                crf.oldpath = imagePath;
+                crf.path = imagePath;
+                crf.destination = imagePath;
+            } else { 
+                crf.Picture.setIcon(new ImageIcon("path/to/default/icon.png")); // Set default icon if no image
+                crf.select.setEnabled(true); 
+                crf.remove1.setEnabled(false); 
+                crf.oldpath = null; // No previous path
+                crf.path = null; 
+                crf.destination = null; 
+            }
+
+            crf.pass.setEnabled(false); 
+            crf.cancel.setVisible(true);
+
+            crf.Update1.setVisible(true);
+
+            crf.setVisible(true);
+            this.dispose();
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_ProfileMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -405,6 +510,7 @@ public class AccountAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Profile;
     private javax.swing.JLabel emm;
     private javax.swing.JLabel gwapo;
     private javax.swing.JButton jButton3;
@@ -413,7 +519,6 @@ public class AccountAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -5,6 +5,9 @@
  */
 package admin;
 
+import Userdashboard.GenPin;
+import Userdashboard.GenQue;
+import Userdashboard.Security;
 import Userdashboard.userdashboard;
 import admin.adminDashboard;
 import config.Session;
@@ -360,68 +363,71 @@ public class LogInForm extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String usernameInput = username.getText().trim();
-String passwordInput = new String(password.getPassword()).trim();
+    String passwordInput = new String(password.getPassword()).trim();
 
-if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Username and Password cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
+    if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Username and Password cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-String hashedPasswordInput = hashPassword(passwordInput); 
+    String hashedPasswordInput = hashPassword(passwordInput); 
 
-String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, cont,  status, u_pass, PIN FROM users WHERE u_username = ?";
+    String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, cont, status, u_pass, PIN FROM users WHERE u_username = ?";
 
-try (Connection connect = new dbConnector().getConnection(); 
-     PreparedStatement pst = connect.prepareStatement(sql)) {
-    
-    pst.setString(1, usernameInput);
-    ResultSet rs = pst.executeQuery();
-    
-    if (rs.next()) {
-        String dbPassword = rs.getString("u_pass");  
-        String status = rs.getString("status");
-        String type = rs.getString("type");
+    try (Connection connect = new dbConnector().getConnection(); 
+         PreparedStatement pst = connect.prepareStatement(sql)) {
+        
+        pst.setString(1, usernameInput);
+        ResultSet rs = pst.executeQuery();
+        
+        if (rs.next()) {
+            String dbPassword = rs.getString("u_pass");  
+            String status = rs.getString("status");
+            String type = rs.getString("type");
 
-        Session sess = Session.getInstance();
-        sess.setId(rs.getInt("id")); 
-        sess.setU_fname(rs.getString("u_fname"));
-        sess.setU_lname(rs.getString("u_lname"));
-        sess.setU_email(rs.getString("u_email"));
-        sess.setU_username(rs.getString("u_username"));
-        sess.setType(type); 
-        sess.setCont(rs.getString("cont"));
-        sess.setStatus(status); 
-        sess.setU_pass(rs.getString("u_pass"));
-        sess.setPIN(rs.getString("PIN"));
+            // Set static user type for session management
+            GenPin.userType = type;
+            Security.userType = type;// Set user type here
+            GenQue.userType = type;
+            
+            Session sess = Session.getInstance();
+            sess.setId(rs.getInt("id")); 
+            sess.setU_fname(rs.getString("u_fname"));
+            sess.setU_lname(rs.getString("u_lname"));
+            sess.setU_email(rs.getString("u_email"));
+            sess.setU_username(rs.getString("u_username"));
+            sess.setCont(rs.getString("cont"));
+            sess.setStatus(status); 
+            sess.setU_pass(rs.getString("u_pass"));
+            sess.setPIN(rs.getString("PIN"));
 
-        if (status.equalsIgnoreCase("Pending")) {
-            JOptionPane.showMessageDialog(this, "Your account is pending approval. Please wait for admin approval.", "Access Denied", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (hashedPasswordInput.equals(dbPassword)) {
-            JOptionPane.showMessageDialog(this, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-            if (type.equalsIgnoreCase("admin")) {
-                new adminDashboard().setVisible(true);
-            } else if (type.equalsIgnoreCase("customer")) {
-                new userdashboard().setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid User Type!", "Error", JOptionPane.ERROR_MESSAGE);
+            if (status.equalsIgnoreCase("Pending")) {
+                JOptionPane.showMessageDialog(this, "Your account is pending approval. Please wait for admin approval.", "Access Denied", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            this.dispose(); 
+
+            if (hashedPasswordInput.equals(dbPassword)) {
+                JOptionPane.showMessageDialog(this, "Login Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                if (type.equalsIgnoreCase("admin")) {
+                    new adminDashboard().setVisible(true);
+                } else if (type.equalsIgnoreCase("customer")) {
+                    new userdashboard().setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid User Type!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                this.dispose(); 
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Error", JOptionPane.ERROR_MESSAGE);
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-
-} catch (SQLException ex) {
-    JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-}
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void regisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regisMouseClicked

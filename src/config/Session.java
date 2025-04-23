@@ -18,6 +18,7 @@ public class Session {
     private String SecurityQuestion;
     private String answer;
     private String PIN;
+    private String image;
 
 
     // Private constructor to prevent instantiation
@@ -135,6 +136,14 @@ public class Session {
 
     public void setPIN(String PIN) {
         this.PIN = PIN;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
     
 

@@ -509,7 +509,7 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     try {
                         selectedFile = fileChooser.getSelectedFile();
-                        destination = "src/profileImages/" + selectedFile.getName();
+                        destination = "src/Profiles/" + selectedFile.getName();
                         path  = selectedFile.getAbsolutePath();
                         
                         
@@ -548,23 +548,11 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
     }//GEN-LAST:event_cancelActionPerformed
 
     private void fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnActionPerformed
-        String name = fn.getText();
-        String regex = "^[a-zA-Z]+$";
-        if (!name.matches(regex)) {
-            JOptionPane.showMessageDialog(null, "Name should not contain numbers or special characters.");
-        } else {
-        }
-
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_fnActionPerformed
 
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-        String password = new String(pass.getPassword());
-
-        if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
-            JOptionPane.showMessageDialog(this, "Invalid Password! Must be at least 8 characters long, contain one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
-            pass.setText("");
-        }
+    
     }//GEN-LAST:event_passActionPerformed
 
     private void passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passKeyPressed
@@ -797,8 +785,8 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
     }//GEN-LAST:event_Update1MouseExited
 
     private void Update1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Update1ActionPerformed
-        
-     String newFname = fn.getText().trim();
+            
+    String newFname = fn.getText().trim();
     String newLname = ln1.getText().trim();
     String newContact = contactnum.getText().trim();
     String newEmail = Email.getText().trim();
@@ -871,7 +859,7 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
             updatePst.setString(6, newUserStatus);
             
             if (path != null && !path.isEmpty()) {
-                updatePst.setString(7, destination);
+                updatePst.setString(7, path); // Set the image path from the upload
                 updatePst.setString(8, this.userId);
             } else {
                 updatePst.setString(7, this.userId); 
@@ -880,44 +868,23 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
             int updated = updatePst.executeUpdate();
             if (updated > 0) {
     
-    Logins logger = new Logins(conn); 
-    int adminId = Integer.parseInt(ID.getText()); 
-    String logMessage = "Admin updated user info: " + newUsername + " (User ID: " + this.userId + ")";
+                Logins logger = new Logins(conn); 
+                int adminId = Integer.parseInt(ID.getText()); 
+                String logMessage = "Admin updated user info: " + newUsername + " (User ID: " + this.userId + ")";
     
-    try {
-        logger.logAdd(adminId, logMessage);
-    } catch (Exception logEx) {
-        JOptionPane.showMessageDialog(this, "Error logging the update: " + logEx.getMessage(), "Log Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-                
-                if (destination == null || destination.isEmpty()) {
-                    
-                    if (oldpath != null) {
-                        File existingFile = new File(oldpath); 
-                        if (existingFile.exists()) { 
-                            existingFile.delete(); 
-                        }
-                    }
-
-                    
-                    String updateImageQuery = "UPDATE users SET image = NULL WHERE id = ?";
-                    try (PreparedStatement updateImagePst = conn.prepareStatement(updateImageQuery)) {
-                        updateImagePst.setString(1, this.userId);
-                        updateImagePst.executeUpdate();
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, "Error updating image in database: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } else { 
-                    if (oldpath != null && !oldpath.equals(path)) { 
-                        imageUpdater(oldpath, path); 
-                    } 
+                try {
+                    logger.logAdd(adminId, logMessage);
+                } catch (Exception logEx) {
+                    JOptionPane.showMessageDialog(this, "Error logging the update: " + logEx.getMessage(), "Log Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-                
-                if (selectedFile != null && destination != null) {
+                // Handle image file existence and update
+                if (selectedFile != null) {
+                    String destination = "src/profileImages/" + selectedFile.getName(); // Define the destination path
                     try {
                         Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        Session.getInstance().setImage(destination); // Set image path in session
+                        System.out.println("Image uploaded and path set in session: " + destination);
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(this, "Error copying the image file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                         return;

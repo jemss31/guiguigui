@@ -81,11 +81,13 @@ public class AccountAdmin extends javax.swing.JFrame {
         emm = new javax.swing.JLabel();
         gwapo = new javax.swing.JLabel();
         pepe1 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         uss = new javax.swing.JLabel();
         kol = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        ima = new javax.swing.JLabel();
         Profile = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -216,7 +218,7 @@ public class AccountAdmin extends javax.swing.JFrame {
                 emmMouseClicked(evt);
             }
         });
-        jPanel1.add(emm, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 280, 40));
+        jPanel1.add(emm, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 280, 40));
 
         gwapo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         gwapo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -224,7 +226,7 @@ public class AccountAdmin extends javax.swing.JFrame {
                 gwapoMouseClicked(evt);
             }
         });
-        jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 190, 40));
+        jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 190, 40));
 
         pepe1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         pepe1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -232,24 +234,16 @@ public class AccountAdmin extends javax.swing.JFrame {
                 pepe1MouseClicked(evt);
             }
         });
-        jPanel1.add(pepe1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 190, 40));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/asdasdasd.gif"))); // NOI18N
-        jLabel8.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jLabel8KeyPressed(evt);
-            }
-        });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 530, 260));
+        jPanel1.add(pepe1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 190, 40));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 500, 860, 210));
 
         uss.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel1.add(uss, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 390, 190, 40));
+        jPanel1.add(uss, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 190, 40));
 
         kol.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel1.add(kol, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 190, 40));
+        jPanel1.add(kol, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 190, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/idol.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -260,12 +254,27 @@ public class AccountAdmin extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 170, 110));
 
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/asdasdasd.gif"))); // NOI18N
+        jLabel8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel8KeyPressed(evt);
+            }
+        });
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 530, 260));
+        jPanel4.add(ima, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 225));
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, 290, 250));
+
+        Profile.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        Profile.setText("EDIT PROFILE");
         Profile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ProfileMouseClicked(evt);
             }
         });
-        jPanel1.add(Profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 250, 200));
+        jPanel1.add(Profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, 130, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -306,7 +315,7 @@ public class AccountAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_gwapoMouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        Session sess = Session.getInstance();
+Session sess = Session.getInstance();
 
     if (sess.getId() == 0) {
         System.out.println("No active session. Redirecting to login.");
@@ -314,26 +323,31 @@ public class AccountAdmin extends javax.swing.JFrame {
         lf.setVisible(true);
         this.dispose(); 
     } else {
-       
-        gwapo.setText(""+ sess.getU_fname());
-        pepe1.setText("" + sess.getU_lname());
-        emm.setText("" + sess.getU_email());
-        uss.setText("" + sess.getU_username());
-        kol.setText("" + sess.getCont());
+        gwapo.setText(sess.getU_fname());
+        pepe1.setText(sess.getU_lname());
+        emm.setText(sess.getU_email());
+        uss.setText(sess.getU_username());
+        kol.setText(sess.getCont());
     }
-    
+
+    // Retrieve and debug the image path
     String imagePath = sess.getImage();
+    System.out.println("Image path retrieved from session: " + imagePath); // Debug output
+
     if (imagePath != null && !imagePath.isEmpty()) {
         File imgFile = new File(imagePath);
+        System.out.println("Checking existence of image file: " + imgFile.getAbsolutePath()); // Debug output
         if (imgFile.exists()) {
-            Profile.setIcon(ResizeImage(imagePath,null,Profile)); 
+            ima.setIcon(ResizeImage(imagePath, null, ima)); 
+            System.out.println("Image loaded successfully: " + imagePath);
         } else {
             System.out.println("Image not found: " + imagePath);
-            Profile.setIcon(new ImageIcon("path/to/default/icon.png")); 
+            ima.setIcon(new ImageIcon("path/to/default/icon.png")); 
         }
+    } else {
+        System.out.println("No image path provided in session.");
+        ima.setIcon(new ImageIcon("path/to/default/icon.png")); 
     }
-    
-        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
 
     private void pepe1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pepe1MouseClicked
@@ -513,6 +527,7 @@ public class AccountAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel Profile;
     private javax.swing.JLabel emm;
     private javax.swing.JLabel gwapo;
+    private javax.swing.JLabel ima;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -528,6 +543,7 @@ public class AccountAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel kol;
     private javax.swing.JLabel pepe1;

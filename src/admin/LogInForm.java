@@ -362,7 +362,7 @@ public class LogInForm extends javax.swing.JFrame {
     }//GEN-LAST:event_asActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String usernameInput = username.getText().trim();
+       String usernameInput = username.getText().trim();
     String passwordInput = new String(password.getPassword()).trim();
 
     if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
@@ -372,7 +372,7 @@ public class LogInForm extends javax.swing.JFrame {
 
     String hashedPasswordInput = hashPassword(passwordInput); 
 
-    String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, cont, status, u_pass, PIN FROM users WHERE u_username = ?";
+    String sql = "SELECT id, u_fname, u_lname, u_email, u_username, type, cont, status, u_pass, PIN, image FROM users WHERE u_username = ?";
 
     try (Connection connect = new dbConnector().getConnection(); 
          PreparedStatement pst = connect.prepareStatement(sql)) {
@@ -387,7 +387,7 @@ public class LogInForm extends javax.swing.JFrame {
 
             // Set static user type for session management
             GenPin.userType = type;
-            Security.userType = type;// Set user type here
+            Security.userType = type; // Set user type here
             GenQue.userType = type;
             
             Session sess = Session.getInstance();
@@ -400,6 +400,10 @@ public class LogInForm extends javax.swing.JFrame {
             sess.setStatus(status); 
             sess.setU_pass(rs.getString("u_pass"));
             sess.setPIN(rs.getString("PIN"));
+            sess.setImage(rs.getString("image")); // Ensure this retrieves the image path
+
+            // Debug output for image path
+            System.out.println("Image path retrieved from database: " + sess.getImage());
 
             if (status.equalsIgnoreCase("Pending")) {
                 JOptionPane.showMessageDialog(this, "Your account is pending approval. Please wait for admin approval.", "Access Denied", JOptionPane.ERROR_MESSAGE);

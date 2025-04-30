@@ -18,7 +18,7 @@ public class Session {
     private String SecurityQuestion;
     private String answer;
     private String PIN;
-    private String image;
+    private String image;   
 
 
     // Private constructor to prevent instantiation

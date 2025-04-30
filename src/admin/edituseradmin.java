@@ -295,9 +295,9 @@ public class edituseradmin extends javax.swing.JFrame {
     String newUsername = uss1.getText().trim();
     String newUserType = utype.getSelectedItem().toString();
     String newUserStatus = stat.getSelectedItem().toString(); 
-    String newContactNumber = contactnum.getText().trim();  // Add contact number field
+    String newContactNumber = contactnum.getText().trim();
 
-    // Email regex for validation
+   
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
     // Validate inputs
@@ -322,8 +322,8 @@ public class edituseradmin extends javax.swing.JFrame {
         return;
     }
 
-    // Validate contact number (Only numbers and specific length)
-    if (!newContactNumber.matches("\\d{12}")) {  // Ensures 10-15 digits
+    
+    if (!newContactNumber.matches("\\d{11}")) { 
         JOptionPane.showMessageDialog(this, "Invalid Number! Contact number must be 12 digits.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -336,7 +336,7 @@ public class edituseradmin extends javax.swing.JFrame {
     }
 
     try (Connection conn = dbc.getConnection()) {
-        // Check if username or email already exists (excluding the current user)
+       
         String checkQuery = "SELECT COUNT(*) FROM users WHERE (u_username = ? OR u_email = ?) AND id != ?";
         
         try (PreparedStatement pst = conn.prepareStatement(checkQuery)) {
@@ -352,13 +352,13 @@ public class edituseradmin extends javax.swing.JFrame {
             }
         }
 
-        // Check if contact number already exists (excluding the current user)
+        
        if (dbc.isContactExists(newContactNumber)) {
     JOptionPane.showMessageDialog(this, "Contact number is already in use! Please enter a different number.", "Error", JOptionPane.ERROR_MESSAGE);
     return;
 }
 
-        // Update user details including the contact number
+        
         String updateQuery = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, type = ?, status = ?, cont = ? WHERE id = ?";
         
         try (PreparedStatement updatePst = conn.prepareStatement(updateQuery)) {
@@ -368,8 +368,8 @@ public class edituseradmin extends javax.swing.JFrame {
             updatePst.setString(4, newUsername);
             updatePst.setString(5, newUserType);
             updatePst.setString(6, newUserStatus);
-            updatePst.setString(7, newContactNumber);  // Set contact number here
-            updatePst.setString(8, this.userId);  // User ID to identify the correct user
+            updatePst.setString(7, newContactNumber); 
+            updatePst.setString(8, this.userId);
 
             int updated = updatePst.executeUpdate();
             if (updated > 0) {

@@ -6,8 +6,16 @@
 package Userdashboard;
 
 import admin.LogInForm;
+import config.Session;
+import config.dbConnector;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,9 +26,57 @@ public class userAppointment extends javax.swing.JFrame {
     /**
      * Creates new form userAppointment
      */
-    public userAppointment() {
+   public userAppointment() {
         initComponents();
+        loadUsersData();
+        at = new JTable();
+
+        
     }
+    
+private void loadUsersData() {
+    DefaultTableModel model = (DefaultTableModel) at.getModel();
+
+    String[] columnNames = {"a_id", "date", "time", "pet_name", "cost", "u_fname", "u_lname"};
+    model.setColumnIdentifiers(columnNames); 
+    model.setRowCount(0);
+
+    int currentUserId = Session.getInstance().getId();
+   
+
+    String sql = "SELECT a_id, date, time, pet_name, cost, u_fname, u_lname FROM appointments WHERE user_id = ?";
+
+    try (Connection connect = new dbConnector().getConnection();
+         PreparedStatement pst = connect.prepareStatement(sql)) {
+        
+       
+        pst.setInt(1, currentUserId);
+       
+
+        try (ResultSet rs = pst.executeQuery()) {
+            if (!rs.isBeforeFirst()) { 
+                JOptionPane.showMessageDialog(this, "No transactions found for this user.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                while (rs.next()) {
+                    Object[] row = {
+                        rs.getInt("a_id"),
+                        rs.getString("date"),
+                        rs.getString("time"),
+                        rs.getString("pet_name"),
+                        rs.getBigDecimal("cost"),
+                        rs.getString("u_fname"),
+                        rs.getString("u_lname"),
+                    };
+                    model.addRow(row); 
+                }
+            }
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,6 +101,8 @@ public class userAppointment extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        at = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -154,6 +212,21 @@ public class userAppointment extends javax.swing.JFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 860, 280));
+
+        at.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(at);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 630, 300));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,6 +338,7 @@ userdashboard ud = new userdashboard();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel acc;
+    private javax.swing.JTable at;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -277,6 +351,7 @@ userdashboard ud = new userdashboard();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

@@ -59,7 +59,7 @@ public class userdashboard extends javax.swing.JFrame {
         type = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        sumbit = new javax.swing.JButton();
         pet = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         time = new com.raven.swing.TimePicker();
@@ -183,13 +183,13 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel6.setText("Select Date to Appoint:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 260, 30));
 
-        jButton1.setText("SUBMIT");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        sumbit.setText("SUBMIT");
+        sumbit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                sumbitActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 610, 160, 30));
+        jPanel1.add(sumbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 610, 160, 30));
 
         pet.setText("Pet Name");
         jPanel1.add(pet, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 260, 50));
@@ -274,21 +274,21 @@ public class userdashboard extends javax.swing.JFrame {
        lg.setForeground(Color.BLACK);
     }//GEN-LAST:event_lgMouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        java.util.Date selectedDateUtil = date.getDate(); // Assuming 'date' is your JCalendar
+    private void sumbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumbitActionPerformed
+        java.util.Date selectedDateUtil = date.getDate(); 
     String selectedDate = new SimpleDateFormat("yyyy-MM-dd").format(selectedDateUtil);
 
     String petName = pet.getText().trim();
     String selectedHaircut = (String) type.getSelectedItem();
 
-    // Retrieve the selected time from the TimePicker
-    String selectedTime = time.getSelectedTime(); // Adjust based on your TimePicker's method
+   
+    String selectedTime = time.getSelectedTime(); 
 
-    // Convert to 24-hour format
+    
     String formattedTime = "";
     try {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("hh:mm a"); // Adjust if needed
-        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss"); // Desired format for database
+        SimpleDateFormat inputFormat = new SimpleDateFormat("hh:mm a"); 
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss"); 
         Date dateTime = inputFormat.parse(selectedTime);
         formattedTime = outputFormat.format(dateTime);
     } catch (ParseException e) {
@@ -296,37 +296,41 @@ public class userdashboard extends javax.swing.JFrame {
         return;
     }
 
-    // Validate inputs
+    
     if (petName.isEmpty() || selectedDate.isEmpty() || selectedHaircut == null || formattedTime.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Validate future date
+   
     java.util.Date currentDate = new java.util.Date();
     if (selectedDateUtil.before(currentDate)) {
         JOptionPane.showMessageDialog(this, "The selected date and time must be in the future!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Get the current user's ID from the session
-    int currentUserId = Session.getInstance().getId(); // Fetch the user ID
-
-    // Prepare SQL query to insert appointment
-    String sql = "INSERT INTO appointments (date, time, pet_name, haircut_id, cost, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+    
+    int currentUserId = Session.getInstance().getId(); 
+    String userFirstName = Session.getInstance().getU_fname();
+    String userLastName = Session.getInstance().getU_lname();
+    String userEmail = Session.getInstance().getU_email();
+    
+    String sql = "INSERT INTO appointments (date, time, pet_name, haircut_id, cost, user_id, u_fname, u_lname, u_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (Connection conn = new dbConnector().getConnection();
          PreparedStatement pst = conn.prepareStatement(sql)) {
         
-        // Set parameters for the SQL query
+        
         pst.setString(1, selectedDate);
-        pst.setString(2, formattedTime); // Use the formatted time
+        pst.setString(2, formattedTime); 
         pst.setString(3, petName);
-        pst.setInt(4, getHaircutId(selectedHaircut, conn)); // Get haircut ID
-        pst.setBigDecimal(5, getHaircutCost(selectedHaircut, conn)); // Get haircut cost
-        pst.setInt(6, currentUserId); // Use the current user's ID
-
-        // Execute the insert
+        pst.setInt(4, getHaircutId(selectedHaircut, conn)); 
+        pst.setBigDecimal(5, getHaircutCost(selectedHaircut, conn)); 
+        pst.setInt(6, currentUserId);
+        pst.setString(7, userFirstName); 
+        pst.setString(8, userLastName);
+        pst.setString(9, userEmail);
+        
         int rowsAffected = pst.executeUpdate();
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Appointment submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -360,7 +364,7 @@ private BigDecimal getHaircutCost(String haircutName, Connection conn) throws SQ
             throw new SQLException("Haircut not found.");
         }
     }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_sumbitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -400,7 +404,6 @@ private BigDecimal getHaircutCost(String haircutName, Connection conn) throws SQ
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel acc;
     private com.toedter.calendar.JCalendar date;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
@@ -417,6 +420,7 @@ private BigDecimal getHaircutCost(String haircutName, Connection conn) throws SQ
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lg;
     private javax.swing.JTextField pet;
+    private javax.swing.JButton sumbit;
     private com.raven.swing.TimePicker time;
     private javax.swing.JComboBox<String> type;
     private javax.swing.JLabel ya;

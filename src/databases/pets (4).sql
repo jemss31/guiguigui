@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2025 at 07:24 PM
+-- Generation Time: Apr 30, 2025 at 07:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,24 +34,30 @@ CREATE TABLE `appointments` (
   `pet_name` varchar(255) NOT NULL,
   `haircut_id` int(11) NOT NULL,
   `cost` decimal(10,2) NOT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `u_fname` varchar(255) DEFAULT NULL,
+  `u_lname` varchar(255) DEFAULT NULL,
+  `u_email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`a_id`, `date`, `time`, `pet_name`, `haircut_id`, `cost`, `user_id`) VALUES
-(1, '2025-04-30', '10:00:00', 'Pet Name', 2, 30.00, 1),
-(2, '2025-04-30', '10:00:00', 'Jaypee', 3, 20.00, NULL),
-(3, '2025-04-30', '10:00:00', 'Nutella', 1, 25.00, NULL),
-(4, '2025-05-01', '10:00:00', 'kabayo', 2, 30.00, NULL),
-(5, '2025-05-02', '10:00:00', 'Pet Name', 6, 22.00, NULL),
-(6, '2025-05-03', '10:00:00', 'Doggo', 1, 25.00, 1),
-(7, '2025-05-14', '10:00:00', 'nut', 7, 27.00, 26),
-(8, '2025-05-06', '10:00:00', 'Andre', 3, 20.00, 33),
-(9, '2025-05-07', '10:00:00', 'Itlog', 4, 28.00, 26),
-(10, '2025-05-07', '15:30:00', 'Sabio', 6, 22.00, 26);
+INSERT INTO `appointments` (`a_id`, `date`, `time`, `pet_name`, `haircut_id`, `cost`, `user_id`, `u_fname`, `u_lname`, `u_email`) VALUES
+(1, '2025-04-30', '10:00:00', 'Pet Name', 2, 30.00, 1, NULL, NULL, NULL),
+(2, '2025-04-30', '10:00:00', 'Jaypee', 3, 20.00, NULL, NULL, NULL, NULL),
+(3, '2025-04-30', '10:00:00', 'Nutella', 1, 25.00, NULL, NULL, NULL, NULL),
+(4, '2025-05-01', '10:00:00', 'kabayo', 2, 30.00, NULL, NULL, NULL, NULL),
+(5, '2025-05-02', '10:00:00', 'Pet Name', 6, 22.00, NULL, NULL, NULL, NULL),
+(6, '2025-05-03', '10:00:00', 'Doggo', 1, 25.00, 1, NULL, NULL, NULL),
+(7, '2025-05-14', '10:00:00', 'nut', 7, 27.00, 26, NULL, NULL, NULL),
+(8, '2025-05-06', '10:00:00', 'Andre', 3, 20.00, 33, NULL, NULL, NULL),
+(9, '2025-05-07', '10:00:00', 'Itlog', 4, 28.00, 26, NULL, NULL, NULL),
+(10, '2025-05-07', '15:30:00', 'Sabio', 6, 22.00, 26, NULL, NULL, NULL),
+(11, '2025-05-05', '14:30:00', 'gwapo', 7, 27.00, 26, 'kevin', 'Kevinn', 'kevin@gmail.com'),
+(12, '2025-05-05', '16:29:00', 'Isyot', 1, 25.00, 33, 'charles', 'mala', 'mala@gmail.com'),
+(13, '2025-05-06', '09:47:00', 'asjajsdasad', 2, 30.00, 26, 'kevin', 'Kevinn', 'kevin@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -182,7 +188,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `haircuts`
@@ -210,6 +216,7 @@ ALTER TABLE `users`
 -- Constraints for table `appointments`
 --
 ALTER TABLE `appointments`
+  ADD CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`haircut_id`) REFERENCES `haircuts` (`id`),
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --

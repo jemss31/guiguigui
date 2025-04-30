@@ -5,23 +5,63 @@
  */
 package admin;
 
-import config.Session;
-import admin.LogInForm;
-import admin.RegisForm;
+import config.dbConnector;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author admin
  */
-public class adminDashboard extends javax.swing.JFrame {
-     
-    /**
-     * Creates new form adminDashboard
-     */
-    public adminDashboard() {
+public class Transactions extends javax.swing.JFrame {
+ 
+    
+    public Transactions() {
         initComponents();
+            
+        loadUsersData(); // Load data after initializing components
+    }
+     
+    
+    private void loadUsersData() {
+        DefaultTableModel model = (DefaultTableModel) ut.getModel();
+        String[] columnNames = {"a_id", "date", "time", "pet_name", "haircut_id", "cost", "user_id", "u_fname", "u_lname", "u_email"};
+        model.setColumnIdentifiers(columnNames);
+        model.setRowCount(0);
+
+        String sql = "SELECT a_id, date, time, pet_name, haircut_id, cost, user_id, u_fname, u_lname, u_email FROM appointments";
+
+        try (Connection connect = new dbConnector().getConnection();
+             PreparedStatement pst = connect.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("a_id"),
+                    rs.getString("date"),
+                    rs.getString("time"),
+                    rs.getString("pet_name"),
+                    rs.getInt("haircut_id"),
+                    rs.getBigDecimal("cost"),
+                    rs.getInt("user_id"),
+                    
+                    rs.getString("u_fname"),
+                    rs.getString("u_lname"),
+                    rs.getString("u_email"),
+                };
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -46,15 +86,13 @@ public class adminDashboard extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ut = new javax.swing.JTable();
+        VIEW = new javax.swing.JButton();
+        add = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(240, 245, 179));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -62,16 +100,16 @@ public class adminDashboard extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(114, 240, 194));
 
         jLabel2.setFont(new java.awt.Font("Cooper Black", 0, 36)); // NOI18N
-        jLabel2.setText("Welcome to Admin Dashboard!");
+        jLabel2.setText("Transactions!");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(219, 219, 219)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel2)
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addContainerGap(795, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,7 +174,7 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel10.setText("Dashboard");
-        jLabel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jLabel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 100, 40));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
@@ -158,18 +196,45 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel12.setText("Transactions");
-        jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
+        jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 120, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 200, 600));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 420, 860, 280));
+        ut.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(ut);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 660, 300));
+
+        VIEW.setText("VIEW");
+        VIEW.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        VIEW.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                VIEWMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                VIEWMouseExited(evt);
+            }
+        });
+        VIEW.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VIEWActionPerformed(evt);
+            }
+        });
+        jPanel1.add(VIEW, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, 80, 30));
+
+        add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
+        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 420, 860, 280));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,27 +255,8 @@ public class adminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-      AdminAccountControl aac = new  AdminAccountControl();
-      aac.setVisible(true);
-      this.dispose();
-
-    }//GEN-LAST:event_jLabel11MouseClicked
-
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        AccountAdmin aa = new AccountAdmin();
-        aa.setVisible(true);
-        this.dispose();
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel7MouseClicked
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-      
-    }//GEN-LAST:event_formWindowActivated
-
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-  int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "You have successfully logged out!", "Logout", JOptionPane.INFORMATION_MESSAGE);
@@ -222,35 +268,126 @@ public class adminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
 
+    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
+        jLabel4.setForeground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_jLabel4MouseEntered
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+        jLabel4.setForeground(Color.BLACK);
+    }//GEN-LAST:event_jLabel4MouseExited
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        AccountAdmin aa = new AccountAdmin();
+        aa.setVisible(true);
+        this.dispose();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MouseClicked
+
     private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
-       jLabel7.setForeground(new java.awt.Color(114,240,194));
+        jLabel7.setForeground(new java.awt.Color(114,240,194));
     }//GEN-LAST:event_jLabel7MouseEntered
 
     private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
         jLabel7.setForeground(Color.BLACK);
     }//GEN-LAST:event_jLabel7MouseExited
 
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        AdminAccountControl aac = new  AdminAccountControl();
+        aac.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel11MouseClicked
+
     private void jLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseEntered
-      jLabel11.setForeground(new java.awt.Color(114,240,194));
+        jLabel11.setForeground(new java.awt.Color(114,240,194));
     }//GEN-LAST:event_jLabel11MouseEntered
 
     private void jLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseExited
         jLabel11.setForeground(Color.BLACK);
     }//GEN-LAST:event_jLabel11MouseExited
 
-    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
-       jLabel4.setForeground(new java.awt.Color(114,240,194));
-    }//GEN-LAST:event_jLabel4MouseEntered
+    private void VIEWMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWMouseEntered
+        VIEW.setBackground(new java.awt.Color(114,240,194));
+    }//GEN-LAST:event_VIEWMouseEntered
 
-    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-          jLabel4.setForeground(Color.BLACK);
-    }//GEN-LAST:event_jLabel4MouseExited
+    private void VIEWMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWMouseExited
+        VIEW.setBackground(new java.awt.Color(240, 240, 240));
+    }//GEN-LAST:event_VIEWMouseExited
 
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-       Transactions t = new Transactions();
-       t.setVisible(true);
-       this.dispose();
-    }//GEN-LAST:event_jLabel12MouseClicked
+    private void VIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEWActionPerformed
+   int rowIndex = ut.getSelectedRow(); // Get the selected row index
+    System.out.println("Selected row index: " + rowIndex);
+
+    if (rowIndex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select a transaction!");
+    } else {
+        dbConnector dbc = null; 
+        PreparedStatement pst = null; 
+        ResultSet rs = null; 
+
+        try {
+            dbc = new dbConnector(); 
+            TableModel tbl = ut.getModel(); 
+            String appointmentId = tbl.getValueAt(rowIndex, 0).toString().trim(); 
+            System.out.println("Appointment ID: " + appointmentId);
+
+            String query = "SELECT * FROM appointments WHERE a_id = ?";
+            System.out.println("Executing query: " + query + " with ID: " + appointmentId);
+            pst = dbc.getConnection().prepareStatement(query);
+            pst.setInt(1, Integer.parseInt(appointmentId)); 
+            rs = pst.executeQuery(); 
+
+            if (rs.next()) {
+                ViewAccountsAdmin dt = new ViewAccountsAdmin(); 
+
+                // Debugging: Check if fields are initialized
+                if (dt.id == null) System.out.println("dt.id is null");
+                if (dt.date == null) System.out.println("dt.date is null");
+                if (dt.time == null) System.out.println("dt.time is null");
+                if (dt.pet == null) System.out.println("dt.pet is null");
+                if (dt.cut == null) System.out.println("dt.cut is null");
+                if (dt.cost == null) System.out.println("dt.cost is null");
+                if (dt.uid == null) System.out.println("dt.uid is null");
+                if (dt.fn == null) System.out.println("dt.fn is null");
+                if (dt.ln1 == null) System.out.println("dt.ln1 is null");
+                if (dt.Email == null) System.out.println("dt.Email is null");
+
+                // Populate the panel fields with the fetched data
+                dt.setUserId(appointmentId); 
+                dt.id.setText(rs.getString("a_id")); 
+                dt.date.setText(rs.getString("date")); 
+                dt.time.setText(rs.getString("time")); 
+                dt.pet.setText(rs.getString("pet_name")); 
+                dt.cut.setText(rs.getString("haircut_id")); 
+                dt.cost.setText(rs.getString("cost")); 
+                dt.uid.setText(rs.getString("user_id")); 
+                dt.fn.setText(rs.getString("u_fname")); 
+                dt.ln1.setText(rs.getString("u_lname")); 
+                dt.Email.setText(rs.getString("u_email")); 
+
+                dt.setVisible(true); 
+                this.dispose(); 
+            } else {
+                System.out.println("No data found for Appointment ID: " + appointmentId);
+                JOptionPane.showMessageDialog(null, "No data found for the selected appointment.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(); 
+            JOptionPane.showMessageDialog(null, "An error occurred while retrieving data: " + ex.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            JOptionPane.showMessageDialog(null, "An unexpected error occurred: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close(); 
+                if (pst != null) pst.close(); 
+                if (dbc != null) dbc.closeConnection(); 
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
+        }
+    }
+    }//GEN-LAST:event_VIEWActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,25 +406,27 @@ public class adminDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(adminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transactions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(adminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transactions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(adminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transactions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(adminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transactions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new adminDashboard().setVisible(true);
+                new Transactions().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton VIEW;
+    private javax.swing.JLabel add;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -296,11 +435,12 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable ut;
     // End of variables declaration//GEN-END:variables
 }

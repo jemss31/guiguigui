@@ -25,7 +25,6 @@ import javax.swing.table.TableModel;
  * @author admin
  */
 public class AdminAccountControl extends javax.swing.JFrame {
-    private JTable usersTable;
 
     /**
      * Creates new form AdminAccountControl
@@ -33,7 +32,6 @@ public class AdminAccountControl extends javax.swing.JFrame {
     public AdminAccountControl() {
         initComponents();
         loadUsersData();
-        usersTable = new JTable();
 
         
     }
@@ -188,6 +186,12 @@ public class AdminAccountControl extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel12.setText("Transactions");
+        jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 120, 40));
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -358,9 +362,7 @@ if (rowIndex < 0) {
             crf.ln1.setText(rs.getString("u_lname"));
             crf.contactnum.setText(rs.getString("cont"));
             crf.Email.setText(rs.getString("u_email"));
-            
             crf.uss1.setText(rs.getString("u_username"));
-            
             crf.pass.setEnabled(false); 
 
             crf.setVisible(true);
@@ -515,6 +517,12 @@ if (rowIndex < 0) {
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
         jLabel4.setForeground(Color.BLACK);
     }//GEN-LAST:event_jLabel4MouseExited
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+      Transactions t = new Transactions();
+       t.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_jLabel12MouseClicked
 
     /**
      * @param args the command line arguments

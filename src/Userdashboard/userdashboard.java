@@ -275,20 +275,18 @@ public class userdashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_lgMouseExited
 
     private void sumbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumbitActionPerformed
-        java.util.Date selectedDateUtil = date.getDate(); 
+    java.util.Date selectedDateUtil = date.getDate();
     String selectedDate = new SimpleDateFormat("yyyy-MM-dd").format(selectedDateUtil);
 
     String petName = pet.getText().trim();
     String selectedHaircut = (String) type.getSelectedItem();
 
-   
-    String selectedTime = time.getSelectedTime(); 
+    String selectedTime = time.getSelectedTime();
 
-    
     String formattedTime = "";
     try {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("hh:mm a"); 
-        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss"); 
+        SimpleDateFormat inputFormat = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
         Date dateTime = inputFormat.parse(selectedTime);
         formattedTime = outputFormat.format(dateTime);
     } catch (ParseException e) {
@@ -296,41 +294,43 @@ public class userdashboard extends javax.swing.JFrame {
         return;
     }
 
-    
     if (petName.isEmpty() || selectedDate.isEmpty() || selectedHaircut == null || formattedTime.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-   
     java.util.Date currentDate = new java.util.Date();
     if (selectedDateUtil.before(currentDate)) {
         JOptionPane.showMessageDialog(this, "The selected date and time must be in the future!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    
-    int currentUserId = Session.getInstance().getId(); 
+    int currentUserId = Session.getInstance().getId();
     String userFirstName = Session.getInstance().getU_fname();
     String userLastName = Session.getInstance().getU_lname();
     String userEmail = Session.getInstance().getU_email();
-    
-    String sql = "INSERT INTO appointments (date, time, pet_name, haircut_id, cost, user_id, u_fname, u_lname, u_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String userContact = Session.getInstance().getCont(); // Retrieve contact number from Session
+
+    // Updated SQL query with 'groom' and 'haircut_id' columns
+    String sql = "INSERT INTO appointments (date, time, pet_name, groom, haircut_id, cost, user_id, u_fname, u_lname, u_email, cont) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (Connection conn = new dbConnector().getConnection();
          PreparedStatement pst = conn.prepareStatement(sql)) {
-        
-        
+
+        int haircutId = getHaircutId(selectedHaircut, conn); // Get the haircut ID
+
         pst.setString(1, selectedDate);
-        pst.setString(2, formattedTime); 
+        pst.setString(2, formattedTime);
         pst.setString(3, petName);
-        pst.setInt(4, getHaircutId(selectedHaircut, conn)); 
-        pst.setBigDecimal(5, getHaircutCost(selectedHaircut, conn)); 
-        pst.setInt(6, currentUserId);
-        pst.setString(7, userFirstName); 
-        pst.setString(8, userLastName);
-        pst.setString(9, userEmail);
-        
+        pst.setString(4, selectedHaircut); // Set the haircut name
+        pst.setInt(5, haircutId); // Set the haircut ID
+        pst.setBigDecimal(6, getHaircutCost(selectedHaircut, conn)); // Assuming getHaircutCost returns the cost
+        pst.setInt(7, currentUserId);
+        pst.setString(8, userFirstName);
+        pst.setString(9, userLastName);
+        pst.setString(10, userEmail);
+        pst.setString(11, userContact); // Set the contact number
+
         int rowsAffected = pst.executeUpdate();
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Appointment submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -344,11 +344,12 @@ private int getHaircutId(String haircutName, Connection conn) throws SQLExceptio
     String query = "SELECT id FROM haircuts WHERE name = ?";
     try (PreparedStatement pst = conn.prepareStatement(query)) {
         pst.setString(1, haircutName);
-        ResultSet rs = pst.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("id");
-        } else {
-            throw new SQLException("Haircut not found.");
+        try (ResultSet rs = pst.executeQuery()) { // Use try-with-resources for ResultSet
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                throw new SQLException("Haircut not found: " + haircutName); // Include haircutName in the exception message
+            }
         }
     }
 }
@@ -357,14 +358,14 @@ private BigDecimal getHaircutCost(String haircutName, Connection conn) throws SQ
     String query = "SELECT cost FROM haircuts WHERE name = ?";
     try (PreparedStatement pst = conn.prepareStatement(query)) {
         pst.setString(1, haircutName);
-        ResultSet rs = pst.executeQuery();
-        if (rs.next()) {
-            return rs.getBigDecimal("cost");
-        } else {
-            throw new SQLException("Haircut not found.");
+        try (ResultSet rs = pst.executeQuery()) { // Use try-with-resources for ResultSet
+            if (rs.next()) {
+                return rs.getBigDecimal("cost");
+            } else {
+                throw new SQLException("Haircut not found: " + haircutName); // Include haircutName in the exception message
+            }
         }
-    }
-    }//GEN-LAST:event_sumbitActionPerformed
+    }    }//GEN-LAST:event_sumbitActionPerformed
 
     /**
      * @param args the command line arguments

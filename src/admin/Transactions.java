@@ -31,39 +31,44 @@ public class Transactions extends javax.swing.JFrame {
     }
      
     
-    private void loadUsersData() {
-        DefaultTableModel model = (DefaultTableModel) ut.getModel();
-        String[] columnNames = {"a_id", "date", "time", "pet_name", "haircut_id", "cost", "user_id", "u_fname", "u_lname", "u_email"};
-        model.setColumnIdentifiers(columnNames);
-        model.setRowCount(0);
+private void loadUsersData() {
+    DefaultTableModel model = (DefaultTableModel) ut.getModel();
+    String[] columnNames = {"Index", "a_id", "date", "time", "pet_name", "haircut_name", "haircut_id", "cost", "u_fname", "u_lname", "u_email", "cont"};
+    model.setColumnIdentifiers(columnNames);
+    model.setRowCount(0);
 
-        String sql = "SELECT a_id, date, time, pet_name, haircut_id, cost, user_id, u_fname, u_lname, u_email FROM appointments";
+    // Updated SQL query without JOIN
+    String sql = "SELECT a_id, date, time, pet_name, groom, haircut_id, cost, u_fname, u_lname, u_email, cont FROM appointments";
 
-        try (Connection connect = new dbConnector().getConnection();
-             PreparedStatement pst = connect.prepareStatement(sql);
-             ResultSet rs = pst.executeQuery()) {
+    try (Connection connect = new dbConnector().getConnection();
+         PreparedStatement pst = connect.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
 
-            while (rs.next()) {
-                Object[] row = {
-                    rs.getInt("a_id"),
-                    rs.getString("date"),
-                    rs.getString("time"),
-                    rs.getString("pet_name"),
-                    rs.getInt("haircut_id"),
-                    rs.getBigDecimal("cost"),
-                    rs.getInt("user_id"),
-                    
-                    rs.getString("u_fname"),
-                    rs.getString("u_lname"),
-                    rs.getString("u_email"),
-                };
-                model.addRow(row);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        int i = 1; // Initialize counter
+
+        while (rs.next()) {
+            Object[] row = {
+                i++, // Increment the counter for each row
+                rs.getInt("a_id"),
+                rs.getString("date"),
+                rs.getString("time"),
+                rs.getString("pet_name"),
+                rs.getString("groom"), // Get the haircut name
+                rs.getInt("haircut_id"),
+                rs.getBigDecimal("cost"),
+                rs.getString("u_fname"),
+                rs.getString("u_lname"),
+                rs.getString("u_email"),
+                rs.getString("cont"),
+            };
+            model.addRow(row);
         }
+    } catch (SQLException ex) {
+        // Log the SQL exception for debugging
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -315,75 +320,81 @@ public class Transactions extends javax.swing.JFrame {
     }//GEN-LAST:event_VIEWMouseExited
 
     private void VIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEWActionPerformed
-   int rowIndex = ut.getSelectedRow(); // Get the selected row index
-    System.out.println("Selected row index: " + rowIndex);
+int rowIndex = ut.getSelectedRow();
+
+    System.out.println("Row Index: " + rowIndex);
 
     if (rowIndex < 0) {
         JOptionPane.showMessageDialog(null, "Please select a transaction!");
     } else {
-        dbConnector dbc = null; 
-        PreparedStatement pst = null; 
-        ResultSet rs = null; 
+        dbConnector dbc = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
 
         try {
-            dbc = new dbConnector(); 
-            TableModel tbl = ut.getModel(); 
-            String appointmentId = tbl.getValueAt(rowIndex, 0).toString().trim(); 
+            dbc = new dbConnector();
+            TableModel tbl = ut.getModel();
+            // Assuming a_id is in the second column (index 1)
+            String appointmentId = tbl.getValueAt(rowIndex, 1).toString().trim();
+
             System.out.println("Appointment ID: " + appointmentId);
 
-            String query = "SELECT * FROM appointments WHERE a_id = ?";
-            System.out.println("Executing query: " + query + " with ID: " + appointmentId);
+            // Check if appointmentId is a valid integer
+            if (!appointmentId.matches("\\d+")) {
+                JOptionPane.showMessageDialog(null, "Invalid Appointment ID format!");
+                return;
+            }
+
+            // Updated SQL query without JOIN
+            String query = "SELECT a_id, date, time, pet_name, groom, haircut_id, cost, u_fname, u_lname, u_email, cont FROM appointments WHERE a_id = ?";
+
+            System.out.println("SQL Query: " + query);
+
             pst = dbc.getConnection().prepareStatement(query);
-            pst.setInt(1, Integer.parseInt(appointmentId)); 
-            rs = pst.executeQuery(); 
+            pst.setInt(1, Integer.parseInt(appointmentId));
+            rs = pst.executeQuery();
 
             if (rs.next()) {
-                ViewAccountsAdmin dt = new ViewAccountsAdmin(); 
-
-                // Debugging: Check if fields are initialized
-                if (dt.id == null) System.out.println("dt.id is null");
-                if (dt.date == null) System.out.println("dt.date is null");
-                if (dt.time == null) System.out.println("dt.time is null");
-                if (dt.pet == null) System.out.println("dt.pet is null");
-                if (dt.cut == null) System.out.println("dt.cut is null");
-                if (dt.cost == null) System.out.println("dt.cost is null");
-                if (dt.uid == null) System.out.println("dt.uid is null");
-                if (dt.fn == null) System.out.println("dt.fn is null");
-                if (dt.ln1 == null) System.out.println("dt.ln1 is null");
-                if (dt.Email == null) System.out.println("dt.Email is null");
+                ViewAccountsAdmin dt = new ViewAccountsAdmin();
 
                 // Populate the panel fields with the fetched data
-                dt.setUserId(appointmentId); 
-                dt.id.setText(rs.getString("a_id")); 
-                dt.date.setText(rs.getString("date")); 
-                dt.time.setText(rs.getString("time")); 
-                dt.pet.setText(rs.getString("pet_name")); 
-                dt.cut.setText(rs.getString("haircut_id")); 
-                dt.cost.setText(rs.getString("cost")); 
-                dt.uid.setText(rs.getString("user_id")); 
-                dt.fn.setText(rs.getString("u_fname")); 
-                dt.ln1.setText(rs.getString("u_lname")); 
-                dt.Email.setText(rs.getString("u_email")); 
+                dt.id.setText(rs.getString("a_id"));
+                dt.date.setText(rs.getString("date"));
+                dt.time.setText(rs.getString("time"));
+                dt.pet.setText(rs.getString("pet_name"));
+                dt.hair.setText(rs.getString("groom")); // Set haircut name
+                dt.cost.setText(rs.getString("cost"));
+                dt.fn.setText(rs.getString("u_fname"));
+                dt.ln1.setText(rs.getString("u_lname"));
+                dt.Email.setText(rs.getString("u_email"));
 
-                dt.setVisible(true); 
-                this.dispose(); 
+
+                // Handle null value for 'cont' column
+                String contValue = rs.getString("cont");
+                dt.contactnum.setText(contValue != null ? contValue : "");
+
+                dt.setVisible(true);
+                this.dispose();
             } else {
-                System.out.println("No data found for Appointment ID: " + appointmentId);
                 JOptionPane.showMessageDialog(null, "No data found for the selected appointment.");
             }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Invalid Appointment ID format!");
+            ex.printStackTrace();
         } catch (SQLException ex) {
-            ex.printStackTrace(); 
+            ex.printStackTrace(); // Print stack trace for debugging
             JOptionPane.showMessageDialog(null, "An error occurred while retrieving data: " + ex.getMessage());
         } catch (Exception e) {
-            e.printStackTrace(); 
             JOptionPane.showMessageDialog(null, "An unexpected error occurred: " + e.getMessage());
         } finally {
+            // Close resources in the right order
             try {
-                if (rs != null) rs.close(); 
-                if (pst != null) pst.close(); 
-                if (dbc != null) dbc.closeConnection(); 
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
             } catch (SQLException e) {
-                System.out.println("Error closing resources: " + e.getMessage());
+                e.printStackTrace(); // Print stack trace for debugging
+            } finally {
+                if (dbc != null) dbc.closeConnection();
             }
         }
     }

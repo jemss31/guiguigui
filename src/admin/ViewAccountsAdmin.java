@@ -115,7 +115,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 530, 80, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 490, 80, 30));
 
         jButton2.setText("Edit");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -134,7 +134,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 530, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 490, 80, 30));
 
         jButton3.setText("Log In");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +144,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 760, 80, 30));
 
+        fn.setEnabled(false);
         fn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fnActionPerformed(evt);
@@ -155,6 +156,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         jLabel11.setText("Last Name:");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 220, 60));
 
+        ln1.setEnabled(false);
         ln1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ln1ActionPerformed(evt);
@@ -168,8 +170,9 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 400, 530, 260));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 530, 260));
 
+        Email.setEnabled(false);
         Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EmailActionPerformed(evt);
@@ -184,8 +187,14 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel13.setText("Time:");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, 60));
+
+        time.setEnabled(false);
         jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 260, 50));
+
+        id.setEnabled(false);
         jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 260, 50));
+
+        date.setEnabled(false);
         jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 260, 50));
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -196,6 +205,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         jLabel16.setText("Date:");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, 60));
 
+        contactnum.setEnabled(false);
         contactnum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 contactnumActionPerformed(evt);
@@ -203,6 +213,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         });
         jPanel1.add(contactnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 510, 260, 50));
 
+        cost.setEnabled(false);
         cost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 costActionPerformed(evt);
@@ -210,6 +221,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         });
         jPanel1.add(cost, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 330, 260, 50));
 
+        uid.setEnabled(false);
         uid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uidActionPerformed(evt);
@@ -228,12 +240,15 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel19.setText("UserID:");
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, -1, 60));
+
+        pet.setEnabled(false);
         jPanel1.add(pet, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 150, 260, 50));
 
         jLabel20.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel20.setText("Cost:");
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 330, -1, 60));
 
+        cut.setEnabled(false);
         cut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cutActionPerformed(evt);
@@ -244,6 +259,8 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel21.setText("Pet:");
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, -1, 60));
+
+        hair.setEnabled(false);
         jPanel1.add(hair, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 270, 260, 50));
 
         jLabel22.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -274,7 +291,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AdminAccountControl lf = new AdminAccountControl();
+        Transactions lf = new Transactions();
         lf.setVisible(true);
         this.dispose();
 
@@ -383,7 +400,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
     public javax.swing.JTextField cut;
     public javax.swing.JTextField date;
     public javax.swing.JTextField fn;
-    private javax.swing.JTextField hair;
+    public javax.swing.JTextField hair;
     public javax.swing.JTextField id;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

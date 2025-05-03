@@ -56,10 +56,8 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         contactnum = new javax.swing.JTextField();
         cost = new javax.swing.JTextField();
-        uid = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
         pet = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         cut = new javax.swing.JTextField();
@@ -115,7 +113,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 490, 80, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, 80, 30));
 
         jButton2.setText("Edit");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -134,7 +132,7 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 490, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 470, 80, 30));
 
         jButton3.setText("Log In");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -221,14 +219,6 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         });
         jPanel1.add(cost, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 330, 260, 50));
 
-        uid.setEnabled(false);
-        uid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                uidActionPerformed(evt);
-            }
-        });
-        jPanel1.add(uid, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 390, 260, 50));
-
         jLabel17.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel17.setText("Phone:");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, -1, 60));
@@ -236,10 +226,6 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel18.setText("Hair Name:");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 270, -1, 60));
-
-        jLabel19.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel19.setText("UserID:");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, -1, 60));
 
         pet.setEnabled(false);
         jPanel1.add(pet, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 150, 260, 50));
@@ -350,10 +336,6 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_costActionPerformed
 
-    private void uidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uidActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_uidActionPerformed
-
     private void cutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cutActionPerformed
@@ -412,7 +394,6 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -424,6 +405,5 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
     public javax.swing.JTextField ln1;
     public javax.swing.JTextField pet;
     public javax.swing.JTextField time;
-    public javax.swing.JTextField uid;
     // End of variables declaration//GEN-END:variables
 }

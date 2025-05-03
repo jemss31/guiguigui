@@ -7,6 +7,7 @@ package admin;
 
 import Userdashboard.GenPin;
 import Userdashboard.GenQue;
+import Userdashboard.NewDashboard;
 import Userdashboard.Security;
 import Userdashboard.userdashboard;
 import admin.adminDashboard;
@@ -416,7 +417,7 @@ public class LogInForm extends javax.swing.JFrame {
                 if (type.equalsIgnoreCase("admin")) {
                     new adminDashboard().setVisible(true);
                 } else if (type.equalsIgnoreCase("customer")) {
-                    new userdashboard().setVisible(true);
+                    new NewDashboard().setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid User Type!", "Error", JOptionPane.ERROR_MESSAGE);
                     return;

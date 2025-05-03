@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.text.ParseException;
 import java.util.Date;
+import config.TimeConflick;
+
 
 /**
  *
@@ -26,11 +28,9 @@ import java.util.Date;
  */
 public class userdashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form userdashboard
-     */
     public userdashboard() {
         initComponents();
+         pet.setText("Pet Name");
     }
 
     /**
@@ -52,9 +52,11 @@ public class userdashboard extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         ya = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         date = new com.toedter.calendar.JCalendar();
         type = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -64,6 +66,10 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         time = new com.raven.swing.TimePicker();
         jLabel8 = new javax.swing.JLabel();
+        tar = new javax.swing.JTextField();
+        shit = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -74,23 +80,23 @@ public class userdashboard extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(114, 240, 194));
 
         jLabel2.setFont(new java.awt.Font("Cooper Black", 0, 36)); // NOI18N
-        jLabel2.setText("Welcome to User Dashboard!");
+        jLabel2.setText("Set Appointment!");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(219, 219, 219)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(716, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 120));
@@ -153,35 +159,55 @@ public class userdashboard extends javax.swing.JFrame {
                 yaMouseExited(evt);
             }
         });
-        jPanel2.add(ya, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 160, 40));
+        jPanel2.add(ya, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 160, 40));
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel12.setText("Dashboard");
+        jLabel12.setText("Set Appointment");
         jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 100, 40));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/unnamed (3).png"))); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, 30));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 160, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/unnamed (1).png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, 30));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/unnamed (2).png"))); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 40, 50));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
-        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, 420, 240));
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel13.setText("Dashboard");
+        jLabel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 100, 40));
 
-        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Croptop", "Lion Cut", "Mohowk", "Top Knot", "Mushroom", "Buzz Cut", "Edgar Cut", "Flat Top", "Teddy Bear Cut", " " }));
-        jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 260, 40));
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/unnamed (3).png"))); // NOI18N
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 30));
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/unnamed (1).png"))); // NOI18N
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 30));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
+
+        date.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 420, 240));
+
+        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Croptop", "Lion Cut", "Mohowk", "Top Knot", "Mushroom", "Edgar Cut", "Flat Top", "Teddy Bear Cut", " " }));
+        type.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, 260, 50));
 
         jLabel4.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel4.setText("Select Time:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 260, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 260, 30));
 
         jLabel6.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel6.setText("Select Date to Appoint:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 260, 30));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 330, 260, 30));
 
         sumbit.setText("SUBMIT");
         sumbit.addActionListener(new java.awt.event.ActionListener() {
@@ -191,17 +217,39 @@ public class userdashboard extends javax.swing.JFrame {
         });
         jPanel1.add(sumbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 610, 160, 30));
 
-        pet.setText("Pet Name");
-        jPanel1.add(pet, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 260, 50));
+        pet.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                petFocusGained(evt);
+            }
+        });
+        jPanel1.add(pet, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 260, 50));
 
         jLabel7.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
-        jLabel7.setText("Select Haircut:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 240, 260, 30));
-        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 220, 300));
+        jLabel7.setText("Cost:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 260, 30));
+
+        time.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 260, 300));
 
         jLabel8.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel8.setText("Enter Pet Name:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 150, 260, 30));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 260, 30));
+
+        tar.setText("Duration");
+        tar.setEnabled(false);
+        jPanel1.add(tar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 260, 50));
+
+        shit.setText("Cost");
+        shit.setEnabled(false);
+        jPanel1.add(shit, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 260, 50));
+
+        jLabel9.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        jLabel9.setText("Select Haircut:");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, 260, 30));
+
+        jLabel10.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        jLabel10.setText("Possible Duration:");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 240, 260, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,12 +323,13 @@ public class userdashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_lgMouseExited
 
     private void sumbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumbitActionPerformed
+ config.TimeConflick timeHelper = new config.TimeConflick(); // only declared once
+
     java.util.Date selectedDateUtil = date.getDate();
     String selectedDate = new SimpleDateFormat("yyyy-MM-dd").format(selectedDateUtil);
 
     String petName = pet.getText().trim();
     String selectedHaircut = (String) type.getSelectedItem();
-
     String selectedTime = time.getSelectedTime();
 
     String formattedTime = "";
@@ -311,61 +360,77 @@ public class userdashboard extends javax.swing.JFrame {
     String userEmail = Session.getInstance().getU_email();
     String userContact = Session.getInstance().getCont(); // Retrieve contact number from Session
 
-    // Updated SQL query with 'groom' and 'haircut_id' columns
+    // SQL query with 'groom' and 'haircut_id' columns
     String sql = "INSERT INTO appointments (date, time, pet_name, groom, haircut_id, cost, user_id, u_fname, u_lname, u_email, cont) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    try (Connection conn = new dbConnector().getConnection();
-         PreparedStatement pst = conn.prepareStatement(sql)) {
+try (Connection conn = new dbConnector().getConnection();
+     PreparedStatement pst = conn.prepareStatement(sql)) {
 
-        int haircutId = getHaircutId(selectedHaircut, conn); // Get the haircut ID
+    int haircutId = timeHelper.getHaircutId(selectedHaircut, conn);
+    int haircutDuration = timeHelper.getHaircutDuration(haircutId, conn);
+    BigDecimal haircutCost = timeHelper.getHaircutCost(selectedHaircut, conn);
 
-        pst.setString(1, selectedDate);
-        pst.setString(2, formattedTime);
-        pst.setString(3, petName);
-        pst.setString(4, selectedHaircut); // Set the haircut name
-        pst.setInt(5, haircutId); // Set the haircut ID
-        pst.setBigDecimal(6, getHaircutCost(selectedHaircut, conn)); // Assuming getHaircutCost returns the cost
-        pst.setInt(7, currentUserId);
-        pst.setString(8, userFirstName);
-        pst.setString(9, userLastName);
-        pst.setString(10, userEmail);
-        pst.setString(11, userContact); // Set the contact number
-
-        int rowsAffected = pst.executeUpdate();
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Appointment submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    // ✅ Wrap the time conflict check in its own try-catch or expand this one
+    try {
+        if (!timeHelper.isTimeSlotAvailable(conn, selectedDate, formattedTime, haircutDuration)) {
+            JOptionPane.showMessageDialog(this, "The selected time overlaps with another appointment!", "Time Conflict", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (ParseException pe) {
+        JOptionPane.showMessageDialog(this, "Error parsing appointment time: " + pe.getMessage(), "Parse Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
-}
 
-private int getHaircutId(String haircutName, Connection conn) throws SQLException {
-    String query = "SELECT id FROM haircuts WHERE name = ?";
-    try (PreparedStatement pst = conn.prepareStatement(query)) {
-        pst.setString(1, haircutName);
-        try (ResultSet rs = pst.executeQuery()) { // Use try-with-resources for ResultSet
-            if (rs.next()) {
-                return rs.getInt("id");
-            } else {
-                throw new SQLException("Haircut not found: " + haircutName); // Include haircutName in the exception message
-            }
-        }
+    pst.setString(1, selectedDate);
+    pst.setString(2, formattedTime);
+    pst.setString(3, petName);
+    pst.setString(4, selectedHaircut);
+    pst.setInt(5, haircutId);
+    pst.setBigDecimal(6, haircutCost);
+    pst.setInt(7, currentUserId);
+    pst.setString(8, userFirstName);
+    pst.setString(9, userLastName);
+    pst.setString(10, userEmail);
+    pst.setString(11, userContact);
+
+    int rowsAffected = pst.executeUpdate();
+    if (rowsAffected > 0) {
+        JOptionPane.showMessageDialog(this, "Appointment submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
-}
 
-private BigDecimal getHaircutCost(String haircutName, Connection conn) throws SQLException {
-    String query = "SELECT cost FROM haircuts WHERE name = ?";
-    try (PreparedStatement pst = conn.prepareStatement(query)) {
-        pst.setString(1, haircutName);
-        try (ResultSet rs = pst.executeQuery()) { // Use try-with-resources for ResultSet
-            if (rs.next()) {
-                return rs.getBigDecimal("cost");
-            } else {
-                throw new SQLException("Haircut not found: " + haircutName); // Include haircutName in the exception message
-            }
-        }
+} catch (SQLException ex) {
+    JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }    }//GEN-LAST:event_sumbitActionPerformed
+
+    private void typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeActionPerformed
+    TimeConflick timeHelper = new TimeConflick();
+    String selectedHaircut = (String) type.getSelectedItem();  
+    try (Connection conn = new dbConnector().getConnection()) {
+        
+        int haircutId = timeHelper.getHaircutId(selectedHaircut, conn);
+        
+        BigDecimal cost = timeHelper.getHaircutCost(selectedHaircut, conn);
+        
+        int duration = timeHelper.getHaircutDuration(haircutId, conn);
+        shit.setText(cost.toString());
+        tar.setText(duration + " minutes");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error retrieving haircut details: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    }//GEN-LAST:event_typeActionPerformed
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        NewDashboard ndb = new NewDashboard();
+        ndb.setVisible(true);
+        this.dispose();
+
+       
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void petFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_petFocusGained
+      pet.setText("");
+    }//GEN-LAST:event_petFocusGained
 
     /**
      * @param args the command line arguments
@@ -407,21 +472,27 @@ private BigDecimal getHaircutCost(String haircutName, Connection conn) throws SQ
     private com.toedter.calendar.JCalendar date;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lg;
     private javax.swing.JTextField pet;
+    public javax.swing.JTextField shit;
     private javax.swing.JButton sumbit;
+    private javax.swing.JTextField tar;
     private com.raven.swing.TimePicker time;
     private javax.swing.JComboBox<String> type;
     private javax.swing.JLabel ya;

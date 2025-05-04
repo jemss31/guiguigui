@@ -236,7 +236,7 @@ private void loadUsersData() {
                 VIEWActionPerformed(evt);
             }
         });
-        jPanel1.add(VIEW, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, 80, 30));
+        jPanel1.add(VIEW, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 460, 80, 30));
 
         add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
         jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 420, 860, 280));
@@ -362,6 +362,7 @@ int rowIndex = ut.getSelectedRow();
                 dt.date.setText(rs.getString("date"));
                 dt.time.setText(rs.getString("time"));
                 dt.pet.setText(rs.getString("pet_name"));
+                dt.cut.setText(rs.getString("haircut_id"));
                 dt.hair.setText(rs.getString("groom")); // Set haircut name
                 dt.cost.setText(rs.getString("cost"));
                 dt.fn.setText(rs.getString("u_fname"));

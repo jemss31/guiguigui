@@ -90,7 +90,7 @@ private void resetPassword() {
         jLabel2.setText("Recovery Mode");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 320, 116));
 
-        jButton2.setText("LOGIN");
+        jButton2.setText("BACK");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -148,7 +148,7 @@ private void resetPassword() {
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             this.dispose();
 
-            LogInForm loginPage = new LogInForm();
+            UserRecoveryOption loginPage = new UserRecoveryOption();
             loginPage.setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

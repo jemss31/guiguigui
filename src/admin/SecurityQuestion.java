@@ -139,7 +139,7 @@ private void resetPassword() {
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             this.dispose();
 
-            LogInForm loginPage = new LogInForm();
+            UserRecoveryOption loginPage = new UserRecoveryOption();
             loginPage.setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

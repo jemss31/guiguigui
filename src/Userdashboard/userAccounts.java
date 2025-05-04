@@ -5,9 +5,18 @@
  */
 package Userdashboard;
 
+import static Userdashboard.UpdateUser.getHeightFromWidth;
 import config.Session;
 import admin.LogInForm;
+import config.dbConnector;
 import java.awt.Color;
+import java.awt.Image;
+import java.io.File;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +34,21 @@ public class userAccounts extends javax.swing.JFrame {
     }
     private boolean hasShownPinReminder = false;
     private boolean isPinCreationOpen = false;
+             public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,7 +77,6 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         pass = new javax.swing.JLabel();
         nameew = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         namo1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -66,6 +89,9 @@ public class userAccounts extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         phone = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        prof = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        itom = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -209,45 +235,42 @@ public class userAccounts extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/news.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 350, 370, 410));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, 370, 410));
 
         pass.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
-        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 520, 230, 40));
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 600, 230, 40));
 
         nameew.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
-        jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 220, 60));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/profile+user+icon-1320086081145096981-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 420, 230));
+        jPanel1.add(nameew, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 400, 220, 50));
 
         namo1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
-        jPanel1.add(namo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 170, 50));
+        jPanel1.add(namo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 170, 50));
 
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel9.setText("Password:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 520, 120, 40));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 600, 120, 40));
 
-        jLabel13.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel13.setText("First Name:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 120, 40));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 120, 40));
 
-        jLabel14.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel14.setText("Last Name:");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 120, 40));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 120, 40));
 
-        jLabel15.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel15.setText("Phone:");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 120, 40));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 520, 120, 40));
 
         gg1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
-        jPanel1.add(gg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 400, 230, 40));
+        jPanel1.add(gg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 230, 40));
 
-        jLabel16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel16.setText("Username:");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 480, 120, 40));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 560, 120, 40));
 
         user1.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
-        jPanel1.add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 230, 40));
+        jPanel1.add(user1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 560, 230, 40));
 
         jLabel7.setFont(new java.awt.Font("Book Antiqua", 3, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 51, 204));
@@ -263,14 +286,14 @@ public class userAccounts extends javax.swing.JFrame {
                 jLabel7MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 560, 230, 30));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 640, 230, 30));
 
-        jLabel17.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel17.setText("Email:");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 120, 40));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 480, 120, 40));
 
         phone.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
-        jPanel1.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 160, 40));
+        jPanel1.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 520, 160, 40));
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/idol.png"))); // NOI18N
         jLabel18.setText("jLabel1");
@@ -280,6 +303,34 @@ public class userAccounts extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 170, 110));
+
+        prof.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        prof.setText("EDIT PROFILE");
+        prof.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profMouseClicked(evt);
+            }
+        });
+        jPanel1.add(prof, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 360, 120, 30));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(itom, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(itom, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 270, 220));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -352,9 +403,26 @@ public class userAccounts extends javax.swing.JFrame {
         gg1.setText(sess.getU_email());
         user1.setText(sess.getU_username());
         pass.setText(sess.getU_pass());   
-        phone.setText(sess.getCont());        
+        phone.setText(sess.getCont());
+        itom.setText(sess.getImage());
 
+    String imagePath = sess.getImage();
+    System.out.println("Image path retrieved from session: " + imagePath); // Debug output
 
+    if (imagePath != null && !imagePath.isEmpty()) {
+        File imgFile = new File(imagePath);
+        System.out.println("Checking existence of image file: " + imgFile.getAbsolutePath()); // Debug output
+        if (imgFile.exists()) {
+            itom.setIcon(ResizeImage(imagePath, null, itom)); 
+            System.out.println("Image loaded successfully: " + imagePath);
+        } else {
+            System.out.println("Image not found: " + imagePath);
+            itom.setIcon(new ImageIcon("path/to/default/icon.png")); 
+        }
+    } else {
+        System.out.println("No image path provided in session.");
+        itom.setIcon(new ImageIcon("path/to/default/icon.png")); 
+    }
     }
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
@@ -418,6 +486,71 @@ public class userAccounts extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel18MouseClicked
 
+    private void profMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profMouseClicked
+      Session sess = Session.getInstance(); 
+    String userId = String.valueOf(sess.getId()); 
+
+    if (userId == null || userId.equals("0")) { 
+        JOptionPane.showMessageDialog(null, "No user is currently logged in!");
+        return;
+    }
+
+    try {
+        dbConnector dbc = new dbConnector();
+        String query = "SELECT * FROM users WHERE id = ?";
+
+        PreparedStatement pst = dbc.getConnection().prepareStatement(query);
+        pst.setString(1, userId);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            UpdateUser crf = new UpdateUser();
+            crf.setUserId(userId);
+            crf.fn.setText(rs.getString("u_fname"));
+            crf.ln1.setText(rs.getString("u_lname"));
+            crf.contactnum.setText(rs.getString("cont"));
+            crf.Email.setText(rs.getString("u_email"));
+            crf.uss1.setText(rs.getString("u_username"));
+            crf.stat.setSelectedItem(rs.getString("status"));
+            crf.utype.setSelectedItem(rs.getString("type"));
+
+            String imagePath = rs.getString("image");
+
+            if (imagePath != null && !imagePath.isEmpty()) {
+                File imgFile = new File(imagePath);
+                if (imgFile.exists()) {
+                    crf.Picture.setIcon(crf.ResizeImage(imagePath, null, crf.Picture));
+                } else {
+                    System.out.println("Image file does not exist: " + imagePath);
+                    crf.Picture.setIcon(new ImageIcon("path/to/default/icon.png"));
+                }
+                crf.select.setEnabled(false); 
+                crf.remove1.setEnabled(true); 
+                crf.oldpath = imagePath;
+                crf.path = imagePath;
+                crf.destination = imagePath;
+            } else { 
+                crf.Picture.setIcon(new ImageIcon("path/to/default/icon.png")); // Set default icon if no image
+                crf.select.setEnabled(true); 
+                crf.remove1.setEnabled(false); 
+                crf.oldpath = null; // No previous path
+                crf.path = null; 
+                crf.destination = null; 
+            }
+
+            crf.pass.setEnabled(false); 
+            crf.cancel.setVisible(true);
+
+            crf.Update1.setVisible(true);
+
+            crf.setVisible(true);
+            this.dispose();
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_profMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -455,6 +588,7 @@ public class userAccounts extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel gg1;
+    private javax.swing.JLabel itom;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -470,7 +604,6 @@ public class userAccounts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -479,11 +612,13 @@ public class userAccounts extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel nameew;
     private javax.swing.JLabel namo1;
     private javax.swing.JLabel pass;
     private javax.swing.JLabel phone;
+    private javax.swing.JLabel prof;
     private javax.swing.JLabel user1;
     // End of variables declaration//GEN-END:variables
 }

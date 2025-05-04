@@ -65,6 +65,8 @@ public class RegisForm extends javax.swing.JFrame {
         te = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         re = new javax.swing.JTextField();
+        sec = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
         jLabel7.setText("jLabel5");
@@ -101,7 +103,7 @@ public class RegisForm extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel3.setText("Answer:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 350, 220, 60));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, 220, 60));
 
         jButton1.setText("CANCEL");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -227,7 +229,7 @@ public class RegisForm extends javax.swing.JFrame {
                 jLabel8KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 430, 530, 260));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 530, 260));
 
         UserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Customer" }));
         UserType.addActionListener(new java.awt.event.ActionListener() {
@@ -261,18 +263,30 @@ public class RegisForm extends javax.swing.JFrame {
                 teActionPerformed(evt);
             }
         });
-        jPanel1.add(te, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 250, 50));
+        jPanel1.add(te, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 510, 260, 50));
 
         jLabel15.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel15.setText("Security Question:");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 220, 60));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, 220, 60));
 
         re.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reActionPerformed(evt);
             }
         });
-        jPanel1.add(re, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 250, 50));
+        jPanel1.add(re, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 400, 260, 50));
+
+        sec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1. What city were you born in?", "2. What city were you born in?", "3. What is your mother's maiden name?", "4. What is your favorite color?", "5. What is the name of your first pet?", "6. What is your favorite hobby?", "7. What is your favorite book?", "Custom" }));
+        sec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                secActionPerformed(evt);
+            }
+        });
+        jPanel1.add(sec, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 260, 50));
+
+        jLabel16.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel16.setText("Security Question:");
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 220, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -298,21 +312,37 @@ public class RegisForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-   String fname = fn.getText().trim();
+    String fname = fn.getText().trim();
     String lname = ln1.getText().trim();
     String email = Email.getText().trim();
     String username = uss1.getText().trim();
-    String password = new String(RegPass.getPassword()).trim();
+    char[] passwordChars = RegPass.getPassword(); // Get password as char[]
+    String password = new String(passwordChars).trim(); // Convert to String
     String type = UserType.getSelectedItem().toString();
-    String contactNumber = contactnum.getText().trim();  
-     String squestion = re.getText().trim();
+    String contactNumber = contactnum.getText().trim();
     String answer = te.getText().trim();
+
+    // Get security question from combo box
+    String squestion;
+    if (sec.getSelectedItem().equals("Custom")) {
+        squestion = re.getText().trim(); // Get custom question from text field
+        if (squestion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a custom security question.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (squestion.length() < 5 || !squestion.matches(".*\\?")) { // Corrected regex
+            JOptionPane.showMessageDialog(this, "Invalid Custom Question! It must be at least 5 characters long and end with a question mark.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } else {
+        squestion = sec.getSelectedItem().toString(); // Get pre-defined question
+    }
 
     // Email regex for validation
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
     // Validate inputs
-    if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || contactNumber.isEmpty() || squestion.isEmpty() || answer.isEmpty()) {
+    if (fname.isEmpty() || lname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || contactNumber.isEmpty() || answer.isEmpty() || squestion == null || squestion.isEmpty()) {
         JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -332,16 +362,13 @@ public class RegisForm extends javax.swing.JFrame {
         return;
     }
 
-    if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};'\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
-        JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long, include an uppercase letter, a special character, and a number.", "Error", JOptionPane.ERROR_MESSAGE);
+    if (password.length() < 8) {
+        JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
-    if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])(?=.*\\d).{8,}$")) {
-        JOptionPane.showMessageDialog(this, "Invalid Password! Must be at least 8 characters long, contain one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-   if (squestion.length() < 5 || !squestion.matches(".*[?]$")) {
-        JOptionPane.showMessageDialog(this, "Invalid Question! It must be at least 5 characters long and end with a question mark.", "Error", JOptionPane.ERROR_MESSAGE);
+    // Corrected password regex
+    if (!password.matches("^(?=.*[A-Z])(?=.*[!@#$%^&*()_+=\\-\\[\\]{};':\"\\\\|,.<>\\/?])(?=.*\\d).*$")) {
+        JOptionPane.showMessageDialog(this, "Password must contain at least one uppercase letter, one special character, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -353,7 +380,7 @@ public class RegisForm extends javax.swing.JFrame {
 
     dbConnector dbc = new dbConnector();
     Connection conn = dbc.getConnection();
-    
+
     if (conn == null) {
         JOptionPane.showMessageDialog(this, "Database connection failed.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
@@ -368,14 +395,14 @@ public class RegisForm extends javax.swing.JFrame {
 
         // **Check if contact number already exists**
         if (dbc.isContactExists(contactNumber)) {  // Removed the second argument
-    JOptionPane.showMessageDialog(this, "Contact number is already in use! Please enter a different number.", "Error", JOptionPane.ERROR_MESSAGE);
-    return;  // Ensure the function exits if contact number exists
-}
+            JOptionPane.showMessageDialog(this, "Contact number is already in use! Please enter a different number.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;  // Ensure the function exits if contact number exists
+        }
 
-        String hashedPassword = hashPassword(password);
+        String hashedPassword = hashPassword(password); // Hash the password
 
         // Insert the user into the database including the contact number
-        String insertQuery = "INSERT INTO users (u_fname, u_lname, u_email, u_username, u_pass, type, status, cont, SecurityQuestion, answer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+        String insertQuery = "INSERT INTO users (u_fname, u_lname, u_email, u_username, u_pass, type, status, cont, SecurityQuestion, answer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pst = conn.prepareStatement(insertQuery)) {
             pst.setString(1, fname);
             pst.setString(2, lname);
@@ -383,10 +410,10 @@ public class RegisForm extends javax.swing.JFrame {
             pst.setString(4, username);
             pst.setString(5, hashedPassword);
             pst.setString(6, type);
-            pst.setString(7, "Pending");  
+            pst.setString(7, "Pending");
             pst.setString(8, contactNumber);
             pst.setString(9, squestion);
-            pst.setString(10, answer);  
+            pst.setString(10, answer);
 
             int inserted = pst.executeUpdate();
             if (inserted > 0) {
@@ -403,6 +430,7 @@ public class RegisForm extends javax.swing.JFrame {
         e.printStackTrace();
     } finally {
         dbc.closeConnection();
+        java.util.Arrays.fill(passwordChars, '0'); // Zero out password array
     }
 }
 
@@ -551,6 +579,16 @@ String username = uss1.getText().trim();
               // TODO add your handling code here:
     }//GEN-LAST:event_reActionPerformed
 
+    private void secActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secActionPerformed
+         String selectedItem = (String) sec.getSelectedItem();
+
+    if ("Custom".equals(selectedItem)) {
+        re.setEnabled(true);  // Enable 're' ONLY when "Custom" is selected
+    } else {
+        re.setEnabled(false); // Disable 're' for EVERYTHING else
+    }
+    }//GEN-LAST:event_secActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -602,6 +640,7 @@ String username = uss1.getText().trim();
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -614,6 +653,7 @@ String username = uss1.getText().trim();
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField ln1;
     private javax.swing.JTextField re;
+    private javax.swing.JComboBox<String> sec;
     private javax.swing.JTextField te;
     private javax.swing.JTextField uss1;
     // End of variables declaration//GEN-END:variables

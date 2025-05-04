@@ -42,9 +42,9 @@ public class UpdateUser extends javax.swing.JFrame {
         initComponents();
     }
      public String destination;
-   File selectedFile;
-   public String oldpath;
-   public String path;
+     File selectedFile;
+     public String oldpath;
+     public String path;
 
 public int FileExistenceChecker(String path){
         File file = new File(path);
@@ -785,13 +785,12 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
     }//GEN-LAST:event_Update1MouseExited
 
     private void Update1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Update1ActionPerformed
-            
     String newFname = fn.getText().trim();
     String newLname = ln1.getText().trim();
     String newContact = contactnum.getText().trim();
     String newEmail = Email.getText().trim();
     String newUsername = uss1.getText().trim();
-    String newUserType = utype.getSelectedItem().toString();
+    String newUserType = utype.getSelectedItem().toString(); // Get the selected user type from the form
     String newUserStatus = stat.getSelectedItem().toString();
 
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -829,7 +828,7 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
     }
 
     String checkQuery = "SELECT COUNT(*) FROM users WHERE (u_username = ? OR u_email = ?) AND id != ?";
-    
+
     try (Connection conn = dbc.getConnection();
          PreparedStatement pst = conn.prepareStatement(checkQuery)) {
 
@@ -846,7 +845,7 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
 
         String updateQuery = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, type = ?, status = ?";
         if (path != null && !path.isEmpty()) {
-            updateQuery += ", image = ?"; 
+            updateQuery += ", image = ?";
         }
         updateQuery += " WHERE id = ?";
 
@@ -855,23 +854,23 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
             updatePst.setString(2, newLname);
             updatePst.setString(3, newEmail);
             updatePst.setString(4, newUsername);
-            updatePst.setString(5, newUserType);
+            updatePst.setString(5, newUserType); // Use the value from the form
             updatePst.setString(6, newUserStatus);
-            
+
             if (path != null && !path.isEmpty()) {
                 updatePst.setString(7, path); // Set the image path from the upload
                 updatePst.setString(8, this.userId);
             } else {
-                updatePst.setString(7, this.userId); 
+                updatePst.setString(7, this.userId);
             }
 
             int updated = updatePst.executeUpdate();
             if (updated > 0) {
-    
-                Logins logger = new Logins(conn); 
-                int adminId = Integer.parseInt(ID.getText()); 
+
+                Logins logger = new Logins(conn);
+                int adminId = Integer.parseInt(ID.getText());
                 String logMessage = "Admin updated user info: " + newUsername + " (User ID: " + this.userId + ")";
-    
+
                 try {
                     logger.logAdd(adminId, logMessage);
                 } catch (Exception logEx) {
@@ -883,17 +882,50 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
                     String destination = "src/profileImages/" + selectedFile.getName(); // Define the destination path
                     try {
                         Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                        Session.getInstance().setImage(destination); // Set image path in session
+
+                        // **UPDATE THE SESSION HERE**
+                        Session sess = Session.getInstance();
+                        sess.setImage(destination); // Set image path in session
+                        sess.setU_fname(newFname); // Update first name
+                        sess.setU_lname(newLname); // Update last name
+                        sess.setU_email(newEmail); // Update email
+                        sess.setU_username(newUsername); // Update username
+                        // You might need to update other session attributes as well
+
                         System.out.println("Image uploaded and path set in session: " + destination);
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(this, "Error copying the image file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 }
+                else{
+                    //Even if no new image is selected, update the session with other details
+                    Session sess = Session.getInstance();
+                    sess.setU_fname(newFname); // Update first name
+                    sess.setU_lname(newLname); // Update last name
+                    sess.setU_email(newEmail); // Update email
+                    sess.setU_username(newUsername); // Update username
+                }
 
                 JOptionPane.showMessageDialog(this, "User data updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                new AccountAdmin().setVisible(true);
-                this.dispose();
+
+                // Redirect to the appropriate panel based on user type
+                Session sess = Session.getInstance();
+
+// Get the user type from the Session
+String userType = sess.getType();
+
+if ("admin".equals(userType)) {
+    new AccountAdmin().setVisible(true);
+} else if ("customer".equals(userType)) {
+    new userAccounts().setVisible(true); // Assuming userAccount is the customer panel
+} else {
+    // Handle unknown user types - redirect to a default panel or show an error
+    System.out.println("Unknown user type: " + userType + ".  Redirecting to default.");
+    new AccountAdmin().setVisible(true); // Or some other default
+}
+this.dispose();
+
             } else {
                 JOptionPane.showMessageDialog(this, "Update failed!", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -901,6 +933,7 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+
     }//GEN-LAST:event_Update1ActionPerformed
 
     private void cancel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancel1MouseClicked
@@ -916,9 +949,31 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
     }//GEN-LAST:event_cancel1MouseExited
 
     private void cancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel1ActionPerformed
-       AccountAdmin ua = new AccountAdmin();
-        ua.setVisible(true);
-        this.dispose(); 
+     int confirm = javax.swing.JOptionPane.showConfirmDialog(
+        this, "Are you sure you want to discard this process?", "Confirmation",
+        javax.swing.JOptionPane.YES_NO_OPTION);
+
+    if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+        this.dispose();
+
+        
+        String userType = getUserType(); 
+
+        if ("admin".equalsIgnoreCase(userType)) {
+            AccountAdmin loginPage = new AccountAdmin();
+            loginPage.setVisible(true);
+        } else if ("customer".equalsIgnoreCase(userType)) {
+            userAccounts userPage = new userAccounts();
+            userPage.setVisible(true);
+        } else {
+            
+            JOptionPane.showMessageDialog(this, "Unknown user type.");
+        }
+    }
+}
+    private String getUserType() {
+   
+    return GenPin.userType;
     }//GEN-LAST:event_cancel1ActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

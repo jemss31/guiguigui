@@ -75,7 +75,7 @@ public class MobileNumber extends javax.swing.JFrame {
         jLabel3.setText("Recovery Mode");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 320, 116));
 
-        jButton3.setText("LOGIN");
+        jButton3.setText("BACK");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -97,13 +97,13 @@ public class MobileNumber extends javax.swing.JFrame {
                 conActionPerformed(evt);
             }
         });
-        jPanel5.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, 90, 30));
+        jPanel5.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 110, 30));
         jPanel5.add(m12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 280, 40));
         jPanel5.add(na, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 280, 40));
 
         jLabel5.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel5.setText("Verify OTP");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 110, 30));
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 110, 30));
 
         jLabel6.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel6.setText("Name:");
@@ -119,7 +119,7 @@ public class MobileNumber extends javax.swing.JFrame {
                 con1ActionPerformed(evt);
             }
         });
-        jPanel5.add(con1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 90, 30));
+        jPanel5.add(con1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 110, 30));
         jPanel5.add(m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 280, 40));
 
         jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 630, 360));
@@ -151,7 +151,7 @@ public class MobileNumber extends javax.swing.JFrame {
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             this.dispose();
 
-            LogInForm loginPage = new LogInForm();
+            UserRecoveryOption loginPage = new UserRecoveryOption();
             loginPage.setVisible(true);
         }
     }//GEN-LAST:event_jButton3ActionPerformed

@@ -12,6 +12,7 @@ import config.Session;
 import admin.LogInForm;
 import config.dbConnector;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.sql.PreparedStatement;
@@ -20,6 +21,8 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -55,6 +58,34 @@ public class AccountAdmin extends javax.swing.JFrame {
     ImageIcon image = new ImageIcon(newImg);
     return image;
 }
+         private void clearSpecificJLabel() {
+    // Clear the icon of the specific JLabel and reload the image
+    Session sess = Session.getInstance();
+    if (ima != null && ima instanceof JLabel) {
+        ima.setIcon(null); // Clear the icon
+
+        // RELOAD AND SET THE NEW ICON HERE:
+        String imagePath = sess.getImage(); // Assuming you have a session object
+
+        if (imagePath != null && !imagePath.isEmpty()) {
+            File imgFile = new File(imagePath);
+            if (imgFile.exists()) {
+                ImageIcon imageIcon = ResizeImage(imagePath, null, ima); // Use your ResizeImage method
+                ima.setIcon(imageIcon); // Set the new icon
+            } else {
+                System.out.println("Image not found: " + imagePath);
+                // Set a default icon if the image is not found
+                ima.setIcon(new ImageIcon("path/to/default/icon.png"));
+            }
+        } else {
+            System.out.println("No image path provided in session.");
+            // Set a default icon if there's no image path
+            ima.setIcon(new ImageIcon("path/to/default/icon.png"));
+        }
+    } else {
+        System.out.println("Warning: 'ima' is either null or not a JLabel.");
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,6 +120,7 @@ public class AccountAdmin extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         ima = new javax.swing.JLabel();
         Profile = new javax.swing.JLabel();
+        refresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -116,14 +148,14 @@ public class AccountAdmin extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel2)
-                .addContainerGap(726, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 120));
@@ -248,7 +280,7 @@ public class AccountAdmin extends javax.swing.JFrame {
         jPanel1.add(pepe1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 190, 40));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 500, 860, 210));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 530, 860, 210));
 
         uss.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jPanel1.add(uss, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 190, 40));
@@ -286,6 +318,14 @@ public class AccountAdmin extends javax.swing.JFrame {
             }
         });
         jPanel1.add(Profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, 130, 50));
+
+        refresh.setText("REFRESH");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
+        jPanel1.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 430, 180, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -328,37 +368,42 @@ public class AccountAdmin extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 Session sess = Session.getInstance();
 
-    if (sess.getId() == 0) {
-        System.out.println("No active session. Redirecting to login.");
-        LogInForm lf = new LogInForm();
-        lf.setVisible(true);
-        this.dispose(); 
-    } else {
-        gwapo.setText(sess.getU_fname());
-        pepe1.setText(sess.getU_lname());
-        emm.setText(sess.getU_email());
-        uss.setText(sess.getU_username());
-        kol.setText(sess.getCont());
-    }
-
-    // Retrieve and debug the image path
-    String imagePath = sess.getImage();
-    System.out.println("Image path retrieved from session: " + imagePath); // Debug output
-
-    if (imagePath != null && !imagePath.isEmpty()) {
-        File imgFile = new File(imagePath);
-        System.out.println("Checking existence of image file: " + imgFile.getAbsolutePath()); // Debug output
-        if (imgFile.exists()) {
-            ima.setIcon(ResizeImage(imagePath, null, ima)); 
-            System.out.println("Image loaded successfully: " + imagePath);
-        } else {
-            System.out.println("Image not found: " + imagePath);
-            ima.setIcon(new ImageIcon("path/to/default/icon.png")); 
+        if (sess.getId() == 0) {
+            System.out.println("No active session. Redirecting to login.");
+            LogInForm lf = new LogInForm();
+            lf.setVisible(true);
+            this.dispose();
+            return; // Add return to prevent further execution after redirection
         }
-    } else {
-        System.out.println("No image path provided in session.");
-        ima.setIcon(new ImageIcon("path/to/default/icon.png")); 
-    }
+
+        // Use SwingUtilities.invokeLater to update the UI on the Event Dispatch Thread
+        SwingUtilities.invokeLater(() -> {
+            gwapo.setText(sess.getU_fname());
+            pepe1.setText(sess.getU_lname());
+            emm.setText(sess.getU_email());
+            uss.setText(sess.getU_username());
+            kol.setText(sess.getCont());
+
+            // Retrieve and debug the image path
+            String imagePath = sess.getImage();
+            System.out.println("Image path retrieved from session: " + imagePath); // Debug output
+
+            if (imagePath != null && !imagePath.isEmpty()) {
+                File imgFile = new File(imagePath);
+                System.out.println("Checking existence of image file: " + imgFile.getAbsolutePath()); // Debug output
+                if (imgFile.exists()) {
+                    // Use the existing ResizeImage method
+                    ima.setIcon(ResizeImage(imagePath, null, ima));
+                    System.out.println("Image loaded successfully: " + imagePath);
+                } else {
+                    System.out.println("Image not found: " + imagePath);
+                    ima.setIcon(new ImageIcon("path/to/default/icon.png")); // Replace with your default icon path
+                }
+            } else {
+                System.out.println("No image path provided in session.");
+                ima.setIcon(new ImageIcon("path/to/default/icon.png")); // Replace with your default icon path
+            }
+        });
     }//GEN-LAST:event_formWindowActivated
 
     private void pepe1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pepe1MouseClicked
@@ -509,6 +554,20 @@ Session sess = Session.getInstance();
        this.dispose();
     }//GEN-LAST:event_jLabel12MouseClicked
 
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+    SwingUtilities.invokeLater(() -> {
+        // 1. Clear Specific JLabel and Reload Image
+        clearSpecificJLabel(); // Call clearSpecificJLabel to clear AND reload
+
+        // 2. Revalidate and Repaint the JFrame
+        revalidate();
+        repaint();
+
+        JOptionPane.showMessageDialog(this, "JLabel refreshed successfully!", "Refresh",
+                JOptionPane.INFORMATION_MESSAGE);
+    });
+    }//GEN-LAST:event_refreshActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -568,6 +627,7 @@ Session sess = Session.getInstance();
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel kol;
     private javax.swing.JLabel pepe1;
+    private javax.swing.JButton refresh;
     private javax.swing.JLabel uss;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,6 +9,7 @@ import Userdashboard.GenPin;
 import Userdashboard.GenQue;
 import Userdashboard.NewDashboard;
 import Userdashboard.Security;
+import Userdashboard.UpdateUser;
 import Userdashboard.userdashboard;
 import admin.adminDashboard;
 import config.Session;
@@ -390,8 +391,10 @@ public class LogInForm extends javax.swing.JFrame {
             GenPin.userType = type;
             Security.userType = type; // Set user type here
             GenQue.userType = type;
+            UpdateUser.userType = type;
             
             Session sess = Session.getInstance();
+            sess.setType(type);
             sess.setId(rs.getInt("id")); 
             sess.setU_fname(rs.getString("u_fname"));
             sess.setU_lname(rs.getString("u_lname"));

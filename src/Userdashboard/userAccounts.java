@@ -539,7 +539,7 @@ public class userAccounts extends javax.swing.JFrame {
             }
 
             crf.pass.setEnabled(false); 
-            crf.cancel.setVisible(true);
+            crf.cancel1.setVisible(true);
 
             crf.Update1.setVisible(true);
 

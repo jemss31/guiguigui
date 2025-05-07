@@ -112,15 +112,19 @@ public class AccountAdmin extends javax.swing.JFrame {
         emm = new javax.swing.JLabel();
         gwapo = new javax.swing.JLabel();
         pepe1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         uss = new javax.swing.JLabel();
         kol = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         ima = new javax.swing.JLabel();
         Profile = new javax.swing.JLabel();
-        refresh = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -192,7 +196,7 @@ public class AccountAdmin extends javax.swing.JFrame {
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 100, 40));
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel9.setText("Appointments");
+        jLabel9.setText("Transactions");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 40));
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -229,7 +233,7 @@ public class AccountAdmin extends javax.swing.JFrame {
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 120, 40));
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel12.setText("Transactions");
+        jLabel12.setText("Appointments");
         jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
         jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -255,38 +259,38 @@ public class AccountAdmin extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 200, 600));
 
-        emm.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        emm.setFont(new java.awt.Font("Georgia", 2, 18)); // NOI18N
         emm.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 emmMouseClicked(evt);
             }
         });
-        jPanel1.add(emm, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 280, 40));
+        jPanel1.add(emm, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 510, 290, 40));
 
-        gwapo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        gwapo.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         gwapo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 gwapoMouseClicked(evt);
             }
         });
-        jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 190, 40));
+        jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, 190, 40));
 
-        pepe1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        pepe1.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         pepe1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pepe1MouseClicked(evt);
             }
         });
-        jPanel1.add(pepe1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 190, 40));
+        jPanel1.add(pepe1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 470, 190, 40));
+
+        uss.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        jPanel1.add(uss, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 590, 190, 40));
+
+        kol.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        jPanel1.add(kol, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 550, 190, 40));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 530, 860, 210));
-
-        uss.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel1.add(uss, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 190, 40));
-
-        kol.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel1.add(kol, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 190, 40));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 490, 860, 210));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/idol.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -308,7 +312,7 @@ public class AccountAdmin extends javax.swing.JFrame {
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 530, 260));
         jPanel4.add(ima, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 225));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, 290, 250));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 290, 250));
 
         Profile.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         Profile.setText("EDIT PROFILE");
@@ -317,15 +321,27 @@ public class AccountAdmin extends javax.swing.JFrame {
                 ProfileMouseClicked(evt);
             }
         });
-        jPanel1.add(Profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, 130, 50));
+        jPanel1.add(Profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 130, 50));
 
-        refresh.setText("REFRESH");
-        refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshActionPerformed(evt);
-            }
-        });
-        jPanel1.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 430, 180, 50));
+        jLabel14.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel14.setText("Username:");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 590, 120, 40));
+
+        jLabel15.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel15.setText("First Name:");
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, 120, 40));
+
+        jLabel16.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel16.setText("Last Name:");
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, 120, 40));
+
+        jLabel17.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel17.setText("Email:");
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 510, 120, 40));
+
+        jLabel18.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jLabel18.setText("Phone:");
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 550, 120, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -532,7 +548,7 @@ Session sess = Session.getInstance();
             }
 
             crf.pass.setEnabled(false); 
-            crf.cancel.setVisible(true);
+            crf.cancel1.setVisible(true);
 
             crf.Update1.setVisible(true);
 
@@ -553,20 +569,6 @@ Session sess = Session.getInstance();
        t.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
-    SwingUtilities.invokeLater(() -> {
-        // 1. Clear Specific JLabel and Reload Image
-        clearSpecificJLabel(); // Call clearSpecificJLabel to clear AND reload
-
-        // 2. Revalidate and Repaint the JFrame
-        revalidate();
-        repaint();
-
-        JOptionPane.showMessageDialog(this, "JLabel refreshed successfully!", "Refresh",
-                JOptionPane.INFORMATION_MESSAGE);
-    });
-    }//GEN-LAST:event_refreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -614,6 +616,11 @@ Session sess = Session.getInstance();
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -627,7 +634,6 @@ Session sess = Session.getInstance();
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel kol;
     private javax.swing.JLabel pepe1;
-    private javax.swing.JButton refresh;
     private javax.swing.JLabel uss;
     // End of variables declaration//GEN-END:variables
 }

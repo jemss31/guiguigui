@@ -99,6 +99,8 @@ public class MobileNumber extends javax.swing.JFrame {
         });
         jPanel5.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 110, 30));
         jPanel5.add(m12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 280, 40));
+
+        na.setEnabled(false);
         jPanel5.add(na, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 280, 40));
 
         jLabel5.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
@@ -120,6 +122,8 @@ public class MobileNumber extends javax.swing.JFrame {
             }
         });
         jPanel5.add(con1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 110, 30));
+
+        m1.setEnabled(false);
         jPanel5.add(m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 280, 40));
 
         jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 630, 360));
@@ -198,7 +202,7 @@ private void sendEmail(String toEmail, String otp) {
         message.setFrom(new InternetAddress(fromEmail));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
         message.setSubject("PET GROOMING SYSTEM OTP");
-        message.setText("Your OTP is: " + otp);
+        message.setText("Your OTP is: " + otp + "\n\nThis is a one-time password. For security reasons, please do not share this OTP with anyone. If you did not request this OTP, please ignore this message.");
 
         Transport.send(message);
         System.out.println("Email sent successfully!");

@@ -229,7 +229,7 @@ public class userdashboard extends javax.swing.JFrame {
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 260, 30));
 
         time.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 260, 300));
+        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 260, 290));
 
         jLabel8.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel8.setText("Enter Pet Name:");

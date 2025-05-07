@@ -34,6 +34,7 @@ import javax.swing.JOptionPane;
  * @author admin
  */
 public class UpdateUser extends javax.swing.JFrame {
+     public static String userType;
 
     /**
      * Creates new form UpdateUser
@@ -165,8 +166,6 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Update = new javax.swing.JButton();
-        cancel = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -196,42 +195,6 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
         remove1 = new javax.swing.JButton();
         Update1 = new javax.swing.JButton();
         cancel1 = new javax.swing.JButton();
-
-        Update.setText("UPDATE");
-        Update.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UpdateMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                UpdateMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                UpdateMouseExited(evt);
-            }
-        });
-        Update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UpdateActionPerformed(evt);
-            }
-        });
-
-        cancel.setText("CANCEL");
-        cancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cancelMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cancelMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                cancelMouseExited(evt);
-            }
-        });
-        cancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelActionPerformed(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -520,7 +483,7 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
                         }else{
                             Picture.setIcon(ResizeImage(path, null, Picture));
                             select.setEnabled(false);
-                            cancel.setEnabled(true);
+                            cancel1.setEnabled(true);
                             
                         }
                     } catch (Exception ex) {
@@ -528,24 +491,6 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
                     }
                 }     
     }//GEN-LAST:event_selectActionPerformed
-
-    private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
-
-    }//GEN-LAST:event_cancelMouseClicked
-
-    private void cancelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseEntered
-        cancel.setBackground(new java.awt.Color(114,240,194));
-    }//GEN-LAST:event_cancelMouseEntered
-
-    private void cancelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseExited
-        cancel.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_cancelMouseExited
-
-    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-    AccountAdmin ua = new AccountAdmin();
-        ua.setVisible(true);
-        this.dispose(); 
-    }//GEN-LAST:event_cancelActionPerformed
 
     private void fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnActionPerformed
       
@@ -619,158 +564,6 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
        destination = "";
        path = "";
     }//GEN-LAST:event_remove1ActionPerformed
-
-    private void UpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UpdateMouseClicked
-
-    private void UpdateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UpdateMouseEntered
-
-    private void UpdateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UpdateMouseExited
-
-    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
-      
-     String newFname = fn.getText().trim();
-    String newLname = ln1.getText().trim();
-    String newContact = contactnum.getText().trim();
-    String newEmail = Email.getText().trim();
-    String newUsername = uss1.getText().trim();
-    String newUserType = utype.getSelectedItem().toString();
-    String newUserStatus = stat.getSelectedItem().toString();
-
-    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-
-    if (newFname.isEmpty() || newLname.isEmpty() || newEmail.isEmpty() || newUsername.isEmpty() || newUserType.isEmpty() || newUserStatus.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "All fields are required!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    if (!newFname.matches("[a-zA-Z ]+") || !newLname.matches("[a-zA-Z ]+")) {
-        JOptionPane.showMessageDialog(this, "Only letters are allowed for First and Last Name.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    if (!newContact.matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Invalid contact number! Only numbers are allowed.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    if (!newEmail.matches(emailRegex)) {
-        JOptionPane.showMessageDialog(this, "Invalid Email! Please enter a valid email address.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    if (!newUsername.matches("[a-zA-Z0-9_]{5,}")) {
-        JOptionPane.showMessageDialog(this, "Invalid Username! Must be at least 5 characters and contain only letters, numbers, and underscores.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    dbConnector dbc = new dbConnector();
-
-    if (this.userId == null || this.userId.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Error: User ID is missing.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    String checkQuery = "SELECT COUNT(*) FROM users WHERE (u_username = ? OR u_email = ?) AND id != ?";
-    
-    try (Connection conn = dbc.getConnection();
-         PreparedStatement pst = conn.prepareStatement(checkQuery)) {
-
-        pst.setString(1, newUsername);
-        pst.setString(2, newEmail);
-        pst.setString(3, this.userId);
-
-        try (ResultSet rs = pst.executeQuery()) {
-            if (rs.next() && rs.getInt(1) > 0) {
-                JOptionPane.showMessageDialog(this, "Username or Email already exists! Please use different credentials.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-
-        String updateQuery = "UPDATE users SET u_fname = ?, u_lname = ?, u_email = ?, u_username = ?, type = ?, status = ?";
-        if (path != null && !path.isEmpty()) {
-            updateQuery += ", image = ?"; 
-        }
-        updateQuery += " WHERE id = ?";
-
-        try (PreparedStatement updatePst = conn.prepareStatement(updateQuery, Statement.RETURN_GENERATED_KEYS)) {
-            updatePst.setString(1, newFname);
-            updatePst.setString(2, newLname);
-            updatePst.setString(3, newEmail);
-            updatePst.setString(4, newUsername);
-            updatePst.setString(5, newUserType);
-            updatePst.setString(6, newUserStatus);
-            
-            if (path != null && !path.isEmpty()) {
-                updatePst.setString(7, destination);
-                updatePst.setString(8, this.userId);
-            } else {
-                updatePst.setString(7, this.userId); 
-            }
-
-            int updated = updatePst.executeUpdate();
-            if (updated > 0) {
-    
-    Logins logger = new Logins(conn); 
-    int adminId = Integer.parseInt(ID.getText()); 
-    String logMessage = "Admin updated user info: " + newUsername + " (User ID: " + this.userId + ")";
-    
-    try {
-        logger.logAdd(adminId, logMessage);
-    } catch (Exception logEx) {
-        JOptionPane.showMessageDialog(this, "Error logging the update: " + logEx.getMessage(), "Log Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-                
-                if (destination == null || destination.isEmpty()) {
-                    
-                    if (oldpath != null) {
-                        File existingFile = new File(oldpath); 
-                        if (existingFile.exists()) { 
-                            existingFile.delete(); 
-                        }
-                    }
-
-                    
-                    String updateImageQuery = "UPDATE users SET image = NULL WHERE u_id = ?";
-                    try (PreparedStatement updateImagePst = conn.prepareStatement(updateImageQuery)) {
-                        updateImagePst.setString(1, this.userId);
-                        updateImagePst.executeUpdate();
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, "Error updating image in database: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } else { 
-                    if (oldpath != null && !oldpath.equals(path)) { 
-                        imageUpdater(oldpath, path); 
-                    } 
-                }
-
-                
-                if (selectedFile != null && destination != null) {
-                    try {
-                        Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(this, "Error copying the image file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                }
-
-                JOptionPane.showMessageDialog(this, "User data updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                new AccountAdmin().setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Update failed!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_UpdateActionPerformed
 
     private void Update1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Update1MouseClicked
         // TODO add your handling code here:
@@ -879,7 +672,7 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
 
                 // Handle image file existence and update
                 if (selectedFile != null) {
-                    String destination = "src/profileImages/" + selectedFile.getName(); // Define the destination path
+                    String destination = "src/profiles/" + selectedFile.getName(); // Define the destination path
                     try {
                         Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
 
@@ -911,20 +704,21 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
 
                 // Redirect to the appropriate panel based on user type
                 Session sess = Session.getInstance();
+                
+    String userType = Session.getInstance().getType();
+    System.out.println("Update: User type from Session: " + userType);
 
-// Get the user type from the Session
-String userType = sess.getType();
-
-if ("admin".equals(userType)) {
-    new AccountAdmin().setVisible(true);
-} else if ("customer".equals(userType)) {
-    new userAccounts().setVisible(true); // Assuming userAccount is the customer panel
-} else {
-    // Handle unknown user types - redirect to a default panel or show an error
-    System.out.println("Unknown user type: " + userType + ".  Redirecting to default.");
-    new AccountAdmin().setVisible(true); // Or some other default
-}
-this.dispose();
+    if ("admin".equalsIgnoreCase(userType)) {
+        System.out.println("Update: Redirecting to AccountAdmin");
+        new AccountAdmin().setVisible(true);
+    } else if ("customer".equalsIgnoreCase(userType)) {
+        System.out.println("Update: Redirecting to userAccounts");
+        new userAccounts().setVisible(true);
+    } else {
+        System.out.println("Unknown user type: " + userType + ". Redirecting to default.");
+        // Handle the unknown user type (e.g., show an error message or take other action)
+    }
+    this.dispose();
 
             } else {
                 JOptionPane.showMessageDialog(this, "Update failed!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1022,9 +816,7 @@ this.dispose();
     public javax.swing.JTextField Email;
     private javax.swing.JLabel ID;
     public javax.swing.JLabel Picture;
-    public javax.swing.JButton Update;
     public javax.swing.JButton Update1;
-    public javax.swing.JButton cancel;
     public javax.swing.JButton cancel1;
     public javax.swing.JTextField contactnum;
     public javax.swing.JTextField fn;

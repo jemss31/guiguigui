@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import java.text.ParseException;
 import java.util.Date;
 import config.TimeConflick;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -229,7 +231,7 @@ public class userdashboard extends javax.swing.JFrame {
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 260, 30));
 
         time.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 260, 300));
+        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 260, 290));
 
         jLabel8.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel8.setText("Enter Pet Name:");
@@ -323,11 +325,10 @@ public class userdashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_lgMouseExited
 
     private void sumbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumbitActionPerformed
-          config.TimeConflick timeHelper = new config.TimeConflick(); // only declared once
+    config.TimeConflick timeHelper = new config.TimeConflick(); // Only declared once
 
     java.util.Date selectedDateUtil = date.getDate();
     String selectedDate = new SimpleDateFormat("yyyy-MM-dd").format(selectedDateUtil);
-
     String petName = pet.getText().trim();
     String selectedHaircut = (String) type.getSelectedItem();
     String selectedTime = time.getSelectedTime();
@@ -377,6 +378,16 @@ public class userdashboard extends javax.swing.JFrame {
         return;
     }
 
+    // Confirmation dialog
+    int confirm = JOptionPane.showConfirmDialog(this, 
+        "Are you sure you want to submit the appointment?", 
+        "Confirm Submission", 
+        JOptionPane.YES_NO_OPTION);
+    
+    if (confirm != JOptionPane.YES_OPTION) {
+        return; // User chose not to submit
+    }
+
     int currentUserId = Session.getInstance().getId();
     String userFirstName = Session.getInstance().getU_fname();
     String userLastName = Session.getInstance().getU_lname();
@@ -393,15 +404,14 @@ public class userdashboard extends javax.swing.JFrame {
         int haircutDuration = timeHelper.getHaircutDuration(haircutId, conn);
         BigDecimal haircutCost = timeHelper.getHaircutCost(selectedHaircut, conn);
 
-        // Time conflict check
         try {
+            // Time conflict check
             if (!timeHelper.isTimeSlotAvailable(conn, selectedDate, formattedTime, haircutDuration)) {
                 JOptionPane.showMessageDialog(this, "The selected time overlaps with another appointment!", "Time Conflict", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        } catch (ParseException pe) {
-            JOptionPane.showMessageDialog(this, "Error parsing appointment time: " + pe.getMessage(), "Parse Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        } catch (ParseException ex) {
+            Logger.getLogger(userdashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         pst.setString(1, selectedDate);
@@ -419,11 +429,15 @@ public class userdashboard extends javax.swing.JFrame {
         int rowsAffected = pst.executeUpdate();
         if (rowsAffected > 0) {
             JOptionPane.showMessageDialog(this, "Appointment submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            
+            // Create and display the Receipt with current data
+            Receipt receiptFrame = new Receipt();
+            receiptFrame.setVisible(true);
         }
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);  
+
     }    }//GEN-LAST:event_sumbitActionPerformed
 
     private void typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeActionPerformed

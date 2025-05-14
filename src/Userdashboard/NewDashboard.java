@@ -31,60 +31,50 @@ public class NewDashboard extends javax.swing.JFrame {
         initComponents();
         loadUsersData();
     }
-   private void loadUsersData() {
+  private void loadUsersData() {
     DefaultTableModel model = (DefaultTableModel) at.getModel();  // Replace `at` with your JTable variable name if needed
-    String[] columnNames = {"#", "Appointment ID", "Date", "Time", "Pet Name", "Cost", "Customer Name"};
+    String[] columnNames = {"#", "Appointment ID", "Date", "Time"};
     model.setColumnIdentifiers(columnNames);
     model.setRowCount(0);
 
-    int currentUserId = Session.getInstance().getId();
-
-    String sql = "SELECT a_id, date, time, pet_name, cost, u_fname, u_lname, status " +
-                 "FROM appointments WHERE user_id = ? AND status != 'Done'";
+    String sql = "SELECT a_id, date, time FROM appointments";  // Adjusted SQL query
 
     try (Connection connect = new dbConnector().getConnection();
-         PreparedStatement pst = connect.prepareStatement(sql)) {
+         PreparedStatement pst = connect.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
 
-        pst.setInt(1, currentUserId);
+        if (!rs.isBeforeFirst()) {
+            JOptionPane.showMessageDialog(this, "No appointments found.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int i = 1;
+            while (rs.next()) {
+                String appointmentDate = rs.getString("date");
+                String appointmentTime = rs.getString("time");
 
-        try (ResultSet rs = pst.executeQuery()) {
-            if (!rs.isBeforeFirst()) {
-                JOptionPane.showMessageDialog(this, "No upcoming appointments found.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                int i = 1;
-                while (rs.next()) {
-                    String appointmentDate = rs.getString("date");
-                    String appointmentTime = rs.getString("time");
+                try {
+                    // Combine date and time into a LocalDateTime object
+                    LocalDateTime appointmentDateTime = LocalDateTime.parse(appointmentDate + "T" + appointmentTime);
 
-                    try {
-                        // Combine date and time into a LocalDateTime object
-                        LocalDateTime appointmentDateTime = LocalDateTime.parse(appointmentDate + "T" + appointmentTime);
-
-                        // Check if the appointment is in the future
-                        if (LocalDateTime.now().isBefore(appointmentDateTime)) {
-                            Object[] row = {
-                                i++,
-                                rs.getInt("a_id"),
-                                appointmentDate,
-                                appointmentTime,
-                                rs.getString("pet_name"),
-                                rs.getBigDecimal("cost"),
-                                rs.getString("u_fname") + " " + rs.getString("u_lname")
-                            };
-                            model.addRow(row);
-                        }
-                    } catch (DateTimeParseException dtpe) {
-                        System.err.println("Invalid date/time format for appointment: " + appointmentDate + " " + appointmentTime);
+                    // Check if the appointment is in the future
+                    if (LocalDateTime.now().isBefore(appointmentDateTime)) {
+                        Object[] row = {
+                            i++,
+                            rs.getInt("a_id"),
+                            appointmentDate,
+                            appointmentTime
+                        };
+                        model.addRow(row);
                     }
+                } catch (DateTimeParseException dtpe) {
+                    System.err.println("Invalid date/time format for appointment: " + appointmentDate + " " + appointmentTime);
                 }
             }
         }
-
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
-} 
+}
 
 
     /**

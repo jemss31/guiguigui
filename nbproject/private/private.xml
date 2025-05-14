@@ -4,14 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/admin/DoneApp.java</file>
+            <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/admin/AdminAccountControl.java</file>
             <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/admin/Transactions.java</file>
             <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/admin/ViewAccountsAdmin.java</file>
-            <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/config/OTPGenerator.java</file>
-            <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/admin/MobileNumber.java</file>
             <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/admin/AccountAdmin.java</file>
-            <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/config/EmailSender.java</file>
             <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/admin/adminDashboard.java</file>
-            <file>file:/C:/Users/admin/Desktop/jemss/javas/guiguigui/src/config/dbConnector.java</file>
         </group>
     </open-files>
 </project-private>

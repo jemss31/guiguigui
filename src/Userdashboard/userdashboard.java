@@ -191,7 +191,7 @@ public class userdashboard extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
         date.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 420, 240));
+        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, 390, 240));
 
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Croptop", "Lion Cut", "Mohowk", "Top Knot", "Mushroom", "Edgar Cut", "Flat Top", "Teddy Bear Cut", " " }));
         type.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +215,7 @@ public class userdashboard extends javax.swing.JFrame {
                 sumbitActionPerformed(evt);
             }
         });
-        jPanel1.add(sumbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 610, 160, 30));
+        jPanel1.add(sumbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 610, 160, 30));
 
         pet.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -229,7 +229,7 @@ public class userdashboard extends javax.swing.JFrame {
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 260, 30));
 
         time.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 260, 290));
+        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 260, 300));
 
         jLabel8.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel8.setText("Enter Pet Name:");
@@ -323,7 +323,7 @@ public class userdashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_lgMouseExited
 
     private void sumbitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumbitActionPerformed
- config.TimeConflick timeHelper = new config.TimeConflick(); // only declared once
+          config.TimeConflick timeHelper = new config.TimeConflick(); // only declared once
 
     java.util.Date selectedDateUtil = date.getDate();
     String selectedDate = new SimpleDateFormat("yyyy-MM-dd").format(selectedDateUtil);
@@ -331,6 +331,12 @@ public class userdashboard extends javax.swing.JFrame {
     String petName = pet.getText().trim();
     String selectedHaircut = (String) type.getSelectedItem();
     String selectedTime = time.getSelectedTime();
+
+    // Check if pet name is empty
+    if (petName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Pet name cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
     String formattedTime = "";
     try {
@@ -343,7 +349,24 @@ public class userdashboard extends javax.swing.JFrame {
         return;
     }
 
-    if (petName.isEmpty() || selectedDate.isEmpty() || selectedHaircut == null || formattedTime.isEmpty()) {
+    // Time validation: check if the selected time is between 7 PM and 9 AM
+    try {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        Date startTime = timeFormat.parse("19:00:00"); // 7 PM
+        Date endTime = timeFormat.parse("09:00:00");   // 9 AM
+        Date selectedAppointmentTime = timeFormat.parse(formattedTime);
+
+        // Check if the selected time is in the restricted range
+        if (selectedAppointmentTime.after(startTime) || selectedAppointmentTime.before(endTime)) {
+            JOptionPane.showMessageDialog(this, "Appointments cannot be scheduled between 7 PM and 9 AM!", "Time Restriction", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (ParseException e) {
+        JOptionPane.showMessageDialog(this, "Error in time validation: " + e.getMessage(), "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (selectedDate.isEmpty() || selectedHaircut == null || formattedTime.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -363,43 +386,44 @@ public class userdashboard extends javax.swing.JFrame {
     // SQL query with 'groom' and 'haircut_id' columns
     String sql = "INSERT INTO appointments (date, time, pet_name, groom, haircut_id, cost, user_id, u_fname, u_lname, u_email, cont) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-try (Connection conn = new dbConnector().getConnection();
-     PreparedStatement pst = conn.prepareStatement(sql)) {
+    try (Connection conn = new dbConnector().getConnection();
+         PreparedStatement pst = conn.prepareStatement(sql)) {
 
-    int haircutId = timeHelper.getHaircutId(selectedHaircut, conn);
-    int haircutDuration = timeHelper.getHaircutDuration(haircutId, conn);
-    BigDecimal haircutCost = timeHelper.getHaircutCost(selectedHaircut, conn);
+        int haircutId = timeHelper.getHaircutId(selectedHaircut, conn);
+        int haircutDuration = timeHelper.getHaircutDuration(haircutId, conn);
+        BigDecimal haircutCost = timeHelper.getHaircutCost(selectedHaircut, conn);
 
-    // ✅ Wrap the time conflict check in its own try-catch or expand this one
-    try {
-        if (!timeHelper.isTimeSlotAvailable(conn, selectedDate, formattedTime, haircutDuration)) {
-            JOptionPane.showMessageDialog(this, "The selected time overlaps with another appointment!", "Time Conflict", JOptionPane.ERROR_MESSAGE);
+        // Time conflict check
+        try {
+            if (!timeHelper.isTimeSlotAvailable(conn, selectedDate, formattedTime, haircutDuration)) {
+                JOptionPane.showMessageDialog(this, "The selected time overlaps with another appointment!", "Time Conflict", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (ParseException pe) {
+            JOptionPane.showMessageDialog(this, "Error parsing appointment time: " + pe.getMessage(), "Parse Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-    } catch (ParseException pe) {
-        JOptionPane.showMessageDialog(this, "Error parsing appointment time: " + pe.getMessage(), "Parse Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
 
-    pst.setString(1, selectedDate);
-    pst.setString(2, formattedTime);
-    pst.setString(3, petName);
-    pst.setString(4, selectedHaircut);
-    pst.setInt(5, haircutId);
-    pst.setBigDecimal(6, haircutCost);
-    pst.setInt(7, currentUserId);
-    pst.setString(8, userFirstName);
-    pst.setString(9, userLastName);
-    pst.setString(10, userEmail);
-    pst.setString(11, userContact);
+        pst.setString(1, selectedDate);
+        pst.setString(2, formattedTime);
+        pst.setString(3, petName);
+        pst.setString(4, selectedHaircut);
+        pst.setInt(5, haircutId);
+        pst.setBigDecimal(6, haircutCost);
+        pst.setInt(7, currentUserId);
+        pst.setString(8, userFirstName);
+        pst.setString(9, userLastName);
+        pst.setString(10, userEmail);
+        pst.setString(11, userContact);
 
-    int rowsAffected = pst.executeUpdate();
-    if (rowsAffected > 0) {
-        JOptionPane.showMessageDialog(this, "Appointment submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-    }
+        int rowsAffected = pst.executeUpdate();
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(this, "Appointment submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        }
 
-} catch (SQLException ex) {
-    JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    
     }    }//GEN-LAST:event_sumbitActionPerformed
 
     private void typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeActionPerformed

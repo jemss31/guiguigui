@@ -33,43 +33,39 @@ public class Transactions extends javax.swing.JFrame {
      
     
 private void loadUsersData() {
-    DefaultTableModel model = (DefaultTableModel) ut.getModel();
-    String[] columnNames = {"Index", "a_id", "Date", "Time", "Pet_name", "Groom", "Haircut_id", "Cost", "First_name", "Last_name", "Email", "Cont"};
+    DefaultTableModel model = (DefaultTableModel) ut.getModel();  // Replace `ut` with your actual JTable variable name if needed
+    String[] columnNames = {"#", "Appointment ID", "Date", "Time", "Pet Name", "Service", "Customer Name", "Status"};
     model.setColumnIdentifiers(columnNames);
     model.setRowCount(0);
 
-    // Updated SQL query without JOIN
-    String sql = "SELECT a_id, date, time, pet_name, groom, haircut_id, cost, u_fname, u_lname, u_email, cont FROM appointments";
+    String sql = "SELECT a_id, date, time, pet_name, groom, u_fname, u_lname, status " +
+                 "FROM appointments WHERE status != 'Done'";
 
     try (Connection connect = new dbConnector().getConnection();
          PreparedStatement pst = connect.prepareStatement(sql);
          ResultSet rs = pst.executeQuery()) {
 
-        int i = 1; // Initialize counter
-
+        int i = 1;
         while (rs.next()) {
             Object[] row = {
-                i++, // Increment the counter for each row
+                i++,
                 rs.getInt("a_id"),
                 rs.getString("date"),
                 rs.getString("time"),
                 rs.getString("pet_name"),
-                rs.getString("groom"), // Get the haircut name
-                rs.getInt("haircut_id"),
-                rs.getBigDecimal("cost"),
-                rs.getString("u_fname"),
-                rs.getString("u_lname"),
-                rs.getString("u_email"),
-                rs.getString("cont"),
+                rs.getString("groom"),
+                rs.getString("u_fname") + " " + rs.getString("u_lname"),
+                rs.getString("status")
             };
             model.addRow(row);
         }
+
     } catch (SQLException ex) {
-        // Log the SQL exception for debugging
         ex.printStackTrace();
         JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,7 +81,6 @@ private void loadUsersData() {
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -106,7 +101,7 @@ private void loadUsersData() {
         jPanel3.setBackground(new java.awt.Color(114, 240, 194));
 
         jLabel2.setFont(new java.awt.Font("Cooper Black", 0, 36)); // NOI18N
-        jLabel2.setText("Transactions!");
+        jLabel2.setText("Appointments");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -114,8 +109,8 @@ private void loadUsersData() {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(jLabel2)
-                .addContainerGap(795, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(756, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,10 +148,6 @@ private void loadUsersData() {
             }
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 120, 40));
-
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel6.setText("Pets");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 100, 40));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel7.setText("Account");
@@ -251,7 +242,7 @@ private void loadUsersData() {
         jPanel1.add(VIEW, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 460, 80, 30));
 
         add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 420, 560, 280));
+        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 420, 940, 280));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -422,7 +413,9 @@ private void loadUsersData() {
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-     
+       DoneApp dp = new DoneApp();
+       dp.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jLabel9MouseClicked
 
     /**
@@ -469,7 +462,6 @@ private void loadUsersData() {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

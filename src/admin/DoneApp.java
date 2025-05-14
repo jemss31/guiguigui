@@ -8,10 +8,12 @@ package admin;
 
 import config.dbConnector;
 import java.awt.Color;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -23,7 +25,42 @@ public class DoneApp extends javax.swing.JFrame {
     /** Creates new form DoneApp */
     public DoneApp() {
         initComponents();
+        loadDoneAppointments();
     }
+    private void loadDoneAppointments() {
+    DefaultTableModel model = (DefaultTableModel) DoneApp.getModel();  // Replace DoneApp with your JTable variable name
+    String[] columnNames = {"#", "Appointment ID", "Date", "Time", "Pet Name", "Service", "Customer Name", "Status"};
+    model.setColumnIdentifiers(columnNames);
+    model.setRowCount(0);
+
+    String sql = "SELECT a_id, date, time, pet_name, groom, u_fname, u_lname, status " +
+                 "FROM appointments WHERE status = 'Done'";
+
+    try (Connection connect = new dbConnector().getConnection();
+         PreparedStatement pst = connect.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
+
+        int i = 1;
+        while (rs.next()) {
+            Object[] row = {
+                i++,
+                rs.getInt("a_id"),
+                rs.getString("date"),
+                rs.getString("time"),
+                rs.getString("pet_name"),
+                rs.getString("groom"),
+                rs.getString("u_fname") + " " + rs.getString("u_lname"),
+                rs.getString("status")
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading done appointments: " + ex.getMessage());
+    }
+}
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -40,7 +77,6 @@ public class DoneApp extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -48,11 +84,11 @@ public class DoneApp extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
-        VIEW = new javax.swing.JButton();
+        DoneApp = new javax.swing.JTable();
         add = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(240, 245, 179));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -107,10 +143,6 @@ public class DoneApp extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 120, 40));
-
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel6.setText("Pets");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 100, 40));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel7.setText("Account");
@@ -168,11 +200,16 @@ public class DoneApp extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel12.setText("Appointments");
         jLabel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 120, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 200, 600));
 
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
+        DoneApp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -183,29 +220,12 @@ public class DoneApp extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tabla);
+        jScrollPane1.setViewportView(DoneApp);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, 750, 300));
 
-        VIEW.setText("VIEW");
-        VIEW.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        VIEW.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                VIEWMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                VIEWMouseExited(evt);
-            }
-        });
-        VIEW.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VIEWActionPerformed(evt);
-            }
-        });
-        jPanel1.add(VIEW, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 460, 80, 30));
-
         add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 420, 560, 280));
+        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 420, 1030, 280));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,6 +239,7 @@ public class DoneApp extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -287,96 +308,11 @@ public class DoneApp extends javax.swing.JFrame {
         jLabel11.setForeground(Color.BLACK);
     }//GEN-LAST:event_jLabel11MouseExited
 
-    private void VIEWMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWMouseEntered
-        VIEW.setBackground(new java.awt.Color(114,240,194));
-    }//GEN-LAST:event_VIEWMouseEntered
-
-    private void VIEWMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWMouseExited
-        VIEW.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_VIEWMouseExited
-
-    private void VIEWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIEWActionPerformed
-//        int rowIndex = tabla.getSelectedRow();
-//
-//        System.out.println("Row Index: " + rowIndex);
-//
-//        if (rowIndex < 0) {
-//            JOptionPane.showMessageDialog(null, "Please select a transaction!");
-//        } else {
-//            dbConnector dbc = null;
-//            PreparedStatement pst = null;
-//            ResultSet rs = null;
-//
-//            try {
-//                dbc = new dbConnector();
-//                TableModel tbl = tabla.getModel();
-//                // Assuming a_id is in the second column (index 1)
-//                String appointmentId = tbl.getValueAt(rowIndex, 1).toString().trim();
-//
-//                System.out.println("Appointment ID from table: " + appointmentId);
-//
-//                // Check if appointmentId is a valid integer
-//                if (!appointmentId.matches("\\d+")) {
-//                    JOptionPane.showMessageDialog(null, "Invalid Appointment ID format!");
-//                    return;
-//                }
-//
-//                // Updated SQL query without JOIN
-//                String query = "SELECT a_id, date, time, pet_name, groom, haircut_id, cost, u_fname, u_lname, u_email, cont FROM appointments WHERE a_id = ?";
-//
-//                System.out.println("SQL Query: " + query);
-//
-//                pst = dbc.getConnection().prepareStatement(query);
-//                pst.setInt(1, Integer.parseInt(appointmentId)); // Use int for the query
-//                rs = pst.executeQuery();
-//
-//                if (rs.next()) {
-//                    String a_id = rs.getString("a_id"); // Get a_id as a String
-//
-//                    System.out.println("a_id from ResultSet: " + a_id); // **DEBUGGING**
-//
-//                    ViewAccountsAdmin dt = new ViewAccountsAdmin(a_id);  // Pass a_id to the constructor!
-//
-//                    // Populate the panel fields with the fetched data
-//                    dt.id.setText(a_id); // Use the String a_id
-//                    dt.date.setText(rs.getString("date"));
-//                    dt.time.setText(rs.getString("time"));
-//                    dt.pet.setText(rs.getString("pet_name"));
-//                    dt.cut.setText(rs.getString("haircut_id"));
-//                    dt.hair.setText(rs.getString("groom")); // Set haircut name
-//                    dt.cost.setText(rs.getString("cost"));
-//                    dt.fn.setText(rs.getString("u_fname"));
-//                    dt.ln1.setText(rs.getString("u_lname"));
-//                    dt.Email.setText(rs.getString("u_email"));
-//
-//                    // Handle null value for 'cont' column
-//                    String contValue = rs.getString("cont");
-//                    dt.contactnum.setText(contValue != null ? contValue : "");
-//
-//                    dt.setVisible(true);
-//                    //this.dispose(); // Dispose is probably not needed here.  Let the new frame handle it.
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "No data found for the selected appointment.");
-//                }
-//            } catch (NumberFormatException ex) {
-//                JOptionPane.showMessageDialog(null, "Invalid Appointment ID format!");
-//                ex.printStackTrace();
-//            } catch (SQLException ex) {
-//                ex.printStackTrace(); // Print stack trace for debugging
-//                JOptionPane.showMessageDialog(null, "An error occurred while retrieving data: " + ex.getMessage());
-//            } finally {
-//                // Close resources in the right order
-//                try {
-//                    if (rs != null) rs.close();
-//                    if (pst != null) pst.close();
-//                } catch (SQLException e) {
-//                    e.printStackTrace(); // Print stack trace for debugging
-//                } finally {
-//                    if (dbc != null) dbc.closeConnection();
-//                }
-//            }
-//        }
-    }//GEN-LAST:event_VIEWActionPerformed
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        Transactions t = new Transactions();
+        t.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel12MouseClicked
 
     /**
      * @param args the command line arguments
@@ -414,7 +350,7 @@ public class DoneApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton VIEW;
+    public javax.swing.JTable DoneApp;
     private javax.swing.JLabel add;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
@@ -422,7 +358,6 @@ public class DoneApp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -430,7 +365,6 @@ public class DoneApp extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    public javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 
 }

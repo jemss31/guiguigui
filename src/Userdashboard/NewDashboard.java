@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,36 +31,51 @@ public class NewDashboard extends javax.swing.JFrame {
         initComponents();
         loadUsersData();
     }
-    private void loadUsersData() {
-    DefaultTableModel model = (DefaultTableModel) at.getModel();
-
-    String[] columnNames = { "date", "time"};
-    model.setColumnIdentifiers(columnNames); 
+   private void loadUsersData() {
+    DefaultTableModel model = (DefaultTableModel) at.getModel();  // Replace `at` with your JTable variable name if needed
+    String[] columnNames = {"#", "Appointment ID", "Date", "Time", "Pet Name", "Cost", "Customer Name"};
+    model.setColumnIdentifiers(columnNames);
     model.setRowCount(0);
 
     int currentUserId = Session.getInstance().getId();
-   
 
-    String sql = "SELECT date, time FROM appointments WHERE user_id = ?";
+    String sql = "SELECT a_id, date, time, pet_name, cost, u_fname, u_lname, status " +
+                 "FROM appointments WHERE user_id = ? AND status != 'Done'";
 
     try (Connection connect = new dbConnector().getConnection();
          PreparedStatement pst = connect.prepareStatement(sql)) {
-        
-       
+
         pst.setInt(1, currentUserId);
-       
 
         try (ResultSet rs = pst.executeQuery()) {
-            if (!rs.isBeforeFirst()) { 
-                JOptionPane.showMessageDialog(this, "No transactions found for this user.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            if (!rs.isBeforeFirst()) {
+                JOptionPane.showMessageDialog(this, "No upcoming appointments found.", "Information", JOptionPane.INFORMATION_MESSAGE);
             } else {
+                int i = 1;
                 while (rs.next()) {
-                    Object[] row = {
-                       
-                        rs.getString("date"),
-                        rs.getString("time"),
-                    };
-                    model.addRow(row); 
+                    String appointmentDate = rs.getString("date");
+                    String appointmentTime = rs.getString("time");
+
+                    try {
+                        // Combine date and time into a LocalDateTime object
+                        LocalDateTime appointmentDateTime = LocalDateTime.parse(appointmentDate + "T" + appointmentTime);
+
+                        // Check if the appointment is in the future
+                        if (LocalDateTime.now().isBefore(appointmentDateTime)) {
+                            Object[] row = {
+                                i++,
+                                rs.getInt("a_id"),
+                                appointmentDate,
+                                appointmentTime,
+                                rs.getString("pet_name"),
+                                rs.getBigDecimal("cost"),
+                                rs.getString("u_fname") + " " + rs.getString("u_lname")
+                            };
+                            model.addRow(row);
+                        }
+                    } catch (DateTimeParseException dtpe) {
+                        System.err.println("Invalid date/time format for appointment: " + appointmentDate + " " + appointmentTime);
+                    }
                 }
             }
         }
@@ -67,7 +84,8 @@ public class NewDashboard extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
-}
+} 
+
 
     /**
      * This method is called from within the constructor to initialize the form.

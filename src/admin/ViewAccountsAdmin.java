@@ -26,6 +26,9 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
     public void setUserId(String id) {
         this.userId = id;
     }
+    public String getUserId() {
+    return this.userId; // Return the stored user ID
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -308,7 +311,62 @@ public class ViewAccountsAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_donetransactionMouseExited
 
     private void donetransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_donetransactionActionPerformed
-      
+        String appointmentId = id.getText().trim(); // Adjust the field name as necessary
+
+    if (appointmentId.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "No Appointment ID found.");
+        return;
+    }
+
+    // Check if appointmentId is a valid integer
+    if (!appointmentId.matches("\\d+")) {
+        JOptionPane.showMessageDialog(null, "Invalid Appointment ID format!");
+        return;
+    }
+
+    // Ask for confirmation before proceeding
+    int confirm = JOptionPane.showConfirmDialog(null,
+        "Are you sure you want to mark this appointment as Done?",
+        "Confirm Action",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE);
+
+    if (confirm != JOptionPane.YES_OPTION) {
+        return; // User cancelled the action
+    }
+
+    dbConnector dbc = null;
+    PreparedStatement pst = null;
+
+    try {
+        dbc = new dbConnector();
+
+        String query = "UPDATE appointments SET status = 'Done' WHERE a_id = ?";
+        pst = dbc.getConnection().prepareStatement(query);
+        pst.setInt(1, Integer.parseInt(appointmentId));
+
+        int rowsUpdated = pst.executeUpdate();
+
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(null, "Appointment status updated to Done.");
+            Transactions t = new Transactions();
+            t.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No appointment found with the specified ID.");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "An error occurred while updating the appointment status: " + ex.getMessage());
+    } finally {
+        try {
+            if (pst != null) pst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (dbc != null) dbc.closeConnection();
+        }
+    }
     }//GEN-LAST:event_donetransactionActionPerformed
 
     private void fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnActionPerformed

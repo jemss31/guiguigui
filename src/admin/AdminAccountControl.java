@@ -86,7 +86,6 @@ public class AdminAccountControl extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         acc = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -159,10 +158,6 @@ public class AdminAccountControl extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 120, 40));
 
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel6.setText("Pets");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 100, 40));
-
         acc.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         acc.setText("Account");
         acc.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
@@ -181,6 +176,12 @@ public class AdminAccountControl extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Transactions");
+        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 40));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
@@ -524,6 +525,12 @@ if (rowIndex < 0) {
        this.dispose();
     }//GEN-LAST:event_jLabel12MouseClicked
 
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        DoneApp da = new DoneApp();
+        da.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel9MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -573,7 +580,6 @@ if (rowIndex < 0) {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

@@ -183,7 +183,7 @@ public class MobileNumber extends javax.swing.JFrame {
 private void sendEmail(String toEmail, String otp) {
     
     final String fromEmail = "enzoghost8@gmail.com"; // Your Gmail address
-    final String appPassword = "lolz uwji whgu vyab"; // Your Gmail app password
+    final String appPassword = "kmpw rvqr kaar frzm"; // Your Gmail app password
 
     Properties props = new Properties();
     props.put("mail.smtp.host", "smtp.gmail.com");

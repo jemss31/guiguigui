@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -33,41 +35,45 @@ public class userAppointment extends javax.swing.JFrame {
 
         
     }
-    
 private void loadUsersData() {
     DefaultTableModel model = (DefaultTableModel) at.getModel();
-
-    String[] columnNames = {"a_id", "date", "time", "pet_name", "cost", "u_fname", "u_lname"};
-    model.setColumnIdentifiers(columnNames); 
+    model.setColumnIdentifiers(new String[]{"#", "Appointment ID", "Date", "Time", "Pet Name", "Cost", "Customer Name"});
     model.setRowCount(0);
 
-    int currentUserId = Session.getInstance().getId();
-   
-
-    String sql = "SELECT a_id, date, time, pet_name, cost, u_fname, u_lname FROM appointments WHERE user_id = ?";
+    String sql = "SELECT a_id, date, time, pet_name, cost, u_fname, u_lname, status " +
+                 "FROM appointments WHERE user_id = ? AND status != 'Done'";
 
     try (Connection connect = new dbConnector().getConnection();
          PreparedStatement pst = connect.prepareStatement(sql)) {
-        
-       
-        pst.setInt(1, currentUserId);
-       
+
+        pst.setInt(1, Session.getInstance().getId());
 
         try (ResultSet rs = pst.executeQuery()) {
-            if (!rs.isBeforeFirst()) { 
-                JOptionPane.showMessageDialog(this, "No transactions found for this user.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                while (rs.next()) {
-                    Object[] row = {
-                        rs.getInt("a_id"),
-                        rs.getString("date"),
-                        rs.getString("time"),
-                        rs.getString("pet_name"),
-                        rs.getBigDecimal("cost"),
-                        rs.getString("u_fname"),
-                        rs.getString("u_lname"),
-                    };
-                    model.addRow(row); 
+            if (!rs.isBeforeFirst()) {
+                JOptionPane.showMessageDialog(this, "No upcoming appointments found.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            int i = 1;
+            while (rs.next()) {
+                String date = rs.getString("date");
+                String time = rs.getString("time");
+
+                try {
+                    LocalDateTime appointmentDateTime = LocalDateTime.parse(date + "T" + time);
+                    if (LocalDateTime.now().isBefore(appointmentDateTime)) {
+                        model.addRow(new Object[]{
+                            i++,
+                            rs.getInt("a_id"),
+                            date,
+                            time,
+                            rs.getString("pet_name"),
+                            rs.getBigDecimal("cost"),
+                            rs.getString("u_fname") + " " + rs.getString("u_lname")
+                        });
+                    }
+                } catch (DateTimeParseException e) {
+                    System.err.println("Invalid date/time: " + date + " " + time);
                 }
             }
         }
@@ -77,6 +83,9 @@ private void loadUsersData() {
         ex.printStackTrace();
     }
 }
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.

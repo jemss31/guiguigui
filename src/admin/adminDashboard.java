@@ -8,8 +8,14 @@ package admin;
 import config.Session;
 import admin.LogInForm;
 import admin.RegisForm;
+import config.dbConnector;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,7 +28,69 @@ public class adminDashboard extends javax.swing.JFrame {
      */
     public adminDashboard() {
         initComponents();
+        loadUsersData();
+        loadLogsData();
     }
+private void loadUsersData() {
+    DefaultTableModel model = (DefaultTableModel) appoint.getModel();  // Replace `ut` with your actual JTable variable name if needed
+    String[] columnNames = {"#", "Appointment ID", "Date", "Time", "Pet Name", "Service", "Customer Name", "Status"};
+    model.setColumnIdentifiers(columnNames);
+    model.setRowCount(0);
+
+    String sql = "SELECT a_id, date, time, pet_name, groom, u_fname, u_lname, status " +
+                 "FROM appointments WHERE status != 'Done'";
+
+    try (Connection connect = new dbConnector().getConnection();
+         PreparedStatement pst = connect.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
+
+        int i = 1;
+        while (rs.next()) {
+            Object[] row = {
+                i++,
+                rs.getInt("a_id"),
+                rs.getString("date"),
+                rs.getString("time"),
+                rs.getString("pet_name"),
+                rs.getString("groom"),
+                rs.getString("u_fname") + " " + rs.getString("u_lname"),
+                rs.getString("status")
+            };
+            model.addRow(row);
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+private void loadLogsData() {
+    DefaultTableModel model = (DefaultTableModel) logs.getModel(); // Replace `logsTable` with your actual JTable variable
+    model.setColumnIdentifiers(new String[]{"#", "Log ID", "User ID", "Action", "Timestamp"});
+    model.setRowCount(0);
+
+    String sql = "SELECT log_id, id, log_action, log_date FROM logs";
+
+    try (Connection connect = new dbConnector().getConnection();
+         PreparedStatement pst = connect.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
+
+        int i = 1;
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                i++,
+                rs.getInt("log_id"),
+                rs.getInt("id"),
+                rs.getString("log_action"),
+                rs.getTimestamp("log_date")
+            });
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error loading logs: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,7 +107,6 @@ public class adminDashboard extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -47,6 +114,10 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        appoint = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        logs = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -110,10 +181,6 @@ public class adminDashboard extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 120, 40));
 
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel6.setText("Pets");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 100, 40));
-
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel7.setText("Account");
         jLabel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
@@ -132,6 +199,12 @@ public class adminDashboard extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Transactions");
+        jLabel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 40));
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -169,7 +242,37 @@ public class adminDashboard extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 200, 600));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 420, 860, 280));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 420, 860, 280));
+
+        appoint.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(appoint);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 690, 230));
+
+        logs.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(logs);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 500, 270));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -252,6 +355,12 @@ public class adminDashboard extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_jLabel12MouseClicked
 
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        DoneApp da = new DoneApp();
+        da.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel9MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -288,19 +397,22 @@ public class adminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable appoint;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable logs;
     // End of variables declaration//GEN-END:variables
 }

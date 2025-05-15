@@ -72,6 +72,7 @@ public class userdashboard extends javax.swing.JFrame {
         shit = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -252,6 +253,14 @@ public class userdashboard extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
         jLabel10.setText("Possible Duration:");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 240, 260, 30));
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel15.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel15KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, 1000, 460));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -470,6 +479,10 @@ public class userdashboard extends javax.swing.JFrame {
       pet.setText("");
     }//GEN-LAST:event_petFocusGained
 
+    private void jLabel15KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel15KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel15KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -515,6 +528,7 @@ public class userdashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

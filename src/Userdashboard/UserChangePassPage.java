@@ -119,6 +119,7 @@ boolean updatePassword(String newPass) {
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -243,7 +244,7 @@ boolean updatePassword(String newPass) {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 860, 280));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 420, 860, 280));
 
         pass.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 230, 40));
@@ -317,6 +318,14 @@ boolean updatePassword(String newPass) {
             }
         });
         jPanel1.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 340, 20, 20));
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel14.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel14KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 1000, 460));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -493,6 +502,10 @@ jLabel11.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel11MouseExited
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
     jLabel4.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel4MouseExited
 
+    private void jLabel14KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel14KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel14KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -540,6 +553,7 @@ jLabel11.setForeground(Color.BLACK);    }//GEN-LAST:event_jLabel11MouseExited
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;

@@ -221,7 +221,7 @@ public class RegisForm extends javax.swing.JFrame {
                 jLabel10KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-90, -30, 750, 370));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 750, 370));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/asdasdasd.gif"))); // NOI18N
         jLabel8.addKeyListener(new java.awt.event.KeyAdapter() {

@@ -207,7 +207,7 @@ public class AddUser extends javax.swing.JFrame {
                 jLabel10KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-320, -20, 950, 370));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-100, 80, 950, 370));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/animated-dog-image-0023.gif"))); // NOI18N
         jLabel8.addKeyListener(new java.awt.event.KeyAdapter() {

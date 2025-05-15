@@ -74,6 +74,7 @@ public static String hashPassword(String password) {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -138,6 +139,14 @@ public static String hashPassword(String password) {
         jLabel5.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel5.setText("New Password:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 160, 30));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel10KeyPressed(evt);
+            }
+        });
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 50, 1000, 460));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 630, 360));
 
@@ -217,6 +226,10 @@ public static String hashPassword(String password) {
        old.setEchoChar('*');
     }//GEN-LAST:event_formWindowActivated
 
+    private void jLabel10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel10KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -257,6 +270,7 @@ public static String hashPassword(String password) {
     private javax.swing.JPasswordField conpass;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

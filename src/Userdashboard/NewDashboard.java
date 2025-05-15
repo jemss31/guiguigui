@@ -105,6 +105,7 @@ public class NewDashboard extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         at = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -252,6 +253,14 @@ public class NewDashboard extends javax.swing.JFrame {
         jLabel6.setText("Occupied Date And Time:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 470, 30));
 
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel10KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 1000, 460));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -334,6 +343,10 @@ public class NewDashboard extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_jLabel11MouseClicked
 
+    private void jLabel10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel10KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -374,6 +387,7 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JTable at;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

@@ -57,6 +57,7 @@ private void resetPassword() {
         sq = new javax.swing.JLabel();
         con = new javax.swing.JButton();
         as = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -101,7 +102,7 @@ private void resetPassword() {
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 120));
 
         po.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(po, new org.netbeans.lib.awtextra.AbsoluteConstraints(-240, 460, 820, 240));
+        jPanel1.add(po, new org.netbeans.lib.awtextra.AbsoluteConstraints(-240, 450, 820, 240));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -118,6 +119,14 @@ private void resetPassword() {
         });
         jPanel2.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 140, 40));
         jPanel2.add(as, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 440, 60));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel10KeyPressed(evt);
+            }
+        });
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 90, 1000, 460));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 630, 360));
 
@@ -182,6 +191,10 @@ Session sess = Session.getInstance();
        }        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
 
+    private void jLabel10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel10KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -222,6 +235,7 @@ Session sess = Session.getInstance();
     private javax.swing.JButton con;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -47,6 +47,7 @@ public class GenQue extends javax.swing.JFrame {
         s5 = new javax.swing.JTextField();
         sq1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -112,6 +113,14 @@ public class GenQue extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel1.setText("Create Question!");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, -1, 70));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel10KeyPressed(evt);
+            }
+        });
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, 1000, 460));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,6 +248,10 @@ public class GenQue extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_s5ActionPerformed
 
+    private void jLabel10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel10KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -278,6 +291,7 @@ public class GenQue extends javax.swing.JFrame {
     private javax.swing.JButton con;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

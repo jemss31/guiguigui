@@ -40,6 +40,7 @@ public class Receipt extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         receipt = new javax.swing.JTextField();
         name = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -75,6 +76,14 @@ public class Receipt extends javax.swing.JFrame {
 
         name.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jPanel5.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 420, 170, 60));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel10KeyPressed(evt);
+            }
+        });
+        jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, 1000, 460));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,6 +124,10 @@ public class Receipt extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jLabel10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel10KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -151,6 +164,7 @@ public class Receipt extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

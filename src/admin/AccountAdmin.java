@@ -124,6 +124,7 @@ public class AccountAdmin extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -198,7 +199,7 @@ public class AccountAdmin extends javax.swing.JFrame {
                 jLabel9MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 40));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 120, 40));
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel10.setText("Dashboard");
@@ -214,7 +215,7 @@ public class AccountAdmin extends javax.swing.JFrame {
                 jLabel10MouseExited(evt);
             }
         });
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 100, 40));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 120, 40));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -231,7 +232,7 @@ public class AccountAdmin extends javax.swing.JFrame {
                 jLabel11MouseExited(evt);
             }
         });
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 120, 40));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 40));
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel12.setText("Appointments");
@@ -246,7 +247,7 @@ public class AccountAdmin extends javax.swing.JFrame {
                 jLabel12KeyPressed(evt);
             }
         });
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 120, 40));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 120, 40));
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel13.setText("Account");
@@ -256,7 +257,7 @@ public class AccountAdmin extends javax.swing.JFrame {
                 jLabel13MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 120, 40));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 120, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 200, 600));
 
@@ -343,6 +344,9 @@ public class AccountAdmin extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         jLabel18.setText("Phone:");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 550, 120, 40));
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/news.gif"))); // NOI18N
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, 370, 410));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -628,6 +632,7 @@ Session sess = Session.getInstance();
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

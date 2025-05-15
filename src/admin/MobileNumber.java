@@ -55,6 +55,7 @@ public class MobileNumber extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         con1 = new javax.swing.JButton();
         m1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -125,6 +126,14 @@ public class MobileNumber extends javax.swing.JFrame {
 
         m1.setEnabled(false);
         jPanel5.add(m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 280, 40));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
+        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel10KeyPressed(evt);
+            }
+        });
+        jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, -100, 1000, 460));
 
         jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 630, 360));
 
@@ -246,6 +255,10 @@ private void sendEmail(String toEmail, String otp) {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
 
+    private void jLabel10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel10KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -286,6 +299,7 @@ private void sendEmail(String toEmail, String otp) {
     private javax.swing.JButton con1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

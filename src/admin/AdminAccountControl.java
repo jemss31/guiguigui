@@ -172,7 +172,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
                 accMouseExited(evt);
             }
         });
-        jPanel2.add(acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 120, 40));
+        jPanel2.add(acc, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 120, 40));
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Transactions");
@@ -182,7 +182,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
                 jLabel9MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 40));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 120, 40));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -193,12 +193,12 @@ public class AdminAccountControl extends javax.swing.JFrame {
                 jLabel12MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 120, 40));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 120, 40));
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel13.setText("Users Control");
         jLabel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, null, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 120, 40));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 40));
 
         dash.setBackground(new java.awt.Color(255, 255, 255));
         dash.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -215,7 +215,7 @@ public class AdminAccountControl extends javax.swing.JFrame {
                 dashMouseExited(evt);
             }
         });
-        jPanel2.add(dash, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 100, 40));
+        jPanel2.add(dash, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 120, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 200, 600));
 

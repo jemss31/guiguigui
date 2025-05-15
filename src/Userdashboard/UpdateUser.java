@@ -188,13 +188,13 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         contactnum = new javax.swing.JTextField();
+        remove1 = new javax.swing.JButton();
+        cancel1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         Picture = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        remove1 = new javax.swing.JButton();
         Update1 = new javax.swing.JButton();
-        cancel1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -356,13 +356,51 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
         });
         jPanel1.add(contactnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 260, 50));
 
+        remove1.setText("REMOVE");
+        remove1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                remove1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                remove1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                remove1MouseExited(evt);
+            }
+        });
+        remove1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                remove1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(remove1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 560, 80, 30));
+
+        cancel1.setText("CANCEL");
+        cancel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cancel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cancel1MouseExited(evt);
+            }
+        });
+        cancel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cancel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 600, 80, 30));
+
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
         jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jLabel10KeyPressed(evt);
             }
         });
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-300, 40, 950, 370));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, 1000, 460));
         jPanel1.add(Picture, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, 270, 240));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -386,25 +424,6 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
         });
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(-110, 330, 530, 260));
 
-        remove1.setText("REMOVE");
-        remove1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                remove1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                remove1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                remove1MouseExited(evt);
-            }
-        });
-        remove1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                remove1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(remove1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 560, 80, 30));
-
         Update1.setText("UPDATE");
         Update1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -423,25 +442,6 @@ public static int getHeightFromWidth(String imagePath, int desiredWidth) {
             }
         });
         jPanel1.add(Update1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 600, 80, 30));
-
-        cancel1.setText("CANCEL");
-        cancel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cancel1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cancel1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                cancel1MouseExited(evt);
-            }
-        });
-        cancel1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancel1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cancel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 600, 80, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

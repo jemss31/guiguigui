@@ -38,9 +38,8 @@ public class AdminAccountControl extends javax.swing.JFrame {
     
     private void loadUsersData() {
     DefaultTableModel model = (DefaultTableModel) table1.getModel();
-    
-    
-    String[] columnNames = {"id", "u_fname", "u_lname", "u_email", "cont", "type", "u_username","u_pass", "status"};
+
+    String[] columnNames = {"id", "u_fname", "u_lname", "u_email", "cont", "type", "u_username", "u_pass", "status"};
     model.setColumnIdentifiers(columnNames); 
     model.setRowCount(0);
 
@@ -68,8 +67,37 @@ public class AdminAccountControl extends javax.swing.JFrame {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-    
+
+    // Add listener to update DB when a cell is edited
+    model.addTableModelListener(e -> {
+        int row = e.getFirstRow();
+        int column = e.getColumn();
+
+        // Skip if the table is refreshing or if no column is selected
+        if (column == -1 || row == -1) return;
+
+        Object updatedValue = model.getValueAt(row, column);
+        Object idValue = model.getValueAt(row, 0); // ID is assumed to be in column 0
+        String columnName = columnNames[column];
+
+        // Prevent editing the 'id' field
+        if ("id".equalsIgnoreCase(columnName)) return;
+
+        String updateSql = "UPDATE users SET " + columnName + " = ? WHERE id = ?";
+
+        try (Connection connect = new dbConnector().getConnection();
+             PreparedStatement pst = connect.prepareStatement(updateSql)) {
+
+            pst.setObject(1, updatedValue);
+            pst.setObject(2, idValue);
+            pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Update failed: " + ex.getMessage());
+        }
+    });
 }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

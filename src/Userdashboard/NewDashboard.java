@@ -1,87 +1,180 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Userdashboard;
 
 import admin.LogInForm;
-import config.Session;
 import config.dbConnector;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.awt.GridLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import org.knowm.xchart.PieChart;
+import org.knowm.xchart.PieChartBuilder;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.style.Styler.ChartTheme;
 
-/**
- *
- * @author admin
- */
-public class NewDashboard extends javax.swing.JFrame {
+public class NewDashboard extends JFrame {
+    private JPanel jPanel4; // Pie chart panel
+    private JPanel jPanel5; // Real-time chart panel
+    private XYChart lineChart;
+    private List<Double> dataX;
+    private List<Double> dataY;
+    private int time = 0;
 
-    /**
-     * Creates new form NewDashboard
-     */
     public NewDashboard() {
         initComponents();
-        loadUsersData();
+        showPieChart();         // Shows pie chart
+        setupRealTimeChart();   // Prepares the live chart as histogram
+        startRealTimeUpdates(); // Starts the timer for updates
     }
-  private void loadUsersData() {
-    DefaultTableModel model = (DefaultTableModel) at.getModel();  // Replace `at` with your JTable variable name if needed
-    String[] columnNames = {"#", "Appointment ID", "Date", "Time"};
-    model.setColumnIdentifiers(columnNames);
-    model.setRowCount(0);
 
-    String sql = "SELECT a_id, date, time FROM appointments";  // Adjusted SQL query
+    private void inittComponents() {
+        jPanel4 = new JPanel();
+        jPanel5 = new JPanel();
 
-    try (Connection connect = new dbConnector().getConnection();
-         PreparedStatement pst = connect.prepareStatement(sql);
-         ResultSet rs = pst.executeQuery()) {
+        setLayout(new GridLayout(2, 1)); // Two panels vertically
+        add(jPanel4);
+        add(jPanel5);
 
-        if (!rs.isBeforeFirst()) {
-            JOptionPane.showMessageDialog(this, "No appointments found.", "Information", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            int i = 1;
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+    }
+
+    private void showPieChart() {
+        PieChart chart = new PieChartBuilder()
+                .width(800)
+                .height(300)
+                .title("Cost Distribution")
+                .theme(ChartTheme.Matlab)
+                .build();
+
+        dbConnector connector = new dbConnector();
+        Map<String, Double> costMap = new HashMap<>();
+
+        String sql = "SELECT haircut_id, cost FROM appointments";
+        try (ResultSet rs = connector.getData(sql)) {
             while (rs.next()) {
-                String appointmentDate = rs.getString("date");
-                String appointmentTime = rs.getString("time");
-
-                try {
-                    // Combine date and time into a LocalDateTime object
-                    LocalDateTime appointmentDateTime = LocalDateTime.parse(appointmentDate + "T" + appointmentTime);
-
-                    // Check if the appointment is in the future
-                    if (LocalDateTime.now().isBefore(appointmentDateTime)) {
-                        Object[] row = {
-                            i++,
-                            rs.getInt("a_id"),
-                            appointmentDate,
-                            appointmentTime
-                        };
-                        model.addRow(row);
-                    }
-                } catch (DateTimeParseException dtpe) {
-                    System.err.println("Invalid date/time format for appointment: " + appointmentDate + " " + appointmentTime);
-                }
+                String haircutId = rs.getString("haircut_id");
+                double cost = rs.getDouble("cost");
+                costMap.put(haircutId, costMap.getOrDefault(haircutId, 0.0) + cost);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } finally {
+            connector.closeConnection();
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
+
+        for (Map.Entry<String, Double> entry : costMap.entrySet()) {
+            chart.addSeries("ID " + entry.getKey(), entry.getValue());
+        }
+
+        XChartPanel<PieChart> xchartPanel = new XChartPanel<>(chart);
+        gwapo.setLayout(new BorderLayout());
+        gwapo.add(xchartPanel, BorderLayout.CENTER);
+        gwapo.revalidate();
+        gwapo.repaint();
     }
-}
+
+    private void setupRealTimeChart() {
+        dataX = new ArrayList<>();
+        dataY = new ArrayList<>();
+
+        lineChart = new XYChartBuilder()
+                .width(800)
+                .height(300)
+                .title("Real-Time Time-Based Histogram")
+                .xAxisTitle("Time")
+                .yAxisTitle("Value")
+                .theme(ChartTheme.Matlab)
+                .build();
+
+        // Configure x-axis to show formatted dates
+        lineChart.getStyler().setDatePattern("HH:mm:ss");
+        lineChart.getStyler().setXAxisLabelRotation(45);
+
+        // Set chart series render style to Bar for histogram effect
+        lineChart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+
+        Date now = new Date();
+        dataX.add((double) now.getTime());  // Store timestamp as milliseconds
+        dataY.add(getValueByTime(now));
+
+        lineChart.addSeries("Time Value", dataX, dataY);
+
+        XChartPanel<XYChart> xchartPanel = new XChartPanel<>(lineChart);
+        TAE.setLayout(new BorderLayout());
+        TAE.add(xchartPanel, BorderLayout.CENTER);
+        TAE.revalidate();
+        TAE.repaint();
+    }
+
+    private void startRealTimeUpdates() {
+        Timer timer = new Timer(1000, e -> updateChart()); // Every second
+        timer.start();
+    }
+
+    private void updateChart() {
+        Date now = new Date();
+        double timestamp = (double) now.getTime();
+
+        double value = getValueByTime(now);
+
+        dataX.add(timestamp);
+        dataY.add(value);
+
+        if (dataX.size() > 30) {
+            dataX.remove(0);
+            dataY.remove(0);
+        }
+
+        lineChart.updateXYSeries("Time Value", dataX, dataY, null);
+
+        // Scroll x-axis range to latest values
+        lineChart.getStyler().setXAxisMin(dataX.get(0));
+        lineChart.getStyler().setXAxisMax(dataX.get(dataX.size() - 1));
+
+        TAE.revalidate();
+        TAE.repaint();
+    }
+
+    // Returns value based on time of day, smooth change using minutes and seconds
+    private double getValueByTime(Date date) {
+        int hour = date.getHours();
+        int minute = date.getMinutes();
+        int second = date.getSeconds();
+
+        // Calculate progress in current hour as fraction from 0.0 to 1.0
+        double progress = (minute * 60 + second) / 3600.0;
+
+        if (hour >= 6 && hour < 12) {
+            // Morning: value smoothly rises from 0 to 100 over 6 hours
+            return ((hour - 6) + progress) * (100.0 / 6);
+        } else if (hour >= 12 && hour < 22) {
+            // Afternoon/Evening: value smoothly falls from 100 to 0 over 10 hours
+            return 100 - ((hour - 12) + progress) * (100.0 / 10);
+        } else {
+            // Night: value is 0
+            return 0;
+        }
+    }
 
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -101,11 +194,9 @@ public class NewDashboard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        at = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        gwapo = new javax.swing.JPanel();
+        TAE = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -231,35 +322,35 @@ public class NewDashboard extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 220, 580));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/gwapo.gif"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 860, 280));
-
-        at.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(at);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 630, 300));
-
         jLabel6.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         jLabel6.setText("Occupied Date And Time:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 470, 30));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, 470, 30));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Pictires/nenpo.png"))); // NOI18N
-        jLabel10.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jLabel10KeyPressed(evt);
-            }
-        });
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 1000, 460));
+        javax.swing.GroupLayout gwapoLayout = new javax.swing.GroupLayout(gwapo);
+        gwapo.setLayout(gwapoLayout);
+        gwapoLayout.setHorizontalGroup(
+            gwapoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 310, Short.MAX_VALUE)
+        );
+        gwapoLayout.setVerticalGroup(
+            gwapoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 260, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(gwapo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 160, 310, 260));
+
+        javax.swing.GroupLayout TAELayout = new javax.swing.GroupLayout(TAE);
+        TAE.setLayout(TAELayout);
+        TAELayout.setHorizontalGroup(
+            TAELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 390, Short.MAX_VALUE)
+        );
+        TAELayout.setVerticalGroup(
+            TAELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(TAE, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 390, 470));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -314,7 +405,7 @@ public class NewDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_accMouseEntered
 
     private void accMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accMouseExited
-        acc.setForeground(Color.BLACK);
+                acc.setForeground(Color.BLACK);
     }//GEN-LAST:event_accMouseExited
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
@@ -342,10 +433,6 @@ public class NewDashboard extends javax.swing.JFrame {
        ua.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jLabel11MouseClicked
-
-    private void jLabel10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel10KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel10KeyPressed
 
     /**
      * @param args the command line arguments
@@ -383,11 +470,11 @@ public class NewDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel TAE;
     private javax.swing.JLabel acc;
-    private javax.swing.JTable at;
+    public javax.swing.JPanel gwapo;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -397,11 +484,9 @@ public class NewDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
